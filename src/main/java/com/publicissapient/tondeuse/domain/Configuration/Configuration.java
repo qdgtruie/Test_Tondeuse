@@ -26,7 +26,7 @@ public class Configuration {
     private Queue<MownerConfiguration> mowners;
 
 
-    public static Configuration with(ConfigurationProvider provider) throws ConfigurationException {
+    public static Configuration basedOn(ConfigurationProvider provider) throws ConfigurationException {
 
        return Configuration.populateWith(provider.getGardenConfiguration(), provider.getMownerConfiguration());
     }

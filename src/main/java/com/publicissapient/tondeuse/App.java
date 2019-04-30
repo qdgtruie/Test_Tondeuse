@@ -13,13 +13,13 @@ public class App {
     private static final String FILE_CONF = "file.txt";
 
     private void run()  throws ConfigurationException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        var file = classLoader.getResource(FILE_CONF).getFile().replace("%20"," ");
 
-        new MownerController().initialize(Configuration.with(new FileConfigurationProvider(file))).Run();
+        new MownerController().load(Configuration.basedOn(new FileConfigurationProvider(FILE_CONF))).Run();
     }
 
     public static void main(String[] args) throws ConfigurationException {
         new App().run();
     }
+
+
 }

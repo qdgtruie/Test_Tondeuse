@@ -4,7 +4,6 @@ import com.publicissapient.tondeuse.domain.Configuration.Configuration;
 import com.publicissapient.tondeuse.domain.Configuration.MownerConfiguration;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -13,10 +12,10 @@ import java.util.UUID;
 @Slf4j
 public class MownerController {
 
-    private Queue<ExecutionBatch> executions = new LinkedList<ExecutionBatch>();
+    private Queue<ExecutionBatch> executions = new LinkedList<>();
 
 
-    public MownerController initialize(@NotNull Configuration config) {
+    public MownerController load(@NonNull Configuration config) {
 
         executions.clear();
         for (MownerConfiguration item : config.getMowners()) {
@@ -45,7 +44,7 @@ public class MownerController {
         }
     }
 
-    private void runMowner(@NotNull Controllable mowner, @NotNull Queue<Instruction> instructions) {
+    private void runMowner(@NonNull Controllable mowner, @NonNull Queue<Instruction> instructions) {
         for (Instruction step : instructions) {
             executeStep(mowner, step);
         }

@@ -20,22 +20,28 @@ import lombok.extern.slf4j.Slf4j;
 public class FileConfigurationProvider implements ConfigurationProvider {
 
 
-    private final String filePath;
+    private final String ressourceName;
     private List<String> lines;
 
-    public FileConfigurationProvider(final String aFilePath) {
+    public FileConfigurationProvider(final String aRessourceName) {
 
-        filePath = aFilePath;
+        ressourceName = aRessourceName;
     }
 
     private List<String> getLines() throws ConfigurationException {
         if (lines == null)
             try {
-                lines = Files.readAllLines(java.nio.file.Path.of(this.filePath), Charset.defaultCharset());
-            } catch (IOException e) {
+                ClassLoader classLoader = getClass().getClassLoader();
+                var filePath = classLoader.getResource(ressourceName).getFile().replace("%20", " ");
+                lines = Files.readAllLines(java.nio.file.Path.of(filePath), Charset.defaultCharset());
+            } catch (IOException e){
                 String message = "Error while reading configuration file";
                 log.error(message, e);
                 throw new ConfigurationException(message, e);
+            } catch(NullPointerException ex){
+                String message = "Error accessing resources stream for configuration.";
+                log.error(message, ex);
+                throw new ConfigurationException(message, ex);
             }
         return lines;
     }
@@ -54,11 +60,7 @@ public class FileConfigurationProvider implements ConfigurationProvider {
 
     }
 
-    /**
-     *
-     * @return
-     * @throws ConfigurationException
-     */
+
     @Override
     public Queue<MownerConfiguration> getMownerConfiguration() throws ConfigurationException {
 
