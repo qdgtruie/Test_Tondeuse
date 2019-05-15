@@ -101,5 +101,18 @@ public class MownerLocation {
         positionListener.add(check);
     }
 
+    @Override public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof MownerLocation)) return false;
+        MownerLocation other = (MownerLocation) o;
+        if (!other.canEqual(this)) return false;
+        if (this.getPosition() == null ? other.getPosition() != null : !this.getPosition().equals(other.getPosition())) return false;
+        if (this.getOrientation() == null ? other.getOrientation() != null : !this.getOrientation().equals(other.getOrientation())) return false;
 
+        return true;
+    }
+
+    private boolean canEqual(Object other) {
+        return other instanceof MownerLocation;
+    }
 }

@@ -13,7 +13,37 @@ plugins {
     // Apply the application plugin to add support for building an application
     application
     id("io.freefair.lombok") version "3.2.1"
+    //id("org.springframework.boot") version "2.1.4.RELEASE"
 }
+
+//apply(plugin = "io.spring.dependency-management")
+//ext.junitPlatformVersion = '1.4.1'
+//ext.junitJupiterVersion = '5.4.1'
+
+//ext.jqwikVersion = '1.1.3'
+
+tasks {
+    test {                                  // (5)
+        testLogging.showExceptions = true
+        useJUnitPlatform {
+            includeEngines("jqwik")
+
+            // includeTags "fast", "medium"
+            // excludeTags "slow"
+        }
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
+
+        // set heap size for the test JVM(s)
+        minHeapSize = "128m"
+        maxHeapSize = "512m"
+
+    }
+}
+
+
+
 
 repositories {
     // Use jcenter for resolving your dependencies.
@@ -24,15 +54,27 @@ repositories {
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     implementation("com.google.guava:guava:27.0.1-jre")
-    implementation("org.slf4j:slf4j-api:1.7.+")
+
+   
     implementation("ch.qos.logback:logback-classic:1.+")
+    implementation("ch.qos.logback:logback-core:1.+")
+    implementation("ch.qos.logback:logback-access:1.+")
+    implementation("org.slf4j:slf4j-api:1.7.+")
+
     implementation("com.google.guava:guava:27.1-jre")
+    implementation("io.vavr:vavr:0.9.2")
+    //implementation("org.springframework.boot:spring-boot-starter-web")
 
     // Use JUnit test framework
-    testImplementation("junit:junit:4.12")
+    //testImplementation("junit:junit:4.12")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
+
+    //runtime(files("libs/logback-classic-1.3.0-alpha4.jar"))
+
+    testCompile("net.jqwik:jqwik:1.1.3")
 }
 
 application {
     // Define the main class for the application
-    mainClassName = "com.publicissapient.tondeuse.App"
+    mainClassName = "com.publicissapient.tondeuse.ConsoleApp"
 }
