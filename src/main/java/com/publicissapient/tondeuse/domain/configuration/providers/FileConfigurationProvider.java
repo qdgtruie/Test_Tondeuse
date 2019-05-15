@@ -1,6 +1,6 @@
-package com.publicissapient.tondeuse.domain.Configuration.Providers;
+package com.publicissapient.tondeuse.domain.configuration.providers;
 
-import com.publicissapient.tondeuse.domain.Configuration.*;
+import com.publicissapient.tondeuse.domain.configuration.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -10,29 +10,50 @@ import java.util.List;
 import java.util.Queue;
 
 
-import com.publicissapient.tondeuse.domain.Configuration.Providers.StringConfigurationParser.ConfigurationFormatException;
-import com.publicissapient.tondeuse.domain.Configuration.Providers.StringConfigurationParser.GardenConfigurationParser;
-import com.publicissapient.tondeuse.domain.Configuration.Providers.StringConfigurationParser.MownerConfigurationPaser;
+import com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser.ConfigurationFormatException;
+import com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser.GardenConfigurationParser;
+import com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser.MownerConfigurationPaser;
 
+import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class FileConfigurationProvider implements ConfigurationProvider {
 
 
-    private final String ressourceName;
+    private final String filePath;
+
     private List<String> lines;
 
-    public FileConfigurationProvider(final String aRessourceName) {
+    private FileConfigurationProvider(@NonNull final String aFilePath) {
 
-        ressourceName = aRessourceName;
+        filePath = aFilePath;
+    }
+
+    public static FileConfigurationProvider fromFile(@NonNull final String aFilePath){
+        return new FileConfigurationProvider(aFilePath);
+    }
+
+    public static FileConfigurationProvider fromRessource(@NonNull final String aRessourceName)throws ConfigurationException {
+        var filePath = "";
+
+        try {
+            //Option.of()
+            ClassLoader classLoader = FileConfigurationProvider.class.getClassLoader();
+            filePath = classLoader.getResource(aRessourceName).getFile().replace("%20", " ");
+        }catch (NullPointerException e){
+            String message = "Error while reading configuration file";
+            log.error(message, e);
+            throw new ConfigurationException(message, e);
+        }
+
+        return new FileConfigurationProvider(filePath);
     }
 
     private List<String> getLines() throws ConfigurationException {
         if (lines == null)
             try {
-                ClassLoader classLoader = getClass().getClassLoader();
-                var filePath = classLoader.getResource(ressourceName).getFile().replace("%20", " ");
                 lines = Files.readAllLines(java.nio.file.Path.of(filePath), Charset.defaultCharset());
             } catch (IOException e){
                 String message = "Error while reading configuration file";

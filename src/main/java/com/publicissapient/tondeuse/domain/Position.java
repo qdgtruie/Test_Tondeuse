@@ -14,4 +14,7 @@ public  @Data class Position {
     private  int y;
 
 
+    public boolean isWithinRectangle(Position upperRight) {
+        return this.getX() <= upperRight.getX() && this.getY() <= upperRight.getY();
+    }
 }

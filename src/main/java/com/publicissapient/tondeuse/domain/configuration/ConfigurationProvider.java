@@ -1,6 +1,7 @@
-package com.publicissapient.tondeuse.domain.Configuration;
+package com.publicissapient.tondeuse.domain.configuration;
 
-import java.io.IOException;
+import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
+
 import java.util.Queue;
 
 public interface ConfigurationProvider {

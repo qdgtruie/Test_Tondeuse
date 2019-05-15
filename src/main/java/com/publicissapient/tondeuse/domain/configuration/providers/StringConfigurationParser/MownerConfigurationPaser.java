@@ -1,7 +1,7 @@
-package com.publicissapient.tondeuse.domain.Configuration.Providers.StringConfigurationParser;
+package com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser;
 
-import com.publicissapient.tondeuse.domain.Configuration.InstructionQueue;
-import com.publicissapient.tondeuse.domain.Configuration.MownerConfiguration;
+import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
+import com.publicissapient.tondeuse.domain.configuration.MownerConfiguration;
 import com.publicissapient.tondeuse.domain.Instruction;
 import com.publicissapient.tondeuse.domain.MownerLocation;
 import com.publicissapient.tondeuse.domain.Orientation;
@@ -42,7 +42,7 @@ public class MownerConfigurationPaser {
             var instructionTokens = com.google.common.base.Splitter.fixedLength(1).splitToList(instructionsLine);
 
             var queue = instructionTokens.stream()
-                    .map(item -> Instruction.valueOf(item))
+                    .map(Instruction::valueOf)
                     .collect(Collectors.toCollection(LinkedList::new));
 
             result = InstructionQueue.with(queue);
@@ -71,10 +71,10 @@ public class MownerConfigurationPaser {
     }
 
     private boolean CheckFormat(String headLine) throws ConfigurationFormatException {
-        return true;
+        throw new ConfigurationFormatException("not implemented", new Exception());
     }
 
     private boolean CheckFormatInstruction(String instructionsLine) throws ConfigurationFormatException {
-        return true;
+        throw new ConfigurationFormatException("not implemented", new Exception());
     }
 }

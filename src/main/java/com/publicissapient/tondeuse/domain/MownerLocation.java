@@ -1,77 +1,105 @@
 package com.publicissapient.tondeuse.domain;
 
-import com.publicissapient.tondeuse.domain.Orientation;
-import com.publicissapient.tondeuse.domain.Position;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
-@ToString
-@AllArgsConstructor(access = AccessLevel.PUBLIC,staticName = "with")
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.function.Predicate;
+
+@ToString(exclude = "positionListener")
+@RequiredArgsConstructor(access = AccessLevel.PUBLIC, staticName = "with")
 public class MownerLocation {
 
-    @Getter
-    private Position initialPosition;
+    @Getter(AccessLevel.PACKAGE)
+    @NonNull
+    private Position position;
 
     @Getter
-    private Orientation initialOrientation;
+    @NonNull
+    private Orientation orientation;
 
-    public void ShiftRight() {
 
-        switch (initialOrientation){
+    private Queue<Predicate<Position>> positionListener = new LinkedList<>();
+
+    void ShiftRight() {
+
+        switch (orientation) {
             case N:
-                initialOrientation = Orientation.E;
+                orientation = Orientation.E;
                 break;
             case E:
-                initialOrientation = Orientation.S;
+                orientation = Orientation.S;
                 break;
             case S:
-                initialOrientation = Orientation.W;
+                orientation = Orientation.W;
                 break;
             case W:
-                initialOrientation = Orientation.N;
+                orientation = Orientation.N;
                 break;
         }
 
     }
 
-    public void ShiftLeft() {
+    void ShiftLeft() {
 
-        switch (initialOrientation){
+        switch (orientation) {
             case N:
-                initialOrientation = Orientation.W;
+                orientation = Orientation.W;
                 break;
             case E:
-                initialOrientation = Orientation.N;
+                orientation = Orientation.N;
                 break;
             case S:
-                initialOrientation = Orientation.E;
+                orientation = Orientation.E;
                 break;
             case W:
-                initialOrientation = Orientation.S;
+                orientation = Orientation.S;
                 break;
         }
     }
+
     /*
-    *               5,5
-    *   0,0
-    * */
-    public void ShiftForward() {
+     *
+     *
+     * */
+     void ShiftForward() {
 
-        switch (initialOrientation){
+        int nextX = 0;
+        int nextY = 0;
+
+        switch (orientation) {
             case N:
-                initialPosition.setY(initialPosition.getY()+1);
+                nextY = position.getY() + 1;
                 break;
             case E:
-                initialPosition.setX(initialPosition.getX()+1);
+                nextX = position.getX() + 1;
                 break;
             case S:
-                initialPosition.setY(initialPosition.getY()-1);
+                nextY = position.getY() - 1;
                 break;
             case W:
-                initialPosition.setX(initialPosition.getX()-1);
+                nextX = position.getX() - 1;
+                break;
+            default:
                 break;
         }
+
+        if (onMovingTo(Position.locatedAt(nextX, nextY))) {
+            position.setY(nextY);
+            position.setX(nextX);
+        }
+
     }
+
+    private boolean onMovingTo(Position movingTo) {
+
+        return positionListener.stream().allMatch(check -> check.test(movingTo));
+
+    }
+
+     void addPositionListener(Predicate<Position> check){
+        positionListener.add(check);
+    }
+
+
 }

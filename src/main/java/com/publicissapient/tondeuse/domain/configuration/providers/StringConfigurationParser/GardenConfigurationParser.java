@@ -1,6 +1,6 @@
-package com.publicissapient.tondeuse.domain.Configuration.Providers.StringConfigurationParser;
+package com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser;
 
-import com.publicissapient.tondeuse.domain.Configuration.GardenConfiguration;
+import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
 import com.publicissapient.tondeuse.domain.Position;
 
 public class GardenConfigurationParser {
@@ -20,6 +20,6 @@ public class GardenConfigurationParser {
     }
 
     private boolean CheckFormat(String headLine) throws ConfigurationFormatException {
-        return true;
+        throw new ConfigurationFormatException("not implemented", new Exception());
     }
 }

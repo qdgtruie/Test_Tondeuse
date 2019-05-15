@@ -1,7 +1,6 @@
-package com.publicissapient.tondeuse.domain.Configuration;
+package com.publicissapient.tondeuse.domain.configuration.utils;
 
 import com.publicissapient.tondeuse.domain.Instruction;
-import com.publicissapient.tondeuse.domain.Orientation;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
