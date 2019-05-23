@@ -32,11 +32,19 @@ public class MownerWebController {
     }
 
     private static void notifyInvalidMove(InvalidMoveEventArg x) {
-        buffer.append("[Mowner " + x.getMownerID().toString() + "] tried to reach invalid position at : " + x.getTargetPosition().toString());
+        buffer.append("[Mowner ");
+        buffer.append(x.getMownerID().toString());
+        buffer.append("] tried to reach invalid position at : ");
+        buffer.append( x.getTargetPosition().toString());
+        buffer.append("<p/>");
     }
 
     private static void PrintMownerFinalLocation(PositionProvider x) {
-        buffer.append("[Mowner " + x.getID().toString() + "] Job complete : position is " + x.getCurrentLocation().toString());
+        buffer.append("[Mowner ");
+        buffer.append( x.getID().toString());
+        buffer.append( "] Job complete : position is ");
+        buffer.append( x.getCurrentLocation().toString());
+        buffer.append("<p/>");
     }
 
 }
