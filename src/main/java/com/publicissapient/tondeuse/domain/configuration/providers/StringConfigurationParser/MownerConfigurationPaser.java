@@ -91,7 +91,7 @@ public class MownerConfigurationPaser {
 
     private Pattern GetPatternMowner() {
         if(patternMowner==null)
-            patternMowner = Pattern.compile("\\d+ \\d+ \\[NSEW]");
+            patternMowner = Pattern.compile("\\d+ \\d+ [NSEW]");
 
         return patternMowner;
     }
@@ -100,7 +100,7 @@ public class MownerConfigurationPaser {
 
     private Pattern GetPatternInstruction() {
         if(patternInstruction==null)
-            patternInstruction = Pattern.compile("\\[AGD]+");
+            patternInstruction = Pattern.compile("[AGD]+");
 
         return patternInstruction;
     }
