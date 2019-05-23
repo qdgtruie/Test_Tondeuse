@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -58,7 +59,7 @@ public class MownerConfigurationPaser {
 
         MownerLocation result = MownerLocation.with(Position.locatedAt(0,0),Orientation.N);
 
-        if (CheckFormat(mownerLine)) {
+        if (CheckFormatMowner(mownerLine)) {
             var positionTokens = com.google.common.base.Splitter.on(SEPARATOR).splitToList(mownerLine);
 
             int x = Integer.valueOf(positionTokens.get(0));
@@ -70,11 +71,37 @@ public class MownerConfigurationPaser {
         return result;
     }
 
-    private boolean CheckFormat(String headLine) throws ConfigurationFormatException {
-        throw new ConfigurationFormatException("not implemented", new Exception());
+    private boolean CheckFormatMowner(final String mownerLine) throws ConfigurationFormatException {
+        var p1 = GetPatternMowner();
+        if(! p1.matcher(mownerLine).matches())
+            throw new ConfigurationFormatException("Invalid Configuration format for Mowner : '"+mownerLine+"'");
+
+        return true;
     }
 
-    private boolean CheckFormatInstruction(String instructionsLine) throws ConfigurationFormatException {
-        throw new ConfigurationFormatException("not implemented", new Exception());
+    private boolean CheckFormatInstruction(final String instructionsLine) throws ConfigurationFormatException {
+        var p1 = GetPatternInstruction();
+        if(! p1.matcher(instructionsLine).matches())
+            throw new ConfigurationFormatException("Invalid Configuration format for Instruction set : '"+instructionsLine+"'");
+
+        return true;
+    }
+
+    private Pattern patternMowner;
+
+    private Pattern GetPatternMowner() {
+        if(patternMowner==null)
+            patternMowner = Pattern.compile("\\d+ \\d+ \\[NSEW]");
+
+        return patternMowner;
+    }
+
+    private Pattern patternInstruction;
+
+    private Pattern GetPatternInstruction() {
+        if(patternInstruction==null)
+            patternInstruction = Pattern.compile("\\[AGD]+");
+
+        return patternInstruction;
     }
 }

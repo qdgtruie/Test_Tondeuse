@@ -2,14 +2,14 @@ package com.publicissapient.tondeuse.domain;
 
 
 import lombok.*;
-import lombok.experimental.Wither;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
+/**
+ * Reification of a mowner which can be controlled to move and can prtovide its position
+ */
 @Slf4j
 @ToString
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC,staticName = "initialLocation")
@@ -31,7 +31,11 @@ public class Mowner implements Controllable, PositionProvider {
     private MownerLocation currentLocation;
 
 
-    public void addOffBoundChecker(Predicate<Position> positionCheck ){ //Predicate<Position> check
+    /**
+     * Add a mown boundary checker to the mowner
+     * @param positionCheck predicate to perform the check
+     */
+    public void addOffBoundChecker(Predicate<Position> positionCheck ){
 
         getCurrentLocation().addPositionListener(positionCheck);
     }
@@ -44,11 +48,17 @@ public class Mowner implements Controllable, PositionProvider {
         getCurrentLocation().ShiftRight();
     }
 
+    /**
+     * Request the Mowner to turn Left
+     */
     @Override
     public void turnLeft() {
         getCurrentLocation().ShiftLeft();
     }
 
+    /**
+     * Request the Mowner to move forward.
+     */
     @Override
     public void moveForward(){
 
@@ -56,10 +66,4 @@ public class Mowner implements Controllable, PositionProvider {
     }
 
 
-
-    /*@Override
-    public void reportOnDuty(@NonNull Consumer<PositionProvider> positionConsumer) {
-        positionConsumer.accept(this);
-        log.debug("[Mowner "+this.ID.toString()+"] Job complete : position is "+this.getCurrentLocation().toString());
-    }*/
 }

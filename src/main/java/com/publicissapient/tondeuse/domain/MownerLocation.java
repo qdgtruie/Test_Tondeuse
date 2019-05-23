@@ -6,21 +6,36 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Predicate;
 
+/**
+ * Define the location (orientation + position) of a mowner
+ */
 @ToString(exclude = "positionListener")
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC, staticName = "with")
 public class MownerLocation {
 
+    /**
+     * Current position of the location
+     */
     @Getter(AccessLevel.PACKAGE)
     @NonNull
     private Position position;
 
+    /**
+     * Current Orientation of the location
+     */
     @Getter
     @NonNull
     private Orientation orientation;
 
 
+    /**
+     * Queue of hanlder for position change notoification
+     */
     private Queue<Predicate<Position>> positionListener = new LinkedList<>();
 
+    /**
+     * Change orientation to the right
+     */
     void ShiftRight() {
 
         switch (orientation) {
@@ -40,6 +55,9 @@ public class MownerLocation {
 
     }
 
+    /**
+     * Change orientation to the right
+     */
     void ShiftLeft() {
 
         switch (orientation) {
@@ -58,10 +76,9 @@ public class MownerLocation {
         }
     }
 
-    /*
-     *
-     *
-     * */
+    /**
+     * Change position by moving forward
+     */
      void ShiftForward() {
 
         int nextX = 0;
@@ -84,6 +101,7 @@ public class MownerLocation {
                 break;
         }
 
+        //triger event prior to actually changing position
         if (onMovingTo(Position.locatedAt(nextX, nextY))) {
             position.setY(nextY);
             position.setX(nextX);
@@ -91,16 +109,30 @@ public class MownerLocation {
 
     }
 
+    /**
+     * Trigger event associated to the moving attempt
+     * @param movingTo location to move to
+     * @return whether, at least, a listener prevented the move
+     */
     private boolean onMovingTo(Position movingTo) {
 
         return positionListener.stream().allMatch(check -> check.test(movingTo));
 
     }
 
+    /**
+     * Register a listener on move attempt event
+     * @param check a handler for the event
+     */
      void addPositionListener(Predicate<Position> check){
         positionListener.add(check);
     }
 
+    /**
+     * Test equallity between two Location
+     * @param o an object to test against.
+     * @return true if this object is the same as the obj argument; false otherwise.
+     */
     @Override public boolean equals(Object o) {
         if (o == this) return true;
         if (!(o instanceof MownerLocation)) return false;

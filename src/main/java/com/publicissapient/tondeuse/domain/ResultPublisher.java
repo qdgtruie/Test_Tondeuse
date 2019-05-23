@@ -1,9 +1,14 @@
 package com.publicissapient.tondeuse.domain;
 
-import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEventArg;
-
+/**
+ * Capability to display a MownerPosition
+ */
 @FunctionalInterface
 public interface ResultPublisher {
 
+    /**
+     * Publish a Position
+     * @param positionProvider provided prosition to be displayed
+     */
     void publishPosition(PositionProvider positionProvider);
 }

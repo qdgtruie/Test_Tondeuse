@@ -1,5 +1,8 @@
 package com.publicissapient.tondeuse.domain;
 
+/**
+ * Common set of feature supported by all the mowners from MownItNow
+ */
 public interface Controllable {
 
     /**
