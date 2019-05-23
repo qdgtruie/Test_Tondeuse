@@ -9,12 +9,14 @@
 plugins {
     // Apply the java plugin to add support for Java
     java
+    id("org.springframework.boot") version "2.1.5.RELEASE"
     idea
     // Apply the application plugin to add support for building an application
     application
     id("io.freefair.lombok") version "3.2.1"
-    //id("org.springframework.boot") version "2.1.4.RELEASE"
 }
+
+
 
 //apply(plugin = "io.spring.dependency-management")
 //ext.junitPlatformVersion = '1.4.1'
@@ -56,25 +58,25 @@ dependencies {
     implementation("com.google.guava:guava:27.0.1-jre")
 
    
-    implementation("ch.qos.logback:logback-classic:1.+")
-    implementation("ch.qos.logback:logback-core:1.+")
-    implementation("ch.qos.logback:logback-access:1.+")
-    implementation("org.slf4j:slf4j-api:1.7.+")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation("ch.qos.logback:logback-core:1.2.3")
+    implementation("ch.qos.logback:logback-access:1.2.3")
+    implementation("org.slf4j:slf4j-api:1.7.26")
 
     implementation("com.google.guava:guava:27.1-jre")
     implementation("io.vavr:vavr:0.9.2")
-    //implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 
     // Use JUnit test framework
-    //testImplementation("junit:junit:4.12")
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
 
-    //runtime(files("libs/logback-classic-1.3.0-alpha4.jar"))
-
     testCompile("net.jqwik:jqwik:1.1.3")
+    //providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 }
 
 application {
     // Define the main class for the application
     mainClassName = "com.publicissapient.tondeuse.ConsoleApp"
 }
+
+apply(plugin = "io.spring.dependency-management")
