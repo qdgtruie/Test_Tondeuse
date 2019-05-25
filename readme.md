@@ -33,8 +33,6 @@ java -jar target/automower-1.0.0-SNAPSHOT.jar [file]
 2. Creation of instructions list and needed objects in memory
 3. Execution of instructions
 
-![Sequence diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/frecco75/mowitnow/master/src/main/resources/architecture/activity.puml)
-
 
 
 ## Specifications ##
