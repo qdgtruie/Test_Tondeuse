@@ -82,7 +82,7 @@ public class ControllerTest {
     public void MownerCanRunAtScale() throws ConfigurationException {
 
         MownerController controller = new MownerController().load(Configuration.basedOn(new MemoryProvider()));
-        controller.Run();
+        controller.run();
 
     }
 
@@ -90,7 +90,7 @@ public class ControllerTest {
     public void MownerCanNotGoOutsideOfGarden() throws ConfigurationException {
 
         MownerController controller = new MownerController().load(Configuration.basedOn(new LimittedMemoryProvider()));
-        controller.Run();
+        controller.run();
     }
 
 }
