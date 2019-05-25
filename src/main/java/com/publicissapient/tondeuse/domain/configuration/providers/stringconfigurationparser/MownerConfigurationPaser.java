@@ -37,7 +37,7 @@ public class MownerConfigurationPaser {
     }
 
     private InstructionQueue parseInstructionSet(String instructionsLine) throws ConfigurationFormatException {
-        InstructionQueue result = InstructionQueue.with(new LinkedList<>());
+        InstructionQueue result;
 
         if (getPatternInstruction().matcher(instructionsLine).matches()) {
             var instructionTokens = com.google.common.base.Splitter.fixedLength(1).splitToList(instructionsLine);
@@ -60,7 +60,7 @@ public class MownerConfigurationPaser {
 
         final String SEPARATOR = " ";
 
-        MownerLocation result = MownerLocation.with(Position.locatedAt(0,0),Orientation.N);
+        MownerLocation result;
 
         if (getPatternMowner().matcher(mownerLine).matches()) {
             var positionTokens = com.google.common.base.Splitter.on(SEPARATOR).splitToList(mownerLine);
