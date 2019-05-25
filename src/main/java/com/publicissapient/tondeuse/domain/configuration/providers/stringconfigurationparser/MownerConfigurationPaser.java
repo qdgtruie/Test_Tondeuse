@@ -17,17 +17,17 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MownerConfigurationPaser {
 
-    public Queue<MownerConfiguration> Parse(List<String> lines) throws ConfigurationFormatException {
+    public Queue<MownerConfiguration> parse(List<String> lines) throws ConfigurationFormatException {
 
         var result = new LinkedList<MownerConfiguration>();
 
         for (int i = 0; i < lines.size(); i = i + 2) {
 
             String mownerLine = lines.get(i);
-            MownerLocation location = ParseMownerLocation(mownerLine);
+            MownerLocation location = parseMownerLocation(mownerLine);
 
             String instructionsLine = lines.get(i+1);
-            InstructionQueue instructionQueue = ParseInstructionSet(instructionsLine);
+            InstructionQueue instructionQueue = parseInstructionSet(instructionsLine);
 
             var conf = MownerConfiguration.with(location, instructionQueue);
             result.add(conf);
@@ -36,10 +36,10 @@ public class MownerConfigurationPaser {
         return result;
     }
 
-    private InstructionQueue ParseInstructionSet(String instructionsLine) throws ConfigurationFormatException {
+    private InstructionQueue parseInstructionSet(String instructionsLine) throws ConfigurationFormatException {
         InstructionQueue result = InstructionQueue.with(new LinkedList<>());
 
-        if (CheckFormatInstruction(instructionsLine)) {
+        if (checkFormatInstruction(instructionsLine)) {
             var instructionTokens = com.google.common.base.Splitter.fixedLength(1).splitToList(instructionsLine);
 
             var queue = instructionTokens.stream()
@@ -53,13 +53,13 @@ public class MownerConfigurationPaser {
     }
 
 
-    private MownerLocation ParseMownerLocation(String mownerLine) throws ConfigurationFormatException {
+    private MownerLocation parseMownerLocation(String mownerLine) throws ConfigurationFormatException {
 
         final String SEPARATOR = " ";
 
         MownerLocation result = MownerLocation.with(Position.locatedAt(0,0),Orientation.N);
 
-        if (CheckFormatMowner(mownerLine)) {
+        if (checkFormatMowner(mownerLine)) {
             var positionTokens = com.google.common.base.Splitter.on(SEPARATOR).splitToList(mownerLine);
 
             int x = Integer.valueOf(positionTokens.get(0));
@@ -71,15 +71,15 @@ public class MownerConfigurationPaser {
         return result;
     }
 
-    private boolean CheckFormatMowner(final String mownerLine) throws ConfigurationFormatException {
-        var p1 = GetPatternMowner();
+    private boolean checkFormatMowner(final String mownerLine) throws ConfigurationFormatException {
+        var p1 = getPatternMowner();
         if(! p1.matcher(mownerLine).matches())
             throw new ConfigurationFormatException("Invalid Configuration format for Mowner : '"+mownerLine+"'");
 
         return true;
     }
 
-    private boolean CheckFormatInstruction(final String instructionsLine) throws ConfigurationFormatException {
+    private boolean checkFormatInstruction(final String instructionsLine) throws ConfigurationFormatException {
         var p1 = GetPatternInstruction();
         if(! p1.matcher(instructionsLine).matches())
             throw new ConfigurationFormatException("Invalid Configuration format for Instruction set : '"+instructionsLine+"'");
@@ -89,7 +89,7 @@ public class MownerConfigurationPaser {
 
     private Pattern patternMowner;
 
-    private Pattern GetPatternMowner() {
+    private Pattern getPatternMowner() {
         if(patternMowner==null)
             patternMowner = Pattern.compile("\\d+ \\d+ [NSEW]");
 

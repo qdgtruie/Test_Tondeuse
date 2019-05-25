@@ -25,8 +25,8 @@ public class GardenConfigurationParser {
         GardenConfiguration result = GardenConfiguration.endsAt(Position.locatedAt(0,0));
         if(checkFormat(headLine)){
             java.util.List<String> tokens = Splitter.on(SEPARATOR).splitToList(headLine);
-            int x =Integer.valueOf(tokens.get(0));
-            int y = Integer.valueOf(tokens.get(1));
+            int x =Integer.parseInt(tokens.get(0));
+            int y = Integer.parseInt(tokens.get(1));
             result = GardenConfiguration.endsAt(Position.locatedAt(x, y));
         }
 

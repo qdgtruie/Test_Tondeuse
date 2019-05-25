@@ -23,7 +23,7 @@ public class ConsoleApp {
                 .load(Configuration.basedOn(FileConfigurationProvider.fromRessource(FILE_CONF)))
                 .withAlerter(ConsoleApp::notifyInvalidMove)
                 .withResultPublisher(ConsoleApp::printMownerFinalLocation)
-                .Run();
+                .run();
     }
 
     public static void main(String[] args) throws ConfigurationException {

@@ -86,7 +86,7 @@ public class FileConfigurationProvider implements ConfigurationProvider {
     public Queue<MownerConfiguration> getMownerConfiguration() throws ConfigurationException {
 
         try {
-            return new MownerConfigurationPaser().Parse(getLines().subList(1, getLines().size()));
+            return new MownerConfigurationPaser().parse(getLines().subList(1, getLines().size()));
 
         } catch (ConfigurationFormatException e) {
             String message = "Error while parsing Mowner section of configuration file";

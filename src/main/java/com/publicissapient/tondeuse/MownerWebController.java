@@ -26,7 +26,7 @@ public class MownerWebController {
                 .load(Configuration.basedOn(FileConfigurationProvider.fromRessource(FILE_CONF)))
                 .withAlerter(MownerWebController::notifyInvalidMove)
                 .withResultPublisher(MownerWebController::printMownerFinalLocation)
-                .Run();
+                .run();
 
         return buffer.toString();
     }

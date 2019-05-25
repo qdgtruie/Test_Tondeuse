@@ -21,11 +21,6 @@ public final class MownerController {
 
 
     /**
-     * Configration of the garden to be mowned
-     */
-    private GardenConfiguration garden;
-
-    /**
      * Queue of mowners (with their attached instruction set) to be controlled
      */
     private Queue<ExecutionBatch> executions = new LinkedList<>();
@@ -51,8 +46,8 @@ public final class MownerController {
      */
     public MownerController load(@NonNull final Configuration config) {
 
-        this.garden = config.getGarden();
-        this.garden.addFenceViolationListener(this::raiseAlertNotification);
+        var garden = config.getGarden();
+        garden.addFenceViolationListener(this::raiseAlertNotification);
 
         executions.clear();
         for (MownerConfiguration item : config.getMowners()) {
@@ -124,7 +119,7 @@ public final class MownerController {
     /**
      * Run the all the mowners
      */
-    public void Run() {
+    public void run() {
         for (ExecutionBatch e : executions) {
             runMowner(e.getMowner(), e.getInstructions());
         }
