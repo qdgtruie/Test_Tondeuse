@@ -80,7 +80,7 @@ public class MownerConfigurationPaser {
     }
 
     private boolean checkFormatInstruction(final String instructionsLine) throws ConfigurationFormatException {
-        var p1 = GetPatternInstruction();
+        var p1 = getPatternInstruction();
         if(! p1.matcher(instructionsLine).matches())
             throw new ConfigurationFormatException("Invalid Configuration format for Instruction set : '"+instructionsLine+"'");
 
@@ -98,7 +98,7 @@ public class MownerConfigurationPaser {
 
     private Pattern patternInstruction;
 
-    private Pattern GetPatternInstruction() {
+    private Pattern getPatternInstruction() {
         if(patternInstruction==null)
             patternInstruction = Pattern.compile("[AGD]+");
 
