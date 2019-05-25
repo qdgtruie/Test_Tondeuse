@@ -139,7 +139,7 @@ public class MownerLocation {
         MownerLocation other = (MownerLocation) o;
         if (!other.canEqual(this)) return false;
         if (this.getPosition() == null ? other.getPosition() != null : !this.getPosition().equals(other.getPosition())) return false;
-        if (this.getOrientation() == null ? other.getOrientation() != null : !this.getOrientation().equals(other.getOrientation())) return false;
+        if (!this.getOrientation().equals(other.getOrientation())) return false;
 
         return true;
     }
