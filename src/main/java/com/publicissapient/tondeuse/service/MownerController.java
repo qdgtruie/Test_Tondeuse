@@ -2,7 +2,6 @@ package com.publicissapient.tondeuse.service;
 
 import com.publicissapient.tondeuse.domain.*;
 import com.publicissapient.tondeuse.domain.configuration.Configuration;
-import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.MownerConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEventArg;
 import com.publicissapient.tondeuse.errors.IllegalMownerInstruction;
