@@ -1,0 +1,36 @@
+@startuml
+
+@startuml
+
+class domain.Instruction
+class domain.MownerLocation
+class domain.Orientation
+class domain.Position
+class domain.configuration.Configuration
+class domain.configuration.GardenConfiguration
+class domain.configuration.MownerConfiguration
+class domain.configuration.errors.ConfigurationException
+class domain.configuration.errors.InvalidMoveEventArg
+class domain.configuration.InstructionQueue
+interface domain.configuration.ConfigurationProvider
+
+
+
+domain.MownerLocation o--  domain.Position
+domain.MownerLocation o--  domain.Orientation
+
+domain.configuration.Configuration  o--  domain.configuration.GardenConfiguration
+domain.configuration.Configuration  o--  domain.configuration.MownerConfiguration
+domain.configuration.MownerConfiguration  o--  domain.configuration.InstructionQueue
+domain.configuration.MownerConfiguration  o--  domain.MownerLocation
+
+
+
+domain.configuration.Configuration ..> domain.configuration.errors.ConfigurationException
+
+
+domain.configuration.InstructionQueue ..> domain.Instruction
+domain.configuration.ConfigurationProvider ..> domain.configuration.errors.ConfigurationException
+
+
+@enduml

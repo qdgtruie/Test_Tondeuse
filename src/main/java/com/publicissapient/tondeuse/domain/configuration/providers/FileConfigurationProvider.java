@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Queue;
 
 
-import com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser.ConfigurationFormatException;
-import com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser.GardenConfigurationParser;
-import com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser.MownerConfigurationPaser;
+import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.ConfigurationFormatException;
+import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.GardenConfigurationParser;
+import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.MownerConfigurationPaser;
 
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import lombok.NonNull;
@@ -71,7 +71,7 @@ public class FileConfigurationProvider implements ConfigurationProvider {
     public GardenConfiguration getGardenConfiguration() throws ConfigurationException
     {
         try {
-            return new GardenConfigurationParser().Parse(getLines().get(0));
+            return new GardenConfigurationParser().parse(getLines().get(0));
         }catch(ConfigurationFormatException e) {
             String message = "Error while parsing garden section of configuration file";
             log.error(message, e);

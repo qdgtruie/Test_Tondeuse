@@ -45,7 +45,7 @@ public class Mowner implements Controllable, PositionProvider {
      */
     @Override
     public void turnRight() {
-        getCurrentLocation().ShiftRight();
+        getCurrentLocation().shiftRight();
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mowner implements Controllable, PositionProvider {
      */
     @Override
     public void turnLeft() {
-        getCurrentLocation().ShiftLeft();
+        getCurrentLocation().shiftLeft();
     }
 
     /**
@@ -62,7 +62,7 @@ public class Mowner implements Controllable, PositionProvider {
     @Override
     public void moveForward(){
 
-        getCurrentLocation().ShiftForward();
+        getCurrentLocation().shiftForward();
     }
 
 

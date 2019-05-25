@@ -18,7 +18,7 @@ plugins {
     // Apply the application plugin to add support for building an application
     application
     id("io.freefair.lombok") version "3.2.1"
-    //id("checkstyle")
+    id("org.sonarqube") version "2.7"
 }
 
 

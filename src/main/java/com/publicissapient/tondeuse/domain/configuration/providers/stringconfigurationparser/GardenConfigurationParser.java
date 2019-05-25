@@ -1,4 +1,4 @@
-package com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser;
+package com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser;
 
 import com.google.common.base.Splitter;
 import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
@@ -18,12 +18,12 @@ public class GardenConfigurationParser {
      * @return a GardenConfiguration instance
      * @throws ConfigurationFormatException when string is not properly formatted
      */
-    public GardenConfiguration Parse(final String headLine) throws ConfigurationFormatException {
+    public GardenConfiguration parse(final String headLine) throws ConfigurationFormatException {
 
         final String SEPARATOR = " ";
 
         GardenConfiguration result = GardenConfiguration.endsAt(Position.locatedAt(0,0));
-        if(CheckFormat(headLine)){
+        if(checkFormat(headLine)){
             java.util.List<String> tokens = Splitter.on(SEPARATOR).splitToList(headLine);
             int x =Integer.valueOf(tokens.get(0));
             int y = Integer.valueOf(tokens.get(1));
@@ -39,9 +39,9 @@ public class GardenConfigurationParser {
      * @return true if valid.
      * @throws ConfigurationFormatException when incorrect
      */
-    private boolean CheckFormat(final String headLine) throws ConfigurationFormatException {
+    private boolean checkFormat(final String headLine) throws ConfigurationFormatException {
 
-        Pattern p1 = GetPattern();
+        Pattern p1 = getPattern();
         if(! p1.matcher(headLine).matches())
             throw new ConfigurationFormatException("Invalid Configuration format for garden : '"+headLine+"'");
 
@@ -50,7 +50,7 @@ public class GardenConfigurationParser {
 
     private Pattern pattern;
 
-    private Pattern GetPattern() {
+    private Pattern getPattern() {
         if(pattern==null)
             pattern = Pattern.compile("\\d+ \\d+");
 

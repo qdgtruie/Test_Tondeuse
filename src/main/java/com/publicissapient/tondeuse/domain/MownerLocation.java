@@ -36,7 +36,7 @@ public class MownerLocation {
     /**
      * Change orientation to the right
      */
-    void ShiftRight() {
+    void shiftRight() {
 
         switch (orientation) {
             case N:
@@ -58,7 +58,7 @@ public class MownerLocation {
     /**
      * Change orientation to the right
      */
-    void ShiftLeft() {
+    void shiftLeft() {
 
         switch (orientation) {
             case N:
@@ -79,7 +79,7 @@ public class MownerLocation {
     /**
      * Change position by moving forward
      */
-     void ShiftForward() {
+     void shiftForward() {
 
         int nextX = 0;
         int nextY = 0;

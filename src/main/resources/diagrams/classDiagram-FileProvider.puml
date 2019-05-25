@@ -1,0 +1,25 @@
+@startuml
+
+@startuml
+
+
+class domain.configuration.providers.FileConfigurationProvider
+class domain.configuration.providers.StringConfigurationParser.ConfigurationFormatException
+class domain.configuration.providers.StringConfigurationParser.GardenConfigurationParser
+class domain.configuration.providers.StringConfigurationParser.MownerConfigurationPaser
+
+interface domain.configuration.ConfigurationProvider
+
+domain.configuration.providers.FileConfigurationProvider ..> domain.configuration.providers.StringConfigurationParser.ConfigurationFormatException
+domain.configuration.providers.FileConfigurationProvider ..> domain.configuration.providers.StringConfigurationParser.GardenConfigurationParser
+domain.configuration.providers.FileConfigurationProvider ..> domain.configuration.providers.StringConfigurationParser.MownerConfigurationPaser
+
+domain.configuration.providers.FileConfigurationProvider --|> domain.configuration.ConfigurationProvider
+
+
+domain.configuration.providers.StringConfigurationParser.GardenConfigurationParser ..> domain.configuration.GardenConfiguration
+domain.configuration.providers.StringConfigurationParser.MownerConfigurationPaser ..> domain.configuration.MownerConfiguration
+domain.configuration.ConfigurationProvider ..> domain.configuration.errors.ConfigurationException
+
+
+@enduml

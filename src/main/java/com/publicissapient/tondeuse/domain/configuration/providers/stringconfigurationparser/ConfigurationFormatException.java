@@ -1,4 +1,4 @@
-package com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser;
+package com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser;
 
 public class ConfigurationFormatException extends Exception {
 

@@ -1,4 +1,4 @@
-package com.publicissapient.tondeuse.domain.configuration.providers.StringConfigurationParser;
+package com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser;
 
 import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
 import com.publicissapient.tondeuse.domain.configuration.MownerConfiguration;
