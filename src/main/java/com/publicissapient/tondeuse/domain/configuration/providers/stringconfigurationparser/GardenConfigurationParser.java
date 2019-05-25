@@ -41,11 +41,12 @@ public class GardenConfigurationParser {
      */
     private boolean checkFormat(final String headLine) throws ConfigurationFormatException {
 
-        Pattern p1 = getPattern();
-        if(! p1.matcher(headLine).matches())
+        var pattern = getPattern();
+        if(pattern.matcher(headLine).matches())
+            return true;
+        else
             throw new ConfigurationFormatException("Invalid Configuration format for garden : '"+headLine+"'");
 
-        return true;
     }
 
     private Pattern pattern;
