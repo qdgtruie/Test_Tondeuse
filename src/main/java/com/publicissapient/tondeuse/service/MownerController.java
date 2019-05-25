@@ -59,7 +59,7 @@ public final class MownerController {
             MownerLocation initialLocation = item.getLocation();
 
             var mowner = Mowner.initialLocation( UUID.randomUUID(),initialLocation);
-            mowner.addOffBoundChecker(x -> garden.isValideMove(mowner.getID(),x) );
+            mowner.addOffBoundChecker(x -> garden.isValideMove(mowner.getId(),x) );
 
             var instructions = item.getInstructions().getInstructions();
 

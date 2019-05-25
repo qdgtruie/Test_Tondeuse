@@ -41,7 +41,7 @@ public class MownerWebController {
 
     private static void printMownerFinalLocation(PositionProvider x) {
         buffer.append("[Mowner ");
-        buffer.append( x.getID().toString());
+        buffer.append( x.getId().toString());
         buffer.append( "] Job complete : position is ");
         buffer.append( x.getCurrentLocation().toString());
         buffer.append("<p/>");

@@ -35,7 +35,7 @@ public class ConsoleApp {
     }
 
     private static void printMownerFinalLocation(PositionProvider x) {
-        log.info("[Mowner " + x.getID().toString() + "] Job complete : position is " + x.getCurrentLocation().toString());
+        log.info("[Mowner " + x.getId().toString() + "] Job complete : position is " + x.getCurrentLocation().toString());
     }
 
 }
