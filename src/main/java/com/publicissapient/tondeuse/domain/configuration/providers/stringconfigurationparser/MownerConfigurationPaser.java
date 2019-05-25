@@ -39,7 +39,7 @@ public class MownerConfigurationPaser {
     private InstructionQueue parseInstructionSet(String instructionsLine) throws ConfigurationFormatException {
         InstructionQueue result = InstructionQueue.with(new LinkedList<>());
 
-        if (checkFormatInstruction(instructionsLine)) {
+        if (getPatternInstruction().matcher(instructionsLine).matches()) {
             var instructionTokens = com.google.common.base.Splitter.fixedLength(1).splitToList(instructionsLine);
 
             var queue = instructionTokens.stream()
@@ -48,6 +48,9 @@ public class MownerConfigurationPaser {
 
             result = InstructionQueue.with(queue);
         }
+        else
+            throw new ConfigurationFormatException("Invalid Configuration format for Instruction set : '"+instructionsLine+"'");
+
 
         return result;
     }
@@ -59,7 +62,7 @@ public class MownerConfigurationPaser {
 
         MownerLocation result = MownerLocation.with(Position.locatedAt(0,0),Orientation.N);
 
-        if (checkFormatMowner(mownerLine)) {
+        if (getPatternMowner().matcher(mownerLine).matches()) {
             var positionTokens = com.google.common.base.Splitter.on(SEPARATOR).splitToList(mownerLine);
 
             int x = Integer.valueOf(positionTokens.get(0));
@@ -68,24 +71,10 @@ public class MownerConfigurationPaser {
 
             result= MownerLocation.with(Position.locatedAt(x, y), Orientation.valueOf(direction));
         }
-        return result;
-    }
-
-    private boolean checkFormatMowner(final String mownerLine) throws ConfigurationFormatException {
-        var lPattern = getPatternMowner();
-        if( lPattern.matcher(mownerLine).matches())
-            return true;
         else
             throw new ConfigurationFormatException("Invalid Configuration format for Mowner : '"+mownerLine+"'");
-    }
 
-    private boolean checkFormatInstruction(final String instructionsLine) throws ConfigurationFormatException {
-        var lPattern = getPatternInstruction();
-        if( lPattern.matcher(instructionsLine).matches())
-           return true;
-        else
-            throw new ConfigurationFormatException("Invalid Configuration format for Instruction set : '"+instructionsLine+"'");
-
+        return result;
     }
 
     private Pattern patternMowner;

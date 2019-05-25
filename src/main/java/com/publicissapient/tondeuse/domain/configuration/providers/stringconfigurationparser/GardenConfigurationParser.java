@@ -23,31 +23,17 @@ public class GardenConfigurationParser {
         final String SEPARATOR = " ";
 
         GardenConfiguration result = GardenConfiguration.endsAt(Position.locatedAt(0,0));
-        if(checkFormat(headLine)){
+        if( getPattern().matcher(headLine).matches()){
             java.util.List<String> tokens = Splitter.on(SEPARATOR).splitToList(headLine);
             int x =Integer.parseInt(tokens.get(0));
             int y = Integer.parseInt(tokens.get(1));
             result = GardenConfiguration.endsAt(Position.locatedAt(x, y));
-        }
+        }else
+            throw new ConfigurationFormatException("Invalid Configuration format for garden : '"+headLine+"'");
 
         return result;
     }
 
-    /**
-     * Check the fomat on the string provided to the parser
-     * @param headLine string provided
-     * @return true if valid.
-     * @throws ConfigurationFormatException when incorrect
-     */
-    private boolean checkFormat(final String headLine) throws ConfigurationFormatException {
-
-        var lPattern = getPattern();
-        if(lPattern.matcher(headLine).matches())
-            return true;
-        else
-            throw new ConfigurationFormatException("Invalid Configuration format for garden : '"+headLine+"'");
-
-    }
 
     private Pattern pattern;
 
