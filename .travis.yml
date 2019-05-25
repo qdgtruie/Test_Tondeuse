@@ -14,9 +14,9 @@ jdk:
 
 addons:
   sonarcloud:
-    organization: "sonarcloud_organization_key" # the key of the org you chose at step #3
+    organization: "qdgtruie-github" # the key of the org you chose at step #3
     token:
-      secure: "*********" # encrypted value of your token
+      secure: "34848c8632f429468abd65315c8f8ece252a22a4" # encrypted value of your token
 script:
   # other script steps might be done before running the actual analysis
   - sonar-scanner
