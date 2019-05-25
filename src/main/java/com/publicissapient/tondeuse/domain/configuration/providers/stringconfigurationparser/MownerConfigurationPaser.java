@@ -72,19 +72,20 @@ public class MownerConfigurationPaser {
     }
 
     private boolean checkFormatMowner(final String mownerLine) throws ConfigurationFormatException {
-        var p1 = getPatternMowner();
-        if(! p1.matcher(mownerLine).matches())
+        var lPattern = getPatternMowner();
+        if( lPattern.matcher(mownerLine).matches())
+            return true;
+        else
             throw new ConfigurationFormatException("Invalid Configuration format for Mowner : '"+mownerLine+"'");
-
-        return true;
     }
 
     private boolean checkFormatInstruction(final String instructionsLine) throws ConfigurationFormatException {
-        var p1 = getPatternInstruction();
-        if(! p1.matcher(instructionsLine).matches())
+        var lPattern = getPatternInstruction();
+        if( lPattern.matcher(instructionsLine).matches())
+           return true;
+        else
             throw new ConfigurationFormatException("Invalid Configuration format for Instruction set : '"+instructionsLine+"'");
 
-        return true;
     }
 
     private Pattern patternMowner;
