@@ -19,6 +19,7 @@ addons:
       secure: "ff142467de49bc44b68575cac253b8bde6b9f1f1" # encrypted value of your token
 script:
   # other script steps might be done before running the actual analysis
+  - ./gradlew clean test --info
   - sonar-scanner
 
 
