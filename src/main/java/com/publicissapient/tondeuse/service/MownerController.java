@@ -114,7 +114,9 @@ public final class MownerController {
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     private @Data class ExecutionBatch {
 
+        @Getter
         private final Mowner mowner;
+        @Getter
         private final Queue<Instruction> instructions;
 
     }

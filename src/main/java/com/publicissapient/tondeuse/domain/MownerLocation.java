@@ -147,4 +147,14 @@ public class MownerLocation {
     private boolean canEqual(Object other) {
         return other instanceof MownerLocation;
     }
+
+    @Override public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        result = (result*PRIME) + super.hashCode();
+        result = (result*PRIME) + this.getPosition().hashCode();
+        result = (result*PRIME) + this.getOrientation().hashCode();
+        return result;
+    }
+
 }
