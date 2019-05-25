@@ -22,7 +22,8 @@ public class GardenConfigurationParser {
 
         final String SEPARATOR = " ";
 
-        GardenConfiguration result = GardenConfiguration.endsAt(Position.locatedAt(0,0));
+        GardenConfiguration result;
+
         if( getPattern().matcher(headLine).matches()){
             java.util.List<String> tokens = Splitter.on(SEPARATOR).splitToList(headLine);
             int x =Integer.parseInt(tokens.get(0));
