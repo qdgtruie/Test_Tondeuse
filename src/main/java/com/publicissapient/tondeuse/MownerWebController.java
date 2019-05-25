@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MownerWebController {
 
     private static final String FILE_CONF = "file.txt";
-    private static final StringBuffer buffer = new StringBuffer();
+    private static final StringBuilder buffer = new StringBuilder();
 
     @GetMapping
-    public String Run() throws ConfigurationException {
+    public String run() throws ConfigurationException {
         buffer.setLength(0);
 
         log.info("[ConsoleApp] Starting mowner controller...");
         new MownerController()
                 .load(Configuration.basedOn(FileConfigurationProvider.fromRessource(FILE_CONF)))
                 .withAlerter(MownerWebController::notifyInvalidMove)
-                .withResultPublisher(MownerWebController::PrintMownerFinalLocation)
+                .withResultPublisher(MownerWebController::printMownerFinalLocation)
                 .Run();
 
         return buffer.toString();
@@ -39,7 +39,7 @@ public class MownerWebController {
         buffer.append("<p/>");
     }
 
-    private static void PrintMownerFinalLocation(PositionProvider x) {
+    private static void printMownerFinalLocation(PositionProvider x) {
         buffer.append("[Mowner ");
         buffer.append( x.getID().toString());
         buffer.append( "] Job complete : position is ");

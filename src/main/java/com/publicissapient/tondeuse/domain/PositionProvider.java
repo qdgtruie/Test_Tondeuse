@@ -12,7 +12,7 @@ public interface PositionProvider {
      * Mowner ID
      * @return a globally unique iendtifier for a given mowner
      */
-    UUID getID();
+    UUID getId();
 
     /**
      * Current location of the associated mowner

@@ -1,9 +1,6 @@
 package com.publicissapient.tondeuse.domain;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * Describe a location on a Garden grid.
@@ -15,11 +12,13 @@ public  @Data class Position {
     /**
      * x coordinate within the Garden
      */
+    @Getter
     private  int x;
 
     /**
      * Y coordinate within the Garden
      */
+    @Getter
     private  int y;
 
 

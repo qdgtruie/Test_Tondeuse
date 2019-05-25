@@ -21,7 +21,7 @@ public class Mowner implements Controllable, PositionProvider {
     @EqualsAndHashCode.Include
     @Getter(AccessLevel.PUBLIC)
     @NonNull
-    private UUID ID;
+    private UUID id;
 
     /**
      * Current position & orientation of the mowner

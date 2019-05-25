@@ -22,7 +22,7 @@ public class ConsoleApp {
         new MownerController()
                 .load(Configuration.basedOn(FileConfigurationProvider.fromRessource(FILE_CONF)))
                 .withAlerter(ConsoleApp::notifyInvalidMove)
-                .withResultPublisher(ConsoleApp::PrintMownerFinalLocation)
+                .withResultPublisher(ConsoleApp::printMownerFinalLocation)
                 .Run();
     }
 
@@ -34,7 +34,7 @@ public class ConsoleApp {
         log.info("[Mowner " + x.getMownerID().toString() + "] tried to reach invalid position at : " + x.getTargetPosition().toString());
     }
 
-    private static void PrintMownerFinalLocation(PositionProvider x) {
+    private static void printMownerFinalLocation(PositionProvider x) {
         log.info("[Mowner " + x.getID().toString() + "] Job complete : position is " + x.getCurrentLocation().toString());
     }
 
