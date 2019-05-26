@@ -46,7 +46,7 @@ tasks {
     test {                                  // (5)
         testLogging.showExceptions = true
         useJUnitPlatform {
-            includeEngines("jqwik")
+            includeEngines("jqwik,junit-jupiter, junit-vintage")
 
         }
         testLogging {
