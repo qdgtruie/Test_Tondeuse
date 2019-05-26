@@ -26,12 +26,19 @@ group = "com.publicissapient.tondeuse"
 version = "0.0.1-SNAPSHOT"
 
 
-
-//apply(plugin = "io.spring.dependency-management")
-//ext.junitPlatformVersion = '1.4.1'
-//ext.junitJupiterVersion = '5.4.1'
-
-//ext.jqwikVersion = '1.1.3'
+sourceSets {
+    main {
+        java {
+            srcDir("src/main")
+            srcDir("src/test")
+        }
+    }
+    test{
+        java {
+            srcDir("src/test")
+        }
+    }
+}
 
 
 tasks {
@@ -40,8 +47,6 @@ tasks {
         useJUnitPlatform {
             includeEngines("jqwik")
 
-            // includeTags "fast", "medium"
-            // excludeTags "slow"
         }
         testLogging {
             events("passed", "skipped", "failed")
@@ -51,6 +56,10 @@ tasks {
         minHeapSize = "128m"
         maxHeapSize = "512m"
 
+
+        include("**/*Properties.class")
+        include("**/*Test.class")
+        include("**/*Tests.class")
     }
 }
 
@@ -66,21 +75,38 @@ repositories {
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     implementation("com.google.guava:guava:27.0.1-jre")
-
-   
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("ch.qos.logback:logback-core:1.2.3")
     implementation("ch.qos.logback:logback-access:1.2.3")
     implementation("org.slf4j:slf4j-api:1.7.26")
-
     implementation("com.google.guava:guava:27.1-jre")
     implementation("io.vavr:vavr:0.9.2")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     // Use JUnit test framework
+    implementation("org.junit.jupiter:junit-jupiter:5.4.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
+    testCompile("org.junit.jupiter:junit-jupiter:5.4.2")
+    testRuntime("org.junit.jupiter:junit-jupiter:5.4.2")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.4.2")
 
+
+    implementation("org.junit.platform:junit-platform-commons:1.5.0-M1")
+    testImplementation("org.junit.platform:junit-platform-commons:1.5.0-M1")
+    testCompile("org.junit.platform:junit-platform-commons:1.5.0-M1")
+    testRuntime("org.junit.platform:junit-platform-commons:1.5.0-M1")
+
+    implementation("net.jqwik:jqwik:1.1.3")
+    testImplementation("net.jqwik:jqwik:1.1.3")
     testCompile("net.jqwik:jqwik:1.1.3")
+    testRuntime("net.jqwik:jqwik:1.1.3")
+
+
+    implementation("net.jqwik:jqwik-engine:1.1.3")
+    testImplementation("net.jqwik:jqwik-engine:1.1.3")
+    testCompile("net.jqwik:jqwik-engine:1.1.3")
+    testRuntime("net.jqwik:jqwik-engine:1.1.3")
+
 }
 
 application {
