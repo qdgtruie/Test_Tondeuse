@@ -31,7 +31,7 @@ sourceSets {
     main {
         java {
             srcDir("src/main")
-            srcDir("src/test")
+            //srcDir("src/test")
         }
     }
     test{
