@@ -1,3 +1,3 @@
 #!/bin/bash
 
-eval "$(ssh-agent -s)"
+echo "HELLO"
