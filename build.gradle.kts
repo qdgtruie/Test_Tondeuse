@@ -19,11 +19,12 @@ plugins {
     application
     id("io.freefair.lombok") version "3.2.1"
     id("org.sonarqube") version "2.7.1"
+    jacoco
 }
 
 
 group = "com.publicissapient.tondeuse"
-version = "0.0.1-SNAPSHOT"
+version = "1.0.0-SNAPSHOT"
 
 
 sourceSets {
@@ -109,6 +110,15 @@ dependencies {
 
 }
 
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = true
+        xml.destination = file("${buildDir}/jacocoxml")
+        csv.isEnabled = false
+        html.destination = file("${buildDir}/jacocoHtml")
+    }
+}
+
 application {
     // Define the main class for the application
     mainClassName = "com.publicissapient.tondeuse.ConsoleApp"
@@ -134,6 +144,7 @@ tasks.getByName<BootJar>("bootJar") {
     classifier = "boot"
     mainClassName = "com.publicissapient.tondeuse.WebApp"
 }
+
 
 springBoot {
     mainClassName = "com.publicissapient.tondeuse.WebApp"
