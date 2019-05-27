@@ -24,23 +24,11 @@ script:
 
 jobs:
   include:
-    - stage: install
-      name: "my install"
-        - ./gradlew bootJar
-    - stage: test
-        - ./gradlew jacocoTestCoverageVerification jacocoTestReport test
-    - stage: build docker image
+    - stage: deploy
       name: "build docker image"
       script:
         - docker build -t tondeuse_test .
         - docker images
         - docker tag SNAPSHOT
-    - stage: script
 
-
-
-deploy:
-  skip_cleanup: true
-  on:
-    branch: master
 
