@@ -29,6 +29,4 @@ jobs:
       script:
         - docker build -t tondeuse_test .
         - docker images
-        - docker tag SNAPSHOT
-
 
