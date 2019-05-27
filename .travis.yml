@@ -16,7 +16,7 @@ addons:
   sonarcloud:
     organization: "qdgtruie-github" # the key of the org you chose at step #3
     token:
-      secure: "PN//r8PhgWIIHUS5HEWFCna1RAoesqW8VyF785iktSMBxlnxvngYyqmMcXwJitilfUYs3y+fvKfWr9NNvbZ4NwhInOOlx1cZGmGqvoHObUQCE7nNeoOWDWVovzAZuvsTSbOHJJaLMm8WmkM6FxXQDJvGsMXUTYDUBHliCbMO0TkYMwaxcugUCu2LHVH0HsW1+A964+D50Dg9WEWsXwOjnjNktwTpmDI3ZZqJ42GPu1pB6skKTvWE6MplmkCqlrg/PpgbtyDO4h2Gaz/5MDKTCVXBrIAdbpQvlCeAseFRCR38V5FS+epbHtDzQAs4mP96UErYvStIEFOJ6uoZGNUdNfpM4I2Es0IlTJxdsrp4r8tyfUX/rdrn3o6WCHCVNpR1Zrn96Npr0RWrK5iXLen+VZxolmWiRanrbrubPZiZds6OC8xuwdUDPTpXpQWzPops4s2zh/2LdieFnyMnnu4ERkZBVEOnceW12Y+9KuPi67C/6q1xj4f8eRE+cTJccJG5XfB1XYxVMMHFglv3oRz+rXh9WmVUVL3YLPIzTI0aDoX42gjS8G2NDik1Ezikq29U/fOnkSdDugFExuSxEa6fJ0QSW5oXm7geep+R8K3nV6sDphl28FRSz4lz7c4cLryZMhZMt3U8BT6kJugr/AThW4sZAZ7tdNURt6ab6aSYnuc=" # encrypted value of your token
+      secure: "ff142467de49bc44b68575cac253b8bde6b9f1f1"  # encrypted value of your token
 script:
   # other script steps might be done before running the actual analysis
   - ./gradlew clean test --info
