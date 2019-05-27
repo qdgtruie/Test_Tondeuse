@@ -23,7 +23,7 @@ public class MownerWebController {
 
         log.info("[ConsoleApp] Starting mowner controller...");
         new MownerController()
-                .load(Configuration.basedOn(FileConfigurationProvider.fromRessource(FILE_CONF)))
+                .load(Configuration.basedOn(FileConfigurationProvider.fromFileResource(FILE_CONF)))
                 .withAlerter(MownerWebController::notifyInvalidMove)
                 .withResultPublisher(MownerWebController::printMownerFinalLocation)
                 .run();
@@ -32,18 +32,27 @@ public class MownerWebController {
     }
 
     private static void notifyInvalidMove(InvalidMoveEventArg x) {
+        if (log.isInfoEnabled())
+            log.info("[Mowner {} ] tried to reach invalid position at {}",
+                    x.getMownerID().toString(), x.getTargetPosition().toString());
+
         buffer.append("[Mowner ");
         buffer.append(x.getMownerID().toString());
         buffer.append("] tried to reach invalid position at : ");
-        buffer.append( x.getTargetPosition().toString());
+        buffer.append(x.getTargetPosition().toString());
         buffer.append("<p/>");
     }
 
     private static void printMownerFinalLocation(PositionProvider x) {
-        buffer.append("[Mowner ");
-        buffer.append( x.getId().toString());
-        buffer.append( "] Job complete : position is ");
-        buffer.append( x.getCurrentLocation().toString());
+        if (log.isInfoEnabled())
+            log.info("[Mowner {} ] Job complete : position is {}",
+                    x.getId().toString(), x.getCurrentLocation().toString());
+
+        buffer.append(x.getCurrentLocation().getPosition().getX());
+        buffer.append(" ");
+        buffer.append(x.getCurrentLocation().getPosition().getY());
+        buffer.append(" ");
+        buffer.append(x.getCurrentLocation().getOrientation().toString());
         buffer.append("<p/>");
     }
 

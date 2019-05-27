@@ -60,6 +60,12 @@ public final class MownerController {
             var e = new ExecutionBatch(mowner,instructions);
             executions.add(e);
         }
+
+        if(log.isDebugEnabled()) {
+            log.debug("Controller loaded garden configuration {}", garden.toString());
+            log.debug("Controller loaded executions are {}", executions.toString());
+        }
+
         return this;
     }
 
@@ -143,6 +149,8 @@ public final class MownerController {
      * @param step instruction to be executed on the given mowner
      */
     private void executeStep(@NonNull Controllable mowner, @NonNull Instruction step) {
+
+        log.debug("Executing instruction [{}] on mowner {}", step.toString(),mowner.toString());
 
         switch (step) {
             case A:

@@ -1,6 +1,7 @@
 package com.publicissapient.tondeuse.domain;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,6 +10,7 @@ import java.util.function.Predicate;
 /**
  * Define the location (orientation + position) of a mowner
  */
+@Slf4j
 @ToString(exclude = "positionListener")
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC, staticName = "with")
 public class MownerLocation {
@@ -16,7 +18,7 @@ public class MownerLocation {
     /**
      * Current position of the location
      */
-    @Getter(AccessLevel.PACKAGE)
+    @Getter(AccessLevel.PUBLIC)
     @NonNull
     private Position position;
 
@@ -81,8 +83,8 @@ public class MownerLocation {
      */
      void shiftForward() {
 
-        int nextX = 0;
-        int nextY = 0;
+        int nextX = position.getX();
+        int nextY = position.getY();
 
         switch (orientation) {
             case N:
@@ -106,6 +108,10 @@ public class MownerLocation {
             position.setY(nextY);
             position.setX(nextX);
         }
+        else
+            if(log.isWarnEnabled())
+                log.warn("Illegal position transition was attemped from ({},{}) to ({},{})",
+                    position.getX(),position.getY(), nextX,nextY);
 
     }
 

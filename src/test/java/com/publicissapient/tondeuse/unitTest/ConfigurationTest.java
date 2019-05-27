@@ -17,26 +17,11 @@ public class ConfigurationTest {
     private static final String FILE_CONF = "file.txt";
     private static final String DUMMY_FILE = "azxazertyu";
 
-    @Test
-    public void loadConfigurationFromFile() throws ConfigurationException {
-
-
-        ClassLoader classLoader = getClass().getClassLoader();
-        var file = classLoader.getResource(FILE_CONF).getFile().replace("%20", " ");
-
-        ConfigurationProvider source = FileConfigurationProvider.fromFile(file);
-
-        var conf = source.getMownerConfiguration();
-
-        logger.info(conf.toString());
-
-        assertEquals(2, conf.size(), "There should be 2 mowners.");
-    }
 
     @Test
     public void loadConfigurationFromRessouce() throws ConfigurationException {
 
-        ConfigurationProvider source = FileConfigurationProvider.fromRessource(FILE_CONF);
+        ConfigurationProvider source = FileConfigurationProvider.fromFileResource(FILE_CONF);
 
         var conf = source.getMownerConfiguration();
 
@@ -50,7 +35,7 @@ public class ConfigurationTest {
 
         assertThrows(ConfigurationException.class, () -> {
 
-            ConfigurationProvider source = FileConfigurationProvider.fromRessource(DUMMY_FILE);
+            ConfigurationProvider source = FileConfigurationProvider.fromFileResource(DUMMY_FILE);
             var conf = source.getMownerConfiguration();
 
             logger.info(conf.toString());
@@ -59,19 +44,6 @@ public class ConfigurationTest {
         });
     }
 
-    @Test
-    public void loadConfigurationFromWrongFile()  {
 
-        assertThrows(ConfigurationException.class, () -> {
-
-            ConfigurationProvider source = FileConfigurationProvider.fromFile(DUMMY_FILE);
-            var conf = source.getMownerConfiguration();
-
-
-            logger.info(conf.toString());
-
-            assertEquals(2, conf.size(), "There should be 2 mowners.");
-        });
-    }
 
 }

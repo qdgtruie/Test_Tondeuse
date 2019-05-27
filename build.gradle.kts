@@ -23,8 +23,16 @@ plugins {
 }
 
 
+//compileJava.options.fork = true
+//compileJava.options.forkOptions.executable = /path_to_javac
+
 group = "com.publicissapient.tondeuse"
 version = "1.0.0-SNAPSHOT"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 
 
 sourceSets {
@@ -64,7 +72,12 @@ tasks {
     }
 }
 
-
+tasks.test {
+    extensions.configure(JacocoTaskExtension::class) {
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        classDumpDir = file("$buildDir/jacoco/classpathdumps")
+    }
+}
 
 
 repositories {
@@ -83,6 +96,7 @@ dependencies {
     implementation("com.google.guava:guava:27.1-jre")
     implementation("io.vavr:vavr:0.9.2")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("commons-io:commons-io:2.4")
 
     // Use JUnit test framework
     implementation("org.junit.jupiter:junit-jupiter:5.4.2")
@@ -90,6 +104,9 @@ dependencies {
     testCompile("org.junit.jupiter:junit-jupiter:5.4.2")
     testRuntime("org.junit.jupiter:junit-jupiter:5.4.2")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.4.2")
+    testRuntime("org.junit.jupiter:junit-jupiter-api:5.4.2")
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.4.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
 
 
     implementation("org.junit.platform:junit-platform-commons:1.5.0-M1")
@@ -110,6 +127,10 @@ dependencies {
 
 }
 
+jacoco {
+    applyTo(tasks.run.get())
+}
+
 tasks.jacocoTestReport {
     reports {
         xml.isEnabled = true
@@ -117,6 +138,11 @@ tasks.jacocoTestReport {
         csv.isEnabled = false
         html.destination = file("${buildDir}/jacocoHtml")
     }
+}
+
+tasks.register<JacocoReport>("applicationCodeCoverageReport") {
+    executionData(tasks.run.get())
+    sourceSets(sourceSets.main.get())
 }
 
 application {
@@ -140,9 +166,32 @@ tasks.getByName<Jar>("jar") {
     }
 }
 
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.5".toBigDecimal()
+            }
+        }
+
+        rule {
+            enabled = false
+            element = "CLASS"
+            includes = listOf("org.gradle.*")
+
+            limit {
+                counter = "LINE"
+                value = "TOTALCOUNT"
+                maximum = "0.3".toBigDecimal()
+            }
+        }
+    }
+}
+
 tasks.getByName<BootJar>("bootJar") {
     classifier = "boot"
     mainClassName = "com.publicissapient.tondeuse.WebApp"
+
 }
 
 

@@ -20,7 +20,7 @@ public class ConsoleApp {
 
         log.info("[ConsoleApp] Starting mowner controller...");
         new MownerController()
-                .load(Configuration.basedOn(FileConfigurationProvider.fromRessource(FILE_CONF)))
+                .load(Configuration.basedOn(FileConfigurationProvider.fromFileResource(FILE_CONF)))
                 .withAlerter(ConsoleApp::notifyInvalidMove)
                 .withResultPublisher(ConsoleApp::printMownerFinalLocation)
                 .run();
@@ -31,11 +31,15 @@ public class ConsoleApp {
     }
 
     private static void notifyInvalidMove(InvalidMoveEventArg x) {
-        log.info("[Mowner " + x.getMownerID().toString() + "] tried to reach invalid position at : " + x.getTargetPosition().toString());
+        if (log.isInfoEnabled())
+            log.info("[Mowner {} ] tried to reach invalid position at {}",
+                    x.getMownerID().toString(), x.getTargetPosition().toString());
     }
 
     private static void printMownerFinalLocation(PositionProvider x) {
-        log.info("[Mowner " + x.getId().toString() + "] Job complete : position is " + x.getCurrentLocation().toString());
+        if (log.isInfoEnabled())
+            log.info("[Mowner {} ] Job complete : position is {}",
+                    x.getId().toString(), x.getCurrentLocation().toString());
     }
 
 }
