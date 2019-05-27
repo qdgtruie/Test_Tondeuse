@@ -1,28 +1,20 @@
 package com.publicissapient.tondeuse.domain.configuration.providers;
 
-import com.publicissapient.tondeuse.domain.configuration.*;
-
-import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-
-import java.util.Enumeration;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.stream.Stream;
-import org.apache.commons.io.IOUtils;
-
-
+import com.publicissapient.tondeuse.domain.configuration.ConfigurationProvider;
+import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
+import com.publicissapient.tondeuse.domain.configuration.MownerConfiguration;
+import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.ConfigurationFormatException;
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.GardenConfigurationParser;
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.MownerConfigurationPaser;
-
-import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+
+import java.io.*;
+import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Queue;
 
 @Slf4j
 public class FileConfigurationProvider implements ConfigurationProvider {
@@ -46,7 +38,7 @@ public class FileConfigurationProvider implements ConfigurationProvider {
             try {
 
                 String all = IOUtils.toString(getFileStream(resourcePath),Charset.defaultCharset());
-                lines = List.of(all.split(IOUtils.LINE_SEPARATOR)); //Files.readAllLines(java.nio.file.Path.of(filePath), Charset.defaultCharset());
+                lines = List.of(all.split(IOUtils.LINE_SEPARATOR));
 
             } catch (IOException e){
                 String message = "Error while reading configuration file";
