@@ -15,6 +15,7 @@ plugins {
     java
     id("org.springframework.boot") version "2.1.5.RELEASE"
     idea
+    `junit-test-suite`
     // Apply the application plugin to add support for building an application
     application
     id("io.freefair.lombok") version "3.2.1"
@@ -51,25 +52,41 @@ sourceSets {
 
 
 tasks {
-    test {                                  // (5)
+    test {
         testLogging.showExceptions = true
         useJUnitPlatform {
-            includeEngines("jqwik,junit-jupiter, junit-vintage")
+            includeEngines("jqwik, junit-jupiter, junit-vintage")
 
         }
-        testLogging {
-            events("passed", "skipped", "failed")
-        }
+
+        include("**/*Test.class")
+        include("com/publicissapient/tondeuse/*")
+        include("com/publicissapient/tondeuse/**")
+        include("com/publicissapient/tondeuse/unitTest/**")
 
         // set heap size for the test JVM(s)
         minHeapSize = "128m"
         maxHeapSize = "512m"
 
+        testLogging.showStandardStreams = true
 
-        include("**/*Properties.class")
-        include("**/*Test.class")
-        include("**/*Tests.class")
+        // Fail the 'test' task on the first test failure
+        failFast = true
+
     }
+}
+
+tasks.withType<Test> {
+    addTestOutputListener { testDescriptor, outputEvent ->
+        logger.lifecycle("Test: " + testDescriptor + " produced standard out/err: " + outputEvent.message)
+    }
+
+    addTestListener(object : TestListener {
+        override fun beforeSuite(suite: TestDescriptor) {}
+        override fun beforeTest(testDescriptor: TestDescriptor) {logger.lifecycle("Running test: " + testDescriptor)}
+        override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) {}
+        override fun afterSuite(suite: TestDescriptor, result: TestResult) {}
+    })
 }
 
 tasks.test {
@@ -135,7 +152,9 @@ tasks.jacocoTestReport {
     reports {
         xml.isEnabled = true
         xml.destination = file("${buildDir}/jacocoxml")
-        csv.isEnabled = false
+        csv.isEnabled = true
+        csv.destination = file("${buildDir}/jacococsv")
+        html.isEnabled = true
         html.destination = file("${buildDir}/jacocoHtml")
     }
 }
