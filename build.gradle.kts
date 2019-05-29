@@ -64,6 +64,9 @@ tasks {
 //            include("com/publicissapient/tondeuse/unitTest/**")
 
         }
+        include( "**/*Properties.class")
+        include( "**/*Test.class")
+        include( "**/*Tests.class")
 
         // set heap size for the test JVM(s)
         minHeapSize = "128m"
