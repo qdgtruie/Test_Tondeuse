@@ -12,4 +12,13 @@ public class IllegalMownerInstruction extends IllegalStateException{
     public IllegalMownerInstruction(String message){
         super(message);
     }
+
+    /**
+     * Instanciate a IllegalMownerInstruction with a specifc message and innerException
+     * @param message a contextual message
+     * @param ex an inner exception
+     */
+    public IllegalMownerInstruction(String message, Exception ex) {
+        super(message,ex);
+    }
 }

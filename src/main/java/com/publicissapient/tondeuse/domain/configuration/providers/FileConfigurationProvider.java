@@ -40,7 +40,11 @@ public class FileConfigurationProvider implements ConfigurationProvider {
                 String all = IOUtils.toString(getFileStream(resourcePath),Charset.defaultCharset());
                 lines = List.of(all.split(IOUtils.LINE_SEPARATOR));
 
-            } catch (IOException e){
+            } catch (IllegalArgumentException e){
+                String message = "Provided resourcePath is not a file name";
+                log.error(message, e);
+                throw new ConfigurationException(message, e);
+            }  catch (IOException e){
                 String message = "Error while reading configuration file";
                 log.error(message, e);
                 throw new ConfigurationException(message, e);
@@ -52,7 +56,7 @@ public class FileConfigurationProvider implements ConfigurationProvider {
         return lines;
     }
 
-    private static InputStream getFileStream(@NonNull final String aRessourceName) throws FileNotFoundException {
+    private static InputStream getFileStream(@NonNull final String aRessourceName) throws FileNotFoundException, IllegalArgumentException {
         File file = new File(aRessourceName);
         if(file.exists())
             return new FileInputStream(file);

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MownerLocationTest {
 
-    @Property(tries=1000)
+    @Property(tries=100)
     public void MownerLocationEqualsIsProperlyworking(@ForAll int x,@ForAll int y) {
 
         var location = MownerLocation.with(Position.locatedAt(x,y), Orientation.N);
@@ -23,6 +23,17 @@ public class MownerLocationTest {
         var result = MownerLocation.with(Position.locatedAt(x,y), Orientation.N);
 
         assertEquals( result, location, "Position should be equalds");
+
+    }
+
+    @Property(tries=100)
+    public void MownerLocationHashIsSpecific(@ForAll int x,@ForAll int y){
+
+        var location = MownerLocation.with(Position.locatedAt(x,y), Orientation.N);
+        var result = MownerLocation.with(Position.locatedAt(x,y), Orientation.N);
+
+        assertNotEquals( result.hashCode(), location.hashCode(), "hashCode should be equalds");
+
 
     }
 

@@ -2,11 +2,11 @@ package com.publicissapient.tondeuse.domain.configuration.providers.stringconfig
 
 public class ConfigurationFormatException extends Exception {
 
-    ConfigurationFormatException(String message, Throwable cause){
+    public ConfigurationFormatException(String message, Throwable cause){
         super(message,cause);
     }
 
-    ConfigurationFormatException(String message){
+    public ConfigurationFormatException(String message){
         super(message);
     }
 }

@@ -28,6 +28,9 @@ public  @Data class Position {
      * @return true when the position is within the Garden.
      */
     public boolean isWithinRectangle(Position upperRight) {
-        return this.getX() <= upperRight.getX() && this.getY() <= upperRight.getY();
+        return this.getX() <= upperRight.getX()
+                && this.getY() <= upperRight.getY()
+                && this.getY()>=0
+                && this.getX()>=0;
     }
 }

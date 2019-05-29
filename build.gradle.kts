@@ -59,6 +59,8 @@ tasks {
 
         }
 
+        include("$buildDir/classes/java/test/**/*Test.class")
+        include("$buildDir/classes/java/test/com/publicissapient/tondeuse/unitTest/ConfigurationTest.class")
         include("**/*Test.class")
         include("com/publicissapient/tondeuse/*")
         include("com/publicissapient/tondeuse/**")
