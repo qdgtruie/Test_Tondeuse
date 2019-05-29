@@ -56,7 +56,7 @@ public class FileConfigurationProvider implements ConfigurationProvider {
         return lines;
     }
 
-    private static InputStream getFileStream(@NonNull final String aRessourceName) throws FileNotFoundException, IllegalArgumentException {
+    private static InputStream getFileStream(@NonNull final String aRessourceName) throws FileNotFoundException {
         File file = new File(aRessourceName);
         if(file.exists())
             return new FileInputStream(file);

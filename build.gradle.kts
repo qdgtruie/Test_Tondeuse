@@ -1,4 +1,3 @@
-
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 import java.time.*
 
@@ -43,7 +42,7 @@ sourceSets {
             //srcDir("src/test")
         }
     }
-    test{
+    test {
         java {
             srcDir("src/test")
         }
@@ -56,15 +55,15 @@ tasks {
         testLogging.showExceptions = true
         useJUnitPlatform {
             includeEngines("jqwik, junit-jupiter, junit-vintage")
+//            include("**/*Test.class")
+//            include("$buildDir/classes/java/test/**/*Test.class")
+//            include("$buildDir/classes/java/test/com/publicissapient/tondeuse/unitTest/ConfigurationTest.class")
+//            include("**/*Test.class")
+//            include("com/publicissapient/tondeuse/*")
+//            include("com/publicissapient/tondeuse/**")
+//            include("com/publicissapient/tondeuse/unitTest/**")
 
         }
-
-        include("$buildDir/classes/java/test/**/*Test.class")
-        include("$buildDir/classes/java/test/com/publicissapient/tondeuse/unitTest/ConfigurationTest.class")
-        include("**/*Test.class")
-        include("com/publicissapient/tondeuse/*")
-        include("com/publicissapient/tondeuse/**")
-        include("com/publicissapient/tondeuse/unitTest/**")
 
         // set heap size for the test JVM(s)
         minHeapSize = "128m"
@@ -85,7 +84,10 @@ tasks.withType<Test> {
 
     addTestListener(object : TestListener {
         override fun beforeSuite(suite: TestDescriptor) {}
-        override fun beforeTest(testDescriptor: TestDescriptor) {logger.lifecycle("Running test: " + testDescriptor)}
+        override fun beforeTest(testDescriptor: TestDescriptor) {
+            logger.lifecycle("Running test: " + testDescriptor)
+        }
+
         override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) {}
         override fun afterSuite(suite: TestDescriptor, result: TestResult) {}
     })
@@ -175,14 +177,14 @@ apply(plugin = "io.spring.dependency-management")
 
 tasks.getByName<Jar>("jar") {
     enabled = true
-    manifest{
+    manifest {
         attributes(
-                mapOf( "Implementation-Title" to project.name,
+                mapOf("Implementation-Title" to project.name,
                         "Implementation-Version" to version,
                         "Built-By" to System.getProperty("user.name"),
                         "Built-Date" to LocalDateTime.now(),
                         "Built-JDK" to System.getProperty("java.version"),
-                        "Built-Gradle" to  gradle.gradleVersion)
+                        "Built-Gradle" to gradle.gradleVersion)
         )
     }
 }
