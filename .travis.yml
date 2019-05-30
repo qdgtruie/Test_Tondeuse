@@ -28,10 +28,11 @@ jobs:
       name: "build docker image"
       #if: type!= "pull_request" && env($DOCKER_USER) is present
       script:
+        - docker login --username $DOCKER_USER  --password $DOCKER_PASSWORD
         - docker build -t tondeuse_test .
         - docker images
         - docker tag tondeuse_test $DOCKER_USER/tondeuse
         - docker push $DOCKER_USER/tondeuse
-        - docker run --rm $DOCKER_USER/tondeuse
+        #- docker run --rm $DOCKER_USER/tondeuse
 
 
