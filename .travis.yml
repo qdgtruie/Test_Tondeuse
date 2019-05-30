@@ -28,7 +28,7 @@ jobs:
   include:
     - stage: deploy
       name: "build docker image"
-      if: env($DOCKER_USER) IS present AND env($DOCKER_PASSWORD) IS present
+      #if: env($DOCKER_USER) IS present AND env($DOCKER_PASSWORD) IS present
       script:
         - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USER" --password-stdin
         - docker build -t tondeuse_test .
