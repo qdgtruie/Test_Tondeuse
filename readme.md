@@ -25,13 +25,19 @@ First attempt to Tondeuse.
 
 ### Compilation ###
 ```
-./gradlew install
+./gradlew bootJar
 ```
 
-### Running ###
+### Running as Java Application ###
 ```
-java -jar /lib/tondeuse.jar/tondeuse-0.0.1.SNAPSHOT-boot.jar
+./gradlew bootRun
 ```
+### Running as docker container ###
+```
+docker build -t tondeuse
+docker run --rm tondeuse
+```
+
 ### Overall apporach  ###
 
 1. Parsing of the input file
@@ -74,7 +80,7 @@ When a mower has finished, it give the final position and orientation.
 
 ### Example​ ###
 
-input file
+Input file
 ```
 5 5
 1 2 N
@@ -83,7 +89,7 @@ LFLFLFLFF
 FFRFFRFRRF
 ```
 
-result
+Expected result
 ```
 1 3 N
 5 1 E
