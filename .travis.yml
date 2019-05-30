@@ -32,7 +32,7 @@ jobs:
         - docker images
         - docker tag tondeuse_test $DOCKER_USER/tondeuse
         - docker push $DOCKER_USER/tondeuse
-    - stage deploy
+    - stage: deploy
       name: "test docker image"
       script: docker run --rm $DOCKER_USER/tondeuse
 
