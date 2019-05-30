@@ -5,6 +5,8 @@ First attempt to Tondeuse.
 * Gradle 5.4.1
 * Git
 
+![Build status](https://travis-ci.com/qdgtruie/Test_Tondeuse.svg?branch=master)
+
 ### Technologies ####
 * Language programming: [Java 11](https://docs.aws.amazon.com/fr_fr/corretto/latest/corretto-11-ug/downloads-list.html), [Vavr](http://www.vavr.io/)
 * Tests: [JUnit](https://junit.org/junit5/), [jqwik](https://jqwik.net/), [AssertJ](http://joel-costigliola.github.io/assertj/index.html), [Mockito](http://mockito.org/)
