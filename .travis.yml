@@ -12,6 +12,9 @@ jdk:
   - oraclejdk11
   - openjdk11
 
+services:
+  - docker
+
 addons:
   sonarcloud:
     organization: "qdgtruie-github" # the key of the org you chose at step #3
@@ -25,7 +28,7 @@ jobs:
   include:
     - stage: deploy
       name: "build docker image"
-      #if: type!= "pull_request" && env($DOCKER_USER) is present
+      if: env($DOCKER_USER) IS present AND env($DOCKER_PASSWORD) IS present
       script:
         - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USER" --password-stdin
         - docker build -t tondeuse_test .
