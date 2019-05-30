@@ -1,5 +1,9 @@
 language: java
 
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -31,9 +35,9 @@ jobs:
       #if: env($DOCKER_USER) IS present AND env($DOCKER_PASSWORD) IS present
       script:
         - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USER" --password-stdin
-        - docker build -t tondeuse_test .
+        - docker build -t tondeuse_test:$COMMIT .
         - docker images
-        - docker tag tondeuse_test $DOCKER_USER/tondeuse
+        - docker tag tondeuse_test:$COMMIT $DOCKER_USER/tondeuse
         - docker push $DOCKER_USER/tondeuse
         #- docker run --rm $DOCKER_USER/tondeuse
 
