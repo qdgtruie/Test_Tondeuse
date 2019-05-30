@@ -26,7 +26,7 @@ jobs:
   include:
     - stage: deploy
       name: "build docker image"
-      if: type!= "pull_request" && env($DOCKER_USER) is present
+      #if: type!= "pull_request" && env($DOCKER_USER) is present
       script:
         - docker build -t tondeuse_test .
         - docker images
