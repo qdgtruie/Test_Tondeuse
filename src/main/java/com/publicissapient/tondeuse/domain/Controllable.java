@@ -5,6 +5,7 @@ package com.publicissapient.tondeuse.domain;
  */
 public interface Controllable {
 
+
     /**
      * Request the Controllable to turn Right
      */
