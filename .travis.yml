@@ -32,8 +32,6 @@ jobs:
         - docker images
         - docker tag tondeuse_test $DOCKER_USER/tondeuse
         - docker push $DOCKER_USER/tondeuse
-    - stage: deploy
-      name: "test docker image"
-      script: docker run --rm $DOCKER_USER/tondeuse
+        - docker run --rm $DOCKER_USER/tondeuse
 
 
