@@ -44,7 +44,10 @@ sourceSets {
     }
     test {
         java {
-            srcDir("src/test")
+            srcDir("src/test/java")
+        }
+        resources{
+            srcDir("src/test/resources")
         }
     }
 }
@@ -52,32 +55,22 @@ sourceSets {
 
 tasks {
     test {
-        testLogging.showExceptions = true
+        
         useJUnitPlatform {
             includeEngines("jqwik, junit-jupiter, junit-vintage")
-//            include("**/*Test.class")
-//            include("$buildDir/classes/java/test/**/*Test.class")
-//            include("$buildDir/classes/java/test/com/publicissapient/tondeuse/unitTest/ConfigurationTest.class")
-//            include("**/*Test.class")
-//            include("com/publicissapient/tondeuse/*")
-//            include("com/publicissapient/tondeuse/**")
-//            include("com/publicissapient/tondeuse/unitTest/**")
 
         }
         include( "**/*Properties.class")
         include( "**/*Test.class")
         include( "**/*Tests.class")
+        include( "**/*.class")
 
         // set heap size for the test JVM(s)
         minHeapSize = "128m"
         maxHeapSize = "512m"
 
-        testLogging.showStandardStreams = true
-
-        // Fail the 'test' task on the first test failure
-        failFast = true
-
     }
+
 }
 
 tasks.withType<Test> {
@@ -86,7 +79,10 @@ tasks.withType<Test> {
     }
 
     addTestListener(object : TestListener {
-        override fun beforeSuite(suite: TestDescriptor) {}
+        override fun beforeSuite(suite: TestDescriptor) {
+            logger.error(" === [SOURCE] ====> "+sourceSets.getByName("test").allJava.asPath);
+            logger.error(" === [OUTPUT] ====> "+sourceSets.getByName("test").output.asPath);
+        }
         override fun beforeTest(testDescriptor: TestDescriptor) {
             logger.lifecycle("Running test: " + testDescriptor)
         }
@@ -98,7 +94,7 @@ tasks.withType<Test> {
 
 tasks.test {
     extensions.configure(JacocoTaskExtension::class) {
-        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        //destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
         classDumpDir = file("$buildDir/jacoco/classpathdumps")
     }
 }
