@@ -4,9 +4,9 @@ env:
   global:
     - COMMIT=${TRAVIS_COMMIT::8}
     - GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
-    - PROJECT_NAME_PRD=<YOUR_PROJECT_NAME>
-    - CLUSTER_NAME_PRD=<YOUR_CLUSTER_NAME>
-    - CLOUDSDK_COMPUTE_ZONE=<YOUR_GCLOUD_COMPUTE_ZONE>
+    - PROJECT_NAME_PRD=spheric-method-171307
+    - CLUSTER_NAME_PRD=standard-cluster-1
+    - CLOUDSDK_COMPUTE_ZONE=europe-west3-a
     - DOCKER_IMAGE_NAME=tondeuse
     - KUBE_DEPLOYMENT_NAME=tondeuseApp
     - KUBE_DEPLOYMENT_CONTAINER_NAME=tondeuseContainer
@@ -55,7 +55,6 @@ jobs:
         - source /home/travis/google-cloud-sdk/path.bash.inc
         - gcloud --quiet version
         - gcloud --quiet components update
-        - gcloud --quiet components beta update
         - gcloud --quiet components update kubectl
     - stage: push to GKE
       name: "push to Kubernetes "
