@@ -22,7 +22,7 @@ public final class MownerController {
     /**
      * Queue of mowners (with their attached instruction set) to be controlled
      */
-    private Queue<ExecutionBatch> executions = new LinkedList<>();
+    private final Queue<ExecutionBatch> executions = new LinkedList<>();
 
     /**
      * Alerter for out of garden bounds events

@@ -7,9 +7,5 @@ package com.publicissapient.tondeuse;
 import org.junit.jupiter.api.Test;
 
 public class ConsoleAppTest {
-    @Test
-    public void testAppHasAGreeting() {
-
-    }
 
 }

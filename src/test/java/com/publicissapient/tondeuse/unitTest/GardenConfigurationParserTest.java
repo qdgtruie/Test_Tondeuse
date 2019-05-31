@@ -5,7 +5,6 @@ import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigu
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.constraints.IntRange;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,8 +17,8 @@ class GardenConfigurationParserTest {
     }
 
     @Property(tries=100)
-    void parse(@ForAll @IntRange(min = 0,  max = Integer.MAX_VALUE) final int x,
-               @ForAll @IntRange(min = 0,  max = Integer.MAX_VALUE)  final int y) throws ConfigurationFormatException {
+    void parse(@ForAll @IntRange() final int x,
+               @ForAll @IntRange()  final int y) throws ConfigurationFormatException {
         String line = x + " "+y;
 
         var conf = new GardenConfigurationParser().parse(line);

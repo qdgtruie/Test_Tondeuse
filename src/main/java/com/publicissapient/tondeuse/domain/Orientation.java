@@ -7,6 +7,6 @@ import lombok.ToString;
  */
 @ToString
 public enum Orientation {
-    N,E,W,S;
+    N,E,W,S
 
 }

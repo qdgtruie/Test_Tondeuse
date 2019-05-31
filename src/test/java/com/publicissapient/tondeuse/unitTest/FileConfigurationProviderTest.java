@@ -5,7 +5,6 @@ import com.publicissapient.tondeuse.domain.configuration.providers.FileConfigura
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.constraints.StringLength;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 

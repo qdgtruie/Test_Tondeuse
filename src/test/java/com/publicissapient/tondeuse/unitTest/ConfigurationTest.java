@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ConfigurationTest {
 
-    private static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(FileConfigurationProvider.class);
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(FileConfigurationProvider.class);
 
     private static final String FILE_CONF = "file.txt";
     private static final String DUMMY_FILE = "azxazertyu";

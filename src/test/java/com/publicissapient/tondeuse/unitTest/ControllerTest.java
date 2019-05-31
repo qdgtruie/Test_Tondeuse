@@ -7,8 +7,6 @@ import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEvent
 import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
 import com.publicissapient.tondeuse.service.MownerController;
 
-import jdk.jshell.spi.ExecutionControl;
-import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import org.junit.jupiter.api.Test;
 import net.jqwik.api.*;
 
@@ -75,7 +73,7 @@ public class ControllerTest {
             return list.get(getRandomInt(4));
         }
 
-        private Random random = new Random();
+        private final Random random = new Random();
 
         protected int getRandomInt(int bound) {
             return random.nextInt(bound);

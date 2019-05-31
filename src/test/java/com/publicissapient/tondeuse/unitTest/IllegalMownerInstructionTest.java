@@ -1,9 +1,6 @@
 package com.publicissapient.tondeuse.unitTest;
 
-import com.publicissapient.tondeuse.domain.configuration.Configuration;
-import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.errors.IllegalMownerInstruction;
-import com.publicissapient.tondeuse.service.MownerController;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

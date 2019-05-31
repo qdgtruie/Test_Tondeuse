@@ -33,7 +33,7 @@ public class MownerLocation {
     /**
      * Queue of hanlder for position change notoification
      */
-    private Queue<Predicate<Position>> positionListener = new LinkedList<>();
+    private final Queue<Predicate<Position>> positionListener = new LinkedList<>();
 
     /**
      * Change orientation to the right

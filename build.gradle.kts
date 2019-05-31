@@ -84,7 +84,7 @@ tasks.withType<Test> {
             logger.error(" === [OUTPUT] ====> "+sourceSets.getByName("test").output.asPath)
         }
         override fun beforeTest(testDescriptor: TestDescriptor) {
-            logger.lifecycle("Running test: " + testDescriptor)
+            logger.lifecycle("Running test: $testDescriptor")
         }
 
         override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) {}
