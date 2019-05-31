@@ -35,7 +35,7 @@ First attempt to Tondeuse.
 ### Running as docker container ###
 ```
 docker build -t tondeuse
-docker run --rm tondeuse
+docker run --rm tondeuse -p8080:8080
 ```
 
 ### Overall apporach  ###

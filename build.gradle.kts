@@ -80,8 +80,8 @@ tasks.withType<Test> {
 
     addTestListener(object : TestListener {
         override fun beforeSuite(suite: TestDescriptor) {
-            logger.error(" === [SOURCE] ====> "+sourceSets.getByName("test").allJava.asPath);
-            logger.error(" === [OUTPUT] ====> "+sourceSets.getByName("test").output.asPath);
+            logger.error(" === [SOURCE] ====> "+sourceSets.getByName("test").allJava.asPath)
+            logger.error(" === [OUTPUT] ====> "+sourceSets.getByName("test").output.asPath)
         }
         override fun beforeTest(testDescriptor: TestDescriptor) {
             logger.lifecycle("Running test: " + testDescriptor)
@@ -179,7 +179,7 @@ tasks.getByName<Jar>("jar") {
     manifest {
         attributes(
                 mapOf("Implementation-Title" to project.name,
-                        "Implementation-Version" to version,
+                        "Implementation-Version" to archiveVersion,
                         "Built-By" to System.getProperty("user.name"),
                         "Built-Date" to LocalDateTime.now(),
                         "Built-JDK" to System.getProperty("java.version"),
@@ -211,11 +211,9 @@ tasks.jacocoTestCoverageVerification {
 }
 
 tasks.getByName<BootJar>("bootJar") {
-    classifier = "boot"
     mainClassName = "com.publicissapient.tondeuse.WebApp"
 
 }
-
 
 springBoot {
     mainClassName = "com.publicissapient.tondeuse.WebApp"
