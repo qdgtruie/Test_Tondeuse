@@ -39,8 +39,8 @@ script:
 
 jobs:
   include:
-    - stage: deploy
-      name: "build docker image"
+    - stage: build docker image
+      name: "Push docker image to hub.docker.com"
       #if: env($DOCKER_USER) IS present AND env($DOCKER_PASSWORD) IS present
       script:
         - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USER" --password-stdin
@@ -49,7 +49,7 @@ jobs:
         - docker tag tondeuse_test:$COMMIT $DOCKER_USER/tondeuse
         - docker push $DOCKER_USER/tondeuse
     - stage: prepare GKE
-      name: "prepare GKE "
+      name: "prepare google cloud environment "
       script:
         - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
         - source /home/travis/google-cloud-sdk/path.bash.inc
@@ -58,6 +58,8 @@ jobs:
         - gcloud --quiet components beta update
         - gcloud --quiet components update kubectl
     - stage: push to GKE
-      name: "push to GKE "
+      name: "push to Kubernetes "
       script:
         - ./scripts/deploy.sh
+    - stage: test production
+      script: 'curl http://tondeuse.ysaule.net'
