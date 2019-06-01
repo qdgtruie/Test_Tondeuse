@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#set -e
 
 docker build -t eu.gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT .
 
