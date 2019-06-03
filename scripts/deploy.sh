@@ -2,8 +2,8 @@
 
 #set -e
 
-echo building image for GCP registry
-docker build -t eu.gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT .
+#echo building image for GCP registry
+#docker build -t eu.gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT .
 
 
 echo $GCLOUD_SERVICE_KEY_PRD | base64 --decode -i > ${HOME}/gcloud-service-key.json
