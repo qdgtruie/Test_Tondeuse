@@ -16,11 +16,6 @@ before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
-#before_install:
-#  - curl https://sdk.cloud.google.com | bash > /dev/null
-#  - source $HOME/google-cloud-sdk/path.bash.inc
-#  - gcloud components install kubectl
-
 cache:
   directories:
     - $HOME/.gradle/caches/

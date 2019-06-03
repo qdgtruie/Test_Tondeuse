@@ -176,9 +176,12 @@ apply(plugin = "io.spring.dependency-management")
 
 tasks.getByName<Jar>("jar") {
     enabled = true
+
     manifest {
         attributes(
-                mapOf("Implementation-Title" to project.name,
+                mapOf(
+                        "Main-Class" to "com.publicissapient.tondeuse.WebApp",
+                        "Implementation-Title" to project.name,
                         "Implementation-Version" to archiveVersion,
                         "Built-By" to System.getProperty("user.name"),
                         "Built-Date" to LocalDateTime.now(),
