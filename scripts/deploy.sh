@@ -18,9 +18,9 @@ gcloud --quiet container clusters get-credentials $CLUSTER_NAME_PRD
 echo about to deploy to eu.gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME}
 gcloud docker -- push eu.gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME}
 
-yes | gcloud container images add-tag gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME} gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME}:latest
+yes | gcloud container images add-tag eu.gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME} eu.gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME}:latest
 
 kubectl config view
 kubectl config current-context
 
-kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} ${KUBE_DEPLOYMENT_CONTAINER_NAME}=gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT
+kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} ${KUBE_DEPLOYMENT_CONTAINER_NAME}=eu.gcr.io/${PROJECT_NAME_PRD}/${DOCKER_IMAGE_NAME}:latest
