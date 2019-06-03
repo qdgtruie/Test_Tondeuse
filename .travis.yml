@@ -64,9 +64,6 @@ jobs:
         - gcloud --quiet components install kubectl
         - gcloud --quiet components update
         - gcloud --quiet components update kubectl
-    - stage: push to GKE
-      name: "push to Kubernetes "
-      script:
         - ./scripts/deploy.sh
     - stage: test production
       script: 'curl http://tondeuse.ysaule.net'
