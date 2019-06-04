@@ -61,5 +61,4 @@ jobs:
         - gcloud --quiet components update
         - gcloud --quiet components update kubectl
         - ./scripts/deploy.sh
-    - stage: test production
-      script: 'curl http://tondeuse.ysaule.net'
+
