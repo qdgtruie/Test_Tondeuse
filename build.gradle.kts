@@ -190,8 +190,7 @@ tasks.getByName<Jar>("jar") {
                         "Built-Gradle" to gradle.gradleVersion)
         )
     }
-    from(configurations.runtimeClasspath.get().map({ if (it.isDirectory) it else zipTree(it) }))
-    with(tasks.jar.get() as CopySpec)
+    
 
 }
 
