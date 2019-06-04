@@ -5,9 +5,9 @@ First attempt to Tondeuse.
 * Gradle 5.4.1
 * Git
 
-![Build status](https://travis-ci.com/qdgtruie/Test_Tondeuse.svg?branch=master=300x300)
+![Build status](https://travis-ci.com/qdgtruie/Test_Tondeuse.svg?branch=master)
 
-![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg| width=300)
+![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)
 
 ### Technologies ####
 * Language programming: [Java 11](https://docs.aws.amazon.com/fr_fr/corretto/latest/corretto-11-ug/downloads-list.html), [Vavr](http://www.vavr.io/)
