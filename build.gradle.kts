@@ -20,6 +20,7 @@ plugins {
     id("io.freefair.lombok") version "3.2.1"
     id("org.sonarqube") version "2.7.1"
     jacoco
+
 }
 
 
@@ -189,7 +190,13 @@ tasks.getByName<Jar>("jar") {
                         "Built-Gradle" to gradle.gradleVersion)
         )
     }
+    from(configurations.runtimeClasspath.get().map({ if (it.isDirectory) it else zipTree(it) }))
+    with(tasks.jar.get() as CopySpec)
+
 }
+
+
+
 
 tasks.jacocoTestCoverageVerification {
     violationRules {
@@ -221,3 +228,4 @@ tasks.getByName<BootJar>("bootJar") {
 springBoot {
     mainClassName = "com.publicissapient.tondeuse.WebApp"
 }
+
