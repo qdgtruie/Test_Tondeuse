@@ -229,3 +229,24 @@ springBoot {
     mainClassName = "com.publicissapient.tondeuse.WebApp"
 }
 
+val fatJar = task("fatJar", type = Jar::class) {
+    baseName = "${project.name}-fat"
+    manifest {
+        mapOf(
+                "Main-Class" to "com.publicissapient.tondeuse.WebApp",
+                "Implementation-Title" to "Fat Jar File for "+project.name,
+                "Implementation-Version" to archiveVersion,
+                "Built-By" to System.getProperty("user.name"),
+                "Built-Date" to LocalDateTime.now(),
+                "Built-JDK" to System.getProperty("java.version"),
+                "Built-Gradle" to gradle.gradleVersion)
+    }
+    from(configurations.runtimeClasspath.get().map({ if (it.isDirectory) it else zipTree(it) }))
+    with(tasks.jar.get() as CopySpec)
+}
+
+tasks {
+    "build" {
+        dependsOn(fatJar)
+    }
+}
