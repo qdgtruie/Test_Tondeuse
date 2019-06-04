@@ -190,7 +190,7 @@ tasks.getByName<Jar>("jar") {
                         "Built-Gradle" to gradle.gradleVersion)
         )
     }
-    
+
 
 }
 
@@ -229,6 +229,7 @@ springBoot {
 }
 
 val fatJar = task("fatJar", type = Jar::class) {
+    
     baseName = "${project.name}-fat"
     manifest {
         mapOf(
@@ -245,7 +246,7 @@ val fatJar = task("fatJar", type = Jar::class) {
 }
 
 tasks {
-    "build" {
+    "assemble" {
         dependsOn(fatJar)
     }
 }
