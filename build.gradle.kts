@@ -20,6 +20,7 @@ plugins {
     id("io.freefair.lombok") version "3.2.1"
     id("org.sonarqube") version "2.7.1"
     jacoco
+    id("com.github.johnrengelman.shadow") version "5.0.0"
 
 }
 
@@ -170,7 +171,7 @@ tasks.register<JacocoReport>("applicationCodeCoverageReport") {
 
 application {
     // Define the main class for the application
-    mainClassName = "com.publicissapient.tondeuse.ConsoleApp"
+    mainClassName = "com.publicissapient.tondeuse.WebApp"
 }
 
 apply(plugin = "io.spring.dependency-management")
@@ -228,25 +229,3 @@ springBoot {
     mainClassName = "com.publicissapient.tondeuse.WebApp"
 }
 
-val fatJar = task("fatJar", type = Jar::class) {
-    
-    baseName = "${project.name}-fat"
-    manifest {
-        mapOf(
-                "Main-Class" to "com.publicissapient.tondeuse.WebApp",
-                "Implementation-Title" to "Fat Jar File for "+project.name,
-                "Implementation-Version" to archiveVersion,
-                "Built-By" to System.getProperty("user.name"),
-                "Built-Date" to LocalDateTime.now(),
-                "Built-JDK" to System.getProperty("java.version"),
-                "Built-Gradle" to gradle.gradleVersion)
-    }
-    from(configurations.runtimeClasspath.get().map({ if (it.isDirectory) it else zipTree(it) }))
-    with(tasks.jar.get() as CopySpec)
-}
-
-tasks {
-    "assemble" {
-        dependsOn(fatJar)
-    }
-}
