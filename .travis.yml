@@ -9,7 +9,7 @@ env:
     - CLOUDSDK_COMPUTE_ZONE=europe-west3-a
     - DOCKER_IMAGE_NAME=tondeuse
     - KUBE_DEPLOYMENT_NAME=tondeuseapp
-    - KUBE_DEPLOYMENT_CONTAINER_NAME=tondeuseContainer
+    - KUBE_DEPLOYMENT_CONTAINER_NAME=tondeuse
     - NODE_ENV=CI
 
 before_cache:
