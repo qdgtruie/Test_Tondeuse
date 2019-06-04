@@ -5,7 +5,9 @@ First attempt to Tondeuse.
 * Gradle 5.4.1
 * Git
 
-![Build status](https://travis-ci.com/qdgtruie/Test_Tondeuse.svg?branch=master)
+![Build status](https://travis-ci.com/qdgtruie/Test_Tondeuse.svg?branch=master=300x300)
+
+![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg| width=300)
 
 ### Technologies ####
 * Language programming: [Java 11](https://docs.aws.amazon.com/fr_fr/corretto/latest/corretto-11-ug/downloads-list.html), [Vavr](http://www.vavr.io/)
@@ -47,9 +49,6 @@ docker run --rm tondeuse -p8080:8080
 
 ##### Model description #####
 ![Class diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/qdgtruie/Test_Tondeuse/master/src/main/resources/diagrams/classDiagram-configuration.puml)
-
-##### Sequence description #####
-![Sequence diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/qdgtruie/Test_Tondeuse/master/src/main/resources/diagrams/classDiagram-configuration.puml)
 
 ##### CI/CD Sequence description #####
 1. Use of Travis to build, run property based testing and run sonarcloud
