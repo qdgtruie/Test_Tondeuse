@@ -8,7 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WebApp {
 
 
-        public static void main(String[] args) {
+    /**
+     * Entry point for spring boot
+     * @param args arg to be passed
+     */
+    public static void main(String[] args) {
             SpringApplication.run(WebApp.class, args);
         }
 

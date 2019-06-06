@@ -26,16 +26,29 @@ public class ConsoleApp {
                 .run();
     }
 
+    /**
+     * Entry point for the App
+     * @param args args to be passed
+     * @throws ConfigurationException thrown in case of configuration issue
+     */
     public static void main(String[] args) throws ConfigurationException {
         new ConsoleApp().run();
     }
 
+    /**
+     * Handle invalid move notification (log)
+     * @param x move attempted.
+     */
     private static void notifyInvalidMove(InvalidMoveEventArg x) {
         if (log.isInfoEnabled())
             log.info("[Mowner {} ] tried to reach invalid position at {}",
                     x.getMownerID().toString(), x.getTargetPosition().toString());
     }
 
+    /**
+     * handle finakl move notification (log)
+     * @param x final position
+     */
     private static void printMownerFinalLocation(PositionProvider x) {
         if (log.isInfoEnabled())
             log.info("[Mowner {} ] Job complete : position is {}",

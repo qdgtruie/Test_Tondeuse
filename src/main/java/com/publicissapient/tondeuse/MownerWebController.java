@@ -14,9 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("/")
 public class MownerWebController {
 
+    /**
+     * Conf file reference
+     */
     private static final String FILE_CONF = "file.txt";
+
+    /**
+     * Buffer for all notifications
+     */
     private static final StringBuilder buffer = new StringBuilder();
 
+    /**
+     * Run the MownerController
+     * @return a string representing the result.
+     * @throws ConfigurationException when config is not right
+     */
     @GetMapping
     public String run() throws ConfigurationException {
         buffer.setLength(0);
@@ -31,6 +43,10 @@ public class MownerWebController {
         return buffer.toString();
     }
 
+    /**
+     * Handle invalid move notification (log, display)
+     * @param x move attempted.
+     */
     private static void notifyInvalidMove(InvalidMoveEventArg x) {
         if (log.isInfoEnabled())
             log.info("[Mowner {} ] tried to reach invalid position at {}",
@@ -43,6 +59,10 @@ public class MownerWebController {
         buffer.append("<p/>");
     }
 
+    /**
+     * handle finakl move notification (log, display)
+     * @param x final position
+     */
     private static void printMownerFinalLocation(PositionProvider x) {
         if (log.isInfoEnabled())
             log.info("[Mowner {} ] Job complete : position is {}",

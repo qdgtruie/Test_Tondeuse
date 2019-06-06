@@ -153,6 +153,10 @@ public class MownerLocation {
         return other instanceof MownerLocation;
     }
 
+    /**
+     * Compute hash code
+     * @return a hash code value for the object.
+     */
     @Override public int hashCode() {
         final int PRIME = 59;
         int result = 1;
