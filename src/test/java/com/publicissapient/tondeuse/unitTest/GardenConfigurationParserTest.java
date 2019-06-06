@@ -1,28 +1,30 @@
 package com.publicissapient.tondeuse.unitTest;
 
-import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.ConfigurationFormatException;
-import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.GardenConfigurationParser;
-import net.jqwik.api.ForAll;
-import net.jqwik.api.Property;
-import net.jqwik.api.constraints.IntRange;
+        import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.ConfigurationFormatException;
+        import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.GardenConfigurationParser;
+        import net.jqwik.api.ForAll;
+        import net.jqwik.api.Property;
+        import net.jqwik.api.constraints.IntRange;
 
-import static org.junit.jupiter.api.Assertions.*;
+        import static org.junit.jupiter.api.Assertions.*;
 
 class GardenConfigurationParserTest {
 
     @Property(tries=100)
-    void parse(@ForAll final String line) {
+    void parsingRandomStringThrowsConfigurationFormatException(@ForAll final String line) {
         assertThrows(ConfigurationFormatException.class,
                 ()-> new GardenConfigurationParser().parse(line));
     }
 
     @Property(tries=100)
-    void parse(@ForAll @IntRange() final int x,
-               @ForAll @IntRange()  final int y) throws ConfigurationFormatException {
-        String line = x + " "+y;
+    void parsingValidFormatDoesNotThrow(@ForAll @IntRange() final int x,
+               @ForAll @IntRange()  final int y)  {
 
-        var conf = new GardenConfigurationParser().parse(line);
-        assertEquals(x,conf.getUpperRight().getX(), "x should be the same");
-        assertEquals(y,conf.getUpperRight().getY(), "y should be the same");
+        String line = x + " "+y;
+        assertDoesNotThrow(()->{
+            var conf = new GardenConfigurationParser().parse(line);
+            assertEquals(x,conf.getUpperRight().getX(), "x should be the same");
+            assertEquals(y,conf.getUpperRight().getY(), "y should be the same");
+        });
     }
 }

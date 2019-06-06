@@ -21,7 +21,7 @@ class InvalidMoveEventArgTest {
     }
 
     @Test
-    void setMownerID() {
+    void canSetMownerID() {
         Tuple tuple = new Tuple().invoke();
 
         var id = UUID.randomUUID();
@@ -31,7 +31,7 @@ class InvalidMoveEventArgTest {
     }
 
     @Test
-    void setTargetPosition() {
+    void canSetTargetPosition() {
 
         Tuple tuple = new Tuple().invoke();
         var target = Position.locatedAt(5,5);
@@ -41,13 +41,13 @@ class InvalidMoveEventArgTest {
     }
 
     @Test
-    void getMownerID() {
+    void canGetMownerID() {
         Tuple tuple = new Tuple().invoke();
         assertEquals(tuple.id,tuple.instance.getMownerID(),"ID should be similar");
     }
 
     @Test
-    void getTargetPosition() {
+    void canGetTargetPosition() {
         Tuple tuple = new Tuple().invoke();
         assertEquals(tuple.getPosition(),tuple.instance.getTargetPosition(),"Positon should be similar");
 

@@ -3,9 +3,20 @@
  */
 package com.publicissapient.tondeuse;
 
+import net.jqwik.api.ForAll;
+import net.jqwik.api.Property;
+import net.jqwik.api.Report;
+import net.jqwik.api.Reporting;
+import net.jqwik.api.constraints.WithNull;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 
 public class ConsoleAppTest {
+
+    @Property(tries=10) @Report(Reporting.GENERATED)
+    void AnyArgCanBePassed(@ForAll @WithNull final String[] args){
+        assertDoesNotThrow(()->ConsoleApp.main(args));
+    }
 
 }
