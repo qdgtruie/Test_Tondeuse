@@ -135,7 +135,7 @@ public final class MownerController {
      * @param mowner mowner to be executed
      * @param instructions set of instruction to be eecuted on the mowner
      */
-    private void runMowner(@NonNull Controllable mowner, @NonNull Queue<Instruction> instructions) {
+    protected void runMowner(@NonNull Controllable mowner, @NonNull Queue<Instruction> instructions) {
 
         for (Instruction step : instructions)
             executeStep(mowner, step);

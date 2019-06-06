@@ -10,11 +10,13 @@ First attempt to Tondeuse.
 ![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)
 
 ### Technologies ####
-* Language programming: [Java 11](https://docs.aws.amazon.com/fr_fr/corretto/latest/corretto-11-ug/downloads-list.html), [Vavr](http://www.vavr.io/)
-* Tests: [JUnit](https://junit.org/junit5/), [jqwik](https://jqwik.net/), [AssertJ](http://joel-costigliola.github.io/assertj/index.html), [Mockito](http://mockito.org/)
+* Language programming: [Java 11/corretto](https://docs.aws.amazon.com/fr_fr/corretto/latest/corretto-11-ug/downloads-list.html), [Vavr](http://www.vavr.io/)
+* UnitTests: [JUnit](https://junit.org/junit5/)
+* Property based testing: [jqwik](https://jqwik.net/)
 * Behavior Driven Development: [JBehave](http://jbehave.org/)
 * Code generation: [Lombok](https://projectlombok.org)
 * UML: [PlantUML](http://plantuml.com)
+* CI : [Travis CI](https://travis-ci.com)
 * Code analysis: [sonarcloud](https://sonarcloud.io)
 * Packaging : [Docker]()
 * Run : [Kubernetes]()
@@ -53,15 +55,24 @@ docker run --rm tondeuse -p8080:8080
 ##### CI/CD Sequence description #####
 1. Use of Travis to build, run property based testing and run sonarcloud
 2. Package as a Docker Image
-3. Push image into a Kubernetes instance
+3. Push image into a GKE instance
 
-## Specifications ##
+### Possible improvements ###
+1. Move mowners in parallel through multithreading 
+    - change `MownerController::runMowner` to trigger threads
+    - leverage `Mowner::addOffBoundChecker` to check for collisions
+    - manage state : either `MownerController` keeps track of all mowners or each `Mowner` registers with `addOffBoundChecker` on others.
+2. Move to a more functional implementation
+    - use of vavr could be more consistent (currently only used for conveniance)
+3. Move to an Actor based model
 
-### Goal ###
+### Specifications ###
+
+#### Goal ####
 
 Build a java 11 program that implement the following mower’s specification.
 
-### The Story ###
+#### The Story ####
 
 The company MownItNow wants to develop an automower for square surfaces.
 The mower can be programmed to go throughout the whole surface. Mower's position is represented by coordinates (X,Y) and a characters indicate the orientation according to cardinal notations (N,E,W,S). The lawn is divided in grid to simplify navigation.
@@ -77,7 +88,7 @@ Each mower move sequentially, meaning that the second mower moves only when the 
 When a mower has finished, it give the final position and orientation.
 
 
-### Example​ ###
+#### Example​ ####
 
 Input file
 ```
