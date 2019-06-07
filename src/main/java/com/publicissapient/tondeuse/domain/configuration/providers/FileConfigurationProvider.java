@@ -33,6 +33,11 @@ public class FileConfigurationProvider implements ConfigurationProvider {
         return new FileConfigurationProvider(aResourcePath);
     }
 
+    /**
+     * Perform actual parsing and wrap exception into business exception
+     * @return  a list of lines
+     * @throws ConfigurationException with proper message
+     */
     private List<String> getLines() throws ConfigurationException {
         if (lines == null)
             try {
@@ -56,6 +61,7 @@ public class FileConfigurationProvider implements ConfigurationProvider {
         return lines;
     }
 
+
     private static InputStream getFileStream(@NonNull final String aRessourceName) throws FileNotFoundException {
         File file = new File(aRessourceName);
         if(file.exists())
@@ -72,9 +78,11 @@ public class FileConfigurationProvider implements ConfigurationProvider {
     {
         try {
             return new GardenConfigurationParser().parse(getLines().get(0));
+
         }catch(ConfigurationFormatException e) {
             String message = "Error while parsing garden section of configuration file";
-            log.error(message, e);
+            if(log.isErrorEnabled())
+                log.error(message, e);
             throw new ConfigurationException(message, e);
         }
 
@@ -90,7 +98,8 @@ public class FileConfigurationProvider implements ConfigurationProvider {
 
         } catch (ConfigurationFormatException e) {
             String message = "Error while parsing Mowner section of configuration file";
-            log.error(message, e);
+            if(log.isErrorEnabled())
+                log.error(message, e);
             throw new ConfigurationException(message, e);
         }
 

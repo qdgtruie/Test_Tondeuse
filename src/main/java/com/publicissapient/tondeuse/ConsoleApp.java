@@ -12,7 +12,7 @@ import com.publicissapient.tondeuse.service.MownerController;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ConsoleApp {
+class ConsoleApp {
 
     private static final String FILE_CONF = "file.txt";
 

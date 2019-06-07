@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class ConfigurationTest {
+class ConfigurationTest {
 
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(FileConfigurationProvider.class);
 
@@ -19,7 +19,7 @@ public class ConfigurationTest {
 
 
     @Test
-    public void loadConfigurationFromRessouce() throws ConfigurationException {
+    void loadConfigurationFromRessouce() throws ConfigurationException {
 
         ConfigurationProvider source = FileConfigurationProvider.fromFileResource(FILE_CONF);
 
@@ -31,7 +31,7 @@ public class ConfigurationTest {
     }
 
     @Test
-    public void loadConfigurationFromWrongRessouce()  {
+    void loadConfigurationFromWrongRessouce()  {
 
         assertThrows(ConfigurationException.class, () -> {
 

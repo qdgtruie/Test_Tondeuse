@@ -24,9 +24,9 @@ public class GardenConfiguration {
     public boolean isValideMove(UUID mownerID, Position target) {
         boolean valid = target.isWithinRectangle(upperRight);
         if(!valid)
-            for (var consummer:consummers) {
+            for (var consummer:consummers)
                 consummer.accept(InvalidMoveEventArg.from(mownerID,target));
-            }
+
         return valid;
     }
 

@@ -24,11 +24,11 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Steps {
+class Steps {
 
     private GardenConfiguration  gardenConfig;
-    private List<MownerConfiguration> mowners = new LinkedList<>();
-    private MownerController controller = new MownerController();
+    private final List<MownerConfiguration> mowners = new LinkedList<>();
+    private final MownerController controller = new MownerController();
 
 
     @Given("a garden of $width by $height")

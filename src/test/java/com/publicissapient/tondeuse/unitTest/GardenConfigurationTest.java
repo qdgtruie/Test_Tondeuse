@@ -3,8 +3,6 @@ package com.publicissapient.tondeuse.unitTest;
 import com.publicissapient.tondeuse.domain.Position;
 import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
 import net.jqwik.api.*;
-import net.jqwik.api.constraints.IntRange;
-import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
@@ -36,7 +34,7 @@ class GardenConfigurationTest {
     }
 
     @Provide
-    private Arbitrary<GardenConfiguration> getGarden() {
+    Arbitrary<GardenConfiguration> getGarden() {
         var xArbitrary = Arbitraries.integers().between(1, Integer.MAX_VALUE-1);
         var yArbitrary = Arbitraries.integers().between(1, Integer.MAX_VALUE-1);
         return Combinators.combine(xArbitrary,yArbitrary).as((x,y)->GardenConfiguration.endsAt(Position.locatedAt(x, y)));
@@ -52,7 +50,7 @@ class GardenConfigurationTest {
 
     @Property
     void twoGardenInstanceAreNotEquals(@ForAll("getGarden") GardenConfiguration garden1,@ForAll("getGarden") GardenConfiguration garden2) {
-        assertFalse(garden1.equals(null), "Two different object should not be equals.");
+        assertNotEquals(null, garden1, "Two different object should not be equals.");
         assertFalse(garden1.equals(garden2) && garden2.equals(garden1), "Two instance should not be equals.");
     }
 

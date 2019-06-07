@@ -75,7 +75,7 @@ public class ControllerTest {
 
         private final Random random = new Random();
 
-        protected int getRandomInt(int bound) {
+        int getRandomInt(int bound) {
             return random.nextInt(bound);
         }
 
@@ -100,7 +100,7 @@ public class ControllerTest {
 
 
     @Property
-    public void MownerCanRunAtScale() throws ConfigurationException {
+    void MownerCanRunAtScale() throws ConfigurationException {
 
         MownerController controller = new MownerController().load(Configuration.basedOn(new MemoryProvider()));
         controller.run();
@@ -108,7 +108,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void MownerCanNotGoOutsideOfGarden() throws ConfigurationException {
+    void MownerCanNotGoOutsideOfGarden() throws ConfigurationException {
 
         MownerController controller = new MownerController().load(Configuration.basedOn(new LimittedMemoryProvider()));
         controller.run();
@@ -117,7 +117,7 @@ public class ControllerTest {
     private boolean messageGotPublished = false;
 
     @Test
-    public void MownerCanPublishResult() throws ConfigurationException {
+    void MownerCanPublishResult() throws ConfigurationException {
 
        new MownerController()
                          .withResultPublisher(this::publishPosition)
@@ -133,7 +133,7 @@ public class ControllerTest {
 
 
     @Test
-    public void MownerCanRaiseOutOfBoundAlert() throws ConfigurationException {
+    void MownerCanRaiseOutOfBoundAlert() throws ConfigurationException {
 
         new MownerController()
                 .withAlerter(this::notifyAlert)

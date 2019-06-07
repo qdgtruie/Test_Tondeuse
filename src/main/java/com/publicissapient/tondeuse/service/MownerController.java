@@ -2,9 +2,11 @@ package com.publicissapient.tondeuse.service;
 
 import com.publicissapient.tondeuse.domain.*;
 import com.publicissapient.tondeuse.domain.configuration.Configuration;
+import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.MownerConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEventArg;
 import com.publicissapient.tondeuse.errors.IllegalMownerInstruction;
+import io.vavr.collection.List;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,17 +51,9 @@ public final class MownerController {
         garden.addFenceViolationListener(this::raiseAlertNotification);
 
         executions.clear();
-        for (MownerConfiguration item : config.getMowners()) {
-            MownerLocation initialLocation = item.getLocation();
 
-            var mowner = Mowner.initialLocation( UUID.randomUUID(),initialLocation);
-            mowner.addOffBoundChecker(x -> garden.isValideMove(mowner.getId(),x) );
-
-            var instructions = item.getInstructions().getInstructions();
-
-            var e = new ExecutionBatch(mowner,instructions);
-            executions.add(e);
-        }
+        for (MownerConfiguration item : config.getMowners())
+            executions.add(createExecutionBatch(garden, item));
 
         if(log.isDebugEnabled()) {
             log.debug("Controller loaded garden configuration {}", garden.toString());
@@ -67,6 +61,23 @@ public final class MownerController {
         }
 
         return this;
+    }
+
+    /**
+     * Build a ExecutionBatch object
+     * @param garden to beused on the ExecutionBatch
+     * @param item MownerConfig beused on the ExecutionBatch
+     * @return a batch
+     */
+    private ExecutionBatch createExecutionBatch(final GardenConfiguration garden, final MownerConfiguration item) {
+        MownerLocation initialLocation = item.getLocation();
+
+        var mowner = Mowner.initialLocation( UUID.randomUUID(),initialLocation);
+        mowner.addOffBoundChecker(x -> garden.isValideMove(mowner.getId(),x) );
+
+        var instructions = item.getInstructionQueue().getInstructions();
+
+        return new ExecutionBatch(mowner,instructions);
     }
 
     /**
@@ -135,10 +146,9 @@ public final class MownerController {
      * @param mowner mowner to be executed
      * @param instructions set of instruction to be eecuted on the mowner
      */
-    protected void runMowner(@NonNull Controllable mowner, @NonNull Queue<Instruction> instructions) {
+    private void runMowner(@NonNull Controllable mowner, @NonNull Queue<Instruction> instructions) {
 
-        for (Instruction step : instructions)
-            executeStep(mowner, step);
+        List.ofAll(instructions).forEach(step->executeStep(mowner,step));
 
         raisePositionPublication(((PositionProvider) mowner));
     }

@@ -1,8 +1,8 @@
 package com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser;
 
 import com.google.common.base.Splitter;
-import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
 import com.publicissapient.tondeuse.domain.Position;
+import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
 
 import java.util.regex.Pattern;
 

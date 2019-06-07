@@ -58,19 +58,19 @@ class InvalidMoveEventArgTest {
         private Position position;
         private InvalidMoveEventArg instance;
 
-        public UUID getId() {
+        UUID getId() {
             return id;
         }
 
-        public Position getPosition() {
+        Position getPosition() {
             return position;
         }
 
-        public InvalidMoveEventArg getInstance() {
+        InvalidMoveEventArg getInstance() {
             return instance;
         }
 
-        public Tuple invoke() {
+        Tuple invoke() {
             id = UUID.randomUUID();
             position = Position.locatedAt(0, 0);
             instance = InvalidMoveEventArg.from(id, position);

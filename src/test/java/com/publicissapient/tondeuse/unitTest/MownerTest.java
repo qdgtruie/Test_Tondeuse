@@ -11,7 +11,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class MownerTest {
+class MownerTest {
 
 
     private Mowner BuildMowner(int x, int y, Orientation orientation) {
@@ -21,7 +21,7 @@ public class MownerTest {
     }
 
     @Test
-    public void MownerCanTurnLeft() {
+    void MownerCanTurnLeft() {
 
         Mowner mowner = BuildMowner(1, 1, Orientation.N);
         mowner.turnLeft();
@@ -36,7 +36,7 @@ public class MownerTest {
     }
 
     @Test
-    public void MownerCanTurnRight() {
+    void MownerCanTurnRight() {
 
         Mowner mowner = BuildMowner(1, 1, Orientation.N);
         mowner.turnRight();
@@ -51,7 +51,7 @@ public class MownerTest {
     }
 
     @Test
-    public void MownerCanMoveForward() {
+    void MownerCanMoveForward() {
         Mowner mowner = BuildMowner(1, 1, Orientation.N);
 
         mowner.addOffBoundChecker(position-> position.getX() <= 5 && position.getY() <= 5);

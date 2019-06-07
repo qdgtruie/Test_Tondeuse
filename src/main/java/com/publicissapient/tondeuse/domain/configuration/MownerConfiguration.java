@@ -24,5 +24,5 @@ public class MownerConfiguration {
      * Hold the sequence of instruction to be executed by the mowner
      */
     @Getter
-    private InstructionQueue instructions;
+    private InstructionQueue instructionQueue;
 }

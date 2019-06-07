@@ -12,7 +12,7 @@ import net.jqwik.api.constraints.WithNull;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
-public class ConsoleAppTest {
+class ConsoleAppTest {
 
     @Property(tries=10) @Report(Reporting.GENERATED)
     void AnyArgCanBePassed(@ForAll @WithNull final String[] args){
