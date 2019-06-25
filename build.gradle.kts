@@ -57,44 +57,11 @@ sourceSets {
 }
 
 
-tasks {
-    test {
-        
-        useJUnitPlatform {
-            includeEngines("jqwik, junit-jupiter, junit-vintage")
-
-        }
-        include( "**/*Properties.class")
-        include( "**/*Test.class")
-        include( "**/*Tests.class")
-        include( "**/*.class")
-
-        // set heap size for the test JVM(s)
-        minHeapSize = "128m"
-        maxHeapSize = "512m"
-
-    }
-
+tasks.test {
+        useJUnitPlatform {}
 }
 
 tasks.withType<Test> {
-
-    addTestOutputListener { testDescriptor, outputEvent ->
-        logger.lifecycle("Test: " + testDescriptor + " produced standard out/err: " + outputEvent.message)
-    }
-
-    addTestListener(object : TestListener {
-        override fun beforeSuite(suite: TestDescriptor) {
-            logger.error(" === [SOURCE] ====> "+sourceSets.getByName("test").allJava.asPath)
-            logger.error(" === [OUTPUT] ====> "+sourceSets.getByName("test").output.asPath)
-        }
-        override fun beforeTest(testDescriptor: TestDescriptor) {
-            logger.lifecycle("Running test: $testDescriptor")
-        }
-
-        override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) {}
-        override fun afterSuite(suite: TestDescriptor, result: TestResult) {}
-    })
 
     doFirst{
             file("target").mkdirs()
