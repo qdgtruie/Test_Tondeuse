@@ -26,6 +26,7 @@ cache:
 
 jdk:
   - openjdk11
+  - openjdk-ea
 
 services:
   - docker
