@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ConfigurationExceptionTest {
 
     @Test
-    void ExceptionCanContainMessage() {
+    void exceptionCanContainMessage() {
 
         final String MESSAGE = "MESSAGE";
         var e = new ConfigurationException(MESSAGE);
@@ -18,7 +18,7 @@ class ConfigurationExceptionTest {
     }
 
     @Test
-    void ExceptionCanContainInnerException() {
+    void exceptionCanContainInnerException() {
 
         final String MESSAGE = "MESSAGE";
         final String INNER = "INNER";
@@ -33,7 +33,7 @@ class ConfigurationExceptionTest {
     }
 
     @Test
-    void ExceptionIsThrowable() {
+    void exceptionIsThrowable() {
 
         final String MESSAGE = "MESSAGE";
         var e = new ConfigurationException(MESSAGE);

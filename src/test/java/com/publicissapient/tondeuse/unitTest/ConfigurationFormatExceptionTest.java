@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ConfigurationFormatExceptionTest {
 
     @Property(tries=100)
-    void ExceptionCanContainMessage(@ForAll final String MESSAGE) {
+    void exceptionCanContainMessage(@ForAll final String MESSAGE) {
 
         var e = new ConfigurationFormatException(MESSAGE);
 
@@ -17,7 +17,7 @@ class ConfigurationFormatExceptionTest {
     }
 
     @Property(tries=100)
-    void ExceptionCanContainInnerException(@ForAll final String MESSAGE, @ForAll final String INNER) {
+    void exceptionCanContainInnerException(@ForAll final String MESSAGE, @ForAll final String INNER) {
 
         var ex = new Exception(INNER);
         var e = new ConfigurationFormatException(MESSAGE, ex);
@@ -29,7 +29,7 @@ class ConfigurationFormatExceptionTest {
     }
 
     @Property(tries=100)
-    void ExceptionIsThrowable(@ForAll final String MESSAGE) {
+    void exceptionIsThrowable(@ForAll final String MESSAGE) {
 
         var e = new ConfigurationFormatException(MESSAGE);
 

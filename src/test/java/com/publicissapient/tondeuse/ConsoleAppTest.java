@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class ConsoleAppTest {
 
     @Property(tries=10) @Report(Reporting.GENERATED)
-    void AnyArgCanBePassed(@ForAll @WithNull final String[] args){
+    void anyArgCanBePassed(@ForAll @WithNull final String[] args){
         assertDoesNotThrow(()->ConsoleApp.main(args));
     }
 

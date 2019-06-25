@@ -52,8 +52,10 @@ public final class MownerController {
 
         executions.clear();
 
-        for (MownerConfiguration item : config.getMowners())
+        for (var item : config.getMowners())
             executions.add(createExecutionBatch(garden, item));
+
+        makeMownersSeeEachOthers();
 
         if(log.isDebugEnabled()) {
             log.debug("Controller loaded garden configuration {}", garden.toString());
@@ -64,16 +66,36 @@ public final class MownerController {
     }
 
     /**
+     * reprocess the executionBatches to add to each mowner position checkers from all the other mowners.
+     */
+    private void makeMownersSeeEachOthers() {
+
+        for (var batch : executions)
+            for (var otherBtach : executions) {
+
+                var currentMowner = batch.getMowner();
+                var otherMowner = otherBtach.getMowner();
+
+                if (currentMowner != otherMowner) {
+                    currentMowner.addPositionChecker(
+                            targetPosition -> otherMowner.checkcollision(currentMowner.getId(), targetPosition)
+                    );
+                }
+            }
+    }
+
+    /**
      * Build a ExecutionBatch object
-     * @param garden to beused on the ExecutionBatch
-     * @param item MownerConfig beused on the ExecutionBatch
+     * @param garden to be used on the ExecutionBatch
+     * @param item MownerConfig used on the ExecutionBatch
      * @return a batch
      */
     private ExecutionBatch createExecutionBatch(final GardenConfiguration garden, final MownerConfiguration item) {
         MownerLocation initialLocation = item.getLocation();
 
         var mowner = Mowner.initialLocation( UUID.randomUUID(),initialLocation);
-        mowner.addOffBoundChecker(x -> garden.isValideMove(mowner.getId(),x) );
+        mowner.addPositionChecker(targetPosition -> garden.isValideMove(mowner.getId(),targetPosition) );
+        mowner.addCollisionListener(this::raiseAlertNotification);
 
         var instructions = item.getInstructionQueue().getInstructions();
 

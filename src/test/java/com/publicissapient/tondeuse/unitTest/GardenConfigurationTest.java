@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GardenConfigurationTest {
 
     @Property
-    void InvalidMoveAttemptAreDetected(@ForAll("getGarden") GardenConfiguration garden) {
+    void invalidMoveAttemptAreDetected(@ForAll("getGarden") GardenConfiguration garden) {
         var position = Position.locatedAt(garden.getUpperRight().getX()+1,garden.getUpperRight().getY());
         assertFalse(garden.isValideMove(UUID.randomUUID(),position),"move should be invalid");
     }

@@ -14,16 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class MownerTest {
 
 
-    private Mowner BuildMowner(int x, int y, Orientation orientation) {
+    private Mowner buildMowner(int x, int y, Orientation orientation) {
         UUID id = UUID.randomUUID();
 
-        return Mowner.initialLocation(id, MownerLocation.with(Position.locatedAt(x, y), Orientation.N));
+        return Mowner.initialLocation(id, MownerLocation.with(Position.locatedAt(x, y), orientation));
     }
 
     @Test
-    void MownerCanTurnLeft() {
+    void mownerCanTurnLeft() {
 
-        Mowner mowner = BuildMowner(1, 1, Orientation.N);
+        Mowner mowner = buildMowner(1, 1, Orientation.N);
         mowner.turnLeft();
         assertEquals( Orientation.W, mowner.getCurrentLocation().getOrientation(), "Orientation should be 'W' ");
         mowner.turnLeft();
@@ -36,9 +36,9 @@ class MownerTest {
     }
 
     @Test
-    void MownerCanTurnRight() {
+    void mownerCanTurnRight() {
 
-        Mowner mowner = BuildMowner(1, 1, Orientation.N);
+        Mowner mowner = buildMowner(1, 1, Orientation.N);
         mowner.turnRight();
         assertEquals( Orientation.E, mowner.getCurrentLocation().getOrientation(),"Orientation should be 'E' ");
         mowner.turnRight();
@@ -51,10 +51,10 @@ class MownerTest {
     }
 
     @Test
-    void MownerCanMoveForward() {
-        Mowner mowner = BuildMowner(1, 1, Orientation.N);
+    void mownerCanMoveForward() {
+        Mowner mowner = buildMowner(1, 1, Orientation.N);
 
-        mowner.addOffBoundChecker(position-> position.getX() <= 5 && position.getY() <= 5);
+        mowner.addPositionChecker(position-> position.getX() <= 5 && position.getY() <= 5);
         mowner.moveForward();
 
         var result = MownerLocation.with(Position.locatedAt(1,2), Orientation.N);
@@ -62,5 +62,41 @@ class MownerTest {
         assertEquals( result, mowner.getCurrentLocation(), "Y should be '2' ");
     }
 
+    @Test
+    void mownerCanNotStepOnEachOtherToes() {
 
+        Mowner mowner1 = buildMowner(0, 0, Orientation.N);
+        Mowner mowner2 = buildMowner(1, 0, Orientation.W);
+
+        mowner1.addPositionChecker(position->mowner2.checkcollision(mowner1.getId(),position));
+        mowner2.addPositionChecker(position->mowner1.checkcollision(mowner2.getId(),position));
+
+        mowner2.moveForward();
+        var mowner2Result = MownerLocation.with(Position.locatedAt(1,0), Orientation.W);
+        assertEquals( mowner2Result, mowner2.getCurrentLocation(),
+                "Mowner2 should not have moved : position should still be [1,1] ");
+
+
+    }
+
+    boolean detected = false;
+
+    @Test
+    void mownerRaiseNotificationwhenCollisionIsDetected() {
+
+        Mowner mowner1 = buildMowner(0, 0, Orientation.N);
+        Mowner mowner2 = buildMowner(1, 0, Orientation.W);
+
+        mowner1.addPositionChecker(position->mowner2.checkcollision(mowner1.getId(),position));
+        mowner2.addPositionChecker(position->mowner1.checkcollision(mowner2.getId(),position));
+
+        mowner1.addCollisionListener(x->detected=true);
+        mowner2.addCollisionListener(x->detected=true);
+
+        mowner2.moveForward();
+
+        assertTrue( detected, "Mowner2 should have detected collision ");
+
+
+    }
 }

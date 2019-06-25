@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class IllegalMownerInstructionTest {
 
     @Test
-    void ExceptionCanContainMessage() {
+    void exceptionCanContainMessage() {
 
         final String MESSAGE = "MESSAGE";
         var e = new IllegalMownerInstruction(MESSAGE);
@@ -17,7 +17,7 @@ class IllegalMownerInstructionTest {
     }
 
     @Test
-    void ExceptionCanContainInnerException() {
+    void exceptionCanContainInnerException() {
 
         final String MESSAGE = "MESSAGE";
         final String INNER = "INNER";
@@ -32,7 +32,7 @@ class IllegalMownerInstructionTest {
     }
 
     @Test
-    void ExceptionIsThrowable() {
+    void exceptionIsThrowable() {
 
         final String MESSAGE = "MESSAGE";
         var e = new IllegalMownerInstruction(MESSAGE);

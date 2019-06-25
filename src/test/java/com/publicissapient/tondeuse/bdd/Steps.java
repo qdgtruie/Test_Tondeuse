@@ -12,9 +12,7 @@ import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationExc
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.ConfigurationFormatException;
 import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
 import com.publicissapient.tondeuse.service.MownerController;
-import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
+import org.jbehave.core.annotations.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,12 +22,17 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class Steps {
+public class Steps {
 
     private GardenConfiguration  gardenConfig;
-    private final List<MownerConfiguration> mowners = new LinkedList<>();
-    private final MownerController controller = new MownerController();
+    private List<MownerConfiguration> mowners = new LinkedList<>();
+    private MownerController controller = new MownerController();
 
+    @BeforeScenario
+    public void resetState(){
+        controller = new MownerController();
+        mowners.clear();
+    }
 
     @Given("a garden of $width by $height")
     public void garden(final int width, final int height) {
@@ -68,9 +71,10 @@ class Steps {
     @Then("Mower number $number should be at final position $x $y $orientationLabel")
     public void mowerShouldBeAtPosition(String number, int x, int y, String direction) {
         int idx =Integer.parseInt(number)-1;
-        assertEquals(x,mowners.get(idx).getLocation().getPosition().getX());
-        assertEquals(y,mowners.get(idx).getLocation().getPosition().getY());
-        assertEquals(Orientation.valueOf(direction),mowners.get(idx).getLocation().getOrientation());
+        assertEquals(x,mowners.get(idx).getLocation().getPosition().getX(),"x position should be ["+x+"]");
+        assertEquals(y,mowners.get(idx).getLocation().getPosition().getY(),"Y position should be ["+x+"]");
+        assertEquals(Orientation.valueOf(direction),mowners.get(idx).getLocation().getOrientation(),
+                "Orientation should be ["+direction+"]");
 
     }
 }

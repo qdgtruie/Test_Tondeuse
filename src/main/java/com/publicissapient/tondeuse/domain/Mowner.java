@@ -1,10 +1,14 @@
 package com.publicissapient.tondeuse.domain;
 
 
+import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEventArg;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -14,6 +18,11 @@ import java.util.function.Predicate;
 @ToString
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC,staticName = "initialLocation")
 public class Mowner implements Controllable, PositionProvider {
+
+    /**
+     * Maintain listener for collision
+     */
+    private Queue<Consumer<InvalidMoveEventArg>> consummers = new LinkedList<>();
 
     /**
      * ID of the Mowner
@@ -35,7 +44,7 @@ public class Mowner implements Controllable, PositionProvider {
      * Add a mown boundary checker to the mowner
      * @param positionCheck predicate to perform the check
      */
-    public void addOffBoundChecker(Predicate<Position> positionCheck ){
+    public void addPositionChecker(Predicate<Position> positionCheck ){
 
         getCurrentLocation().addPositionListener(positionCheck);
     }
@@ -65,5 +74,25 @@ public class Mowner implements Controllable, PositionProvider {
         getCurrentLocation().shiftForward();
     }
 
+
+    /**
+     * Check whether a given position conflict with current mowner position
+     * @param mownerID id of the mowner attempting a move
+     * @param targetPosition position to be check against
+     * @return true if the position do not create a conflict
+     */
+    public boolean checkcollision(UUID mownerID, Position targetPosition) {
+        boolean valid =  ! targetPosition.equals(this.currentLocation.getPosition());
+
+        if(!valid)
+            for (var consummer:consummers)
+                consummer.accept(InvalidMoveEventArg.from(mownerID,targetPosition));
+
+        return valid;
+    }
+
+    public void addCollisionListener(Consumer<InvalidMoveEventArg> supplier) {
+        consummers.add(supplier);
+    }
 
 }

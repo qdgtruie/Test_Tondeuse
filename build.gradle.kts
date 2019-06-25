@@ -78,6 +78,7 @@ tasks {
 }
 
 tasks.withType<Test> {
+
     addTestOutputListener { testDescriptor, outputEvent ->
         logger.lifecycle("Test: " + testDescriptor + " produced standard out/err: " + outputEvent.message)
     }
@@ -94,6 +95,7 @@ tasks.withType<Test> {
         override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) {}
         override fun afterSuite(suite: TestDescriptor, result: TestResult) {}
     })
+
     doFirst{
             file("target").mkdirs()
         }
@@ -212,7 +214,7 @@ tasks.getByName<Jar>("jar") {
 
 
 
-tasks.jacocoTestCoverageVerification {
+/*tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
@@ -232,7 +234,7 @@ tasks.jacocoTestCoverageVerification {
             }
         }
     }
-}
+}*/
 
 tasks.getByName<BootJar>("bootJar") {
     mainClassName = "com.publicissapient.tondeuse.WebApp"

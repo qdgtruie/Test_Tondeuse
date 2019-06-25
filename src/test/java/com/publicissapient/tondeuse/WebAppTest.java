@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class WebAppTest {
 
     @Property(tries=1) @Report(Reporting.GENERATED)
-    void AnyArgCanBePassed(@ForAll final String[] args){
+    void anyArgCanBePassed(@ForAll final String[] args){
         assertDoesNotThrow(()->WebApp.main(args));
     }
 }
