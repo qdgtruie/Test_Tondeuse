@@ -6,8 +6,12 @@ First attempt to Tondeuse.
 * Git
 
 ![Build status](https://travis-ci.com/qdgtruie/Test_Tondeuse.svg?branch=master)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=qdgtruie_Test_Tondeuse&metric=coverage)](https://sonarcloud.io/dashboard?id=qdgtruie_Test_Tondeuse)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=qdgtruie_Test_Tondeuse&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=qdgtruie_Test_Tondeuse)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=qdgtruie_Test_Tondeuse&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=qdgtruie_Test_Tondeuse)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=qdgtruie_Test_Tondeuse&metric=alert_status)](https://sonarcloud.io/dashboard?id=qdgtruie_Test_Tondeuse)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=qdgtruie_Test_Tondeuse&metric=sqale_index)](https://sonarcloud.io/dashboard?id=qdgtruie_Test_Tondeuse)
 
-![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)
 
 ### Technologies ####
 * Language programming: [Java 11/corretto](https://docs.aws.amazon.com/fr_fr/corretto/latest/corretto-11-ug/downloads-list.html), [Vavr](http://www.vavr.io/)
