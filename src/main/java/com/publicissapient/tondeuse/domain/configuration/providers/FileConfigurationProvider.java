@@ -2,11 +2,11 @@ package com.publicissapient.tondeuse.domain.configuration.providers;
 
 import com.publicissapient.tondeuse.domain.configuration.ConfigurationProvider;
 import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
-import com.publicissapient.tondeuse.domain.configuration.MownerConfiguration;
+import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.ConfigurationFormatException;
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.GardenConfigurationParser;
-import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.MownerConfigurationPaser;
+import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.MowerConfigurationPaser;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -91,10 +91,10 @@ public class FileConfigurationProvider implements ConfigurationProvider {
 
 
     @Override
-    public Queue<MownerConfiguration> getMownerConfiguration() throws ConfigurationException {
+    public Queue<MowerConfiguration> getMownerConfiguration() throws ConfigurationException {
 
         try {
-            return new MownerConfigurationPaser().parse(getLines().subList(1, getLines().size()));
+            return new MowerConfigurationPaser().parse(getLines().subList(1, getLines().size()));
 
         } catch (ConfigurationFormatException e) {
             String message = "Error while parsing Mowner section of configuration file";

@@ -4,7 +4,7 @@ package com.publicissapient.tondeuse.domain;
 import java.util.UUID;
 
 /**
- * Capability to identify a mowner and its current location
+ * Capability to identify a mower and its current location
  */
 public interface PositionProvider {
 
@@ -18,6 +18,6 @@ public interface PositionProvider {
      * Current location of the associated mowner
      * @return a location
      */
-    MownerLocation getCurrentLocation();
+    MowerLocation getCurrentLocation();
 
 }

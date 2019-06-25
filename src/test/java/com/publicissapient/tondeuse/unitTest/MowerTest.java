@@ -1,7 +1,7 @@
 package com.publicissapient.tondeuse.unitTest;
 
 import com.publicissapient.tondeuse.domain.Mowner;
-import com.publicissapient.tondeuse.domain.MownerLocation;
+import com.publicissapient.tondeuse.domain.MowerLocation;
 import com.publicissapient.tondeuse.domain.Orientation;
 import com.publicissapient.tondeuse.domain.Position;
 import org.junit.jupiter.api.Test;
@@ -11,13 +11,13 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class MownerTest {
+class MowerTest {
 
 
     private Mowner buildMowner(int x, int y, Orientation orientation) {
         UUID id = UUID.randomUUID();
 
-        return Mowner.initialLocation(id, MownerLocation.with(Position.locatedAt(x, y), orientation));
+        return Mowner.initialLocation(id, MowerLocation.with(Position.locatedAt(x, y), orientation));
     }
 
     @Test
@@ -57,7 +57,7 @@ class MownerTest {
         mowner.addPositionChecker(position-> position.getX() <= 5 && position.getY() <= 5);
         mowner.moveForward();
 
-        var result = MownerLocation.with(Position.locatedAt(1,2), Orientation.N);
+        var result = MowerLocation.with(Position.locatedAt(1,2), Orientation.N);
 
         assertEquals( result, mowner.getCurrentLocation(), "Y should be '2' ");
     }
@@ -72,14 +72,14 @@ class MownerTest {
         mowner2.addPositionChecker(position->mowner1.checkcollision(mowner2.getId(),position));
 
         mowner2.moveForward();
-        var mowner2Result = MownerLocation.with(Position.locatedAt(1,0), Orientation.W);
+        var mowner2Result = MowerLocation.with(Position.locatedAt(1,0), Orientation.W);
         assertEquals( mowner2Result, mowner2.getCurrentLocation(),
                 "Mowner2 should not have moved : position should still be [1,1] ");
 
 
     }
 
-    boolean detected = false;
+    private boolean detected = false;
 
     @Test
     void mownerRaiseNotificationwhenCollisionIsDetected() {

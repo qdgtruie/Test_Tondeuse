@@ -37,7 +37,7 @@ public class Mowner implements Controllable, PositionProvider {
      */
     @Getter(AccessLevel.PUBLIC)
     @NonNull
-    private MownerLocation currentLocation;
+    private MowerLocation currentLocation;
 
 
     /**

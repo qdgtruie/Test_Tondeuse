@@ -28,7 +28,7 @@ public class Configuration {
      * Hold the configuration for each Mowner
      */
     @Getter
-    private Queue<MownerConfiguration> mowners;
+    private Queue<MowerConfiguration> mowners;
 
 
     /**

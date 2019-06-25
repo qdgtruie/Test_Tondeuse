@@ -1,9 +1,9 @@
 package com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser;
 
 import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
-import com.publicissapient.tondeuse.domain.configuration.MownerConfiguration;
+import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import com.publicissapient.tondeuse.domain.Instruction;
-import com.publicissapient.tondeuse.domain.MownerLocation;
+import com.publicissapient.tondeuse.domain.MowerLocation;
 import com.publicissapient.tondeuse.domain.Orientation;
 import com.publicissapient.tondeuse.domain.Position;
 import lombok.extern.slf4j.Slf4j;
@@ -15,21 +15,21 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class MownerConfigurationPaser {
+public class MowerConfigurationPaser {
 
-    public Queue<MownerConfiguration> parse(List<String> lines) throws ConfigurationFormatException {
+    public Queue<MowerConfiguration> parse(List<String> lines) throws ConfigurationFormatException {
 
-        var result = new LinkedList<MownerConfiguration>();
+        var result = new LinkedList<MowerConfiguration>();
 
         for (int i = 0; i < lines.size(); i = i + 2) {
 
             String mownerLine = lines.get(i);
-            MownerLocation location = parseMownerLocation(mownerLine);
+            MowerLocation location = parseMownerLocation(mownerLine);
 
             String instructionsLine = lines.get(i+1);
             InstructionQueue instructionQueue = parseInstructionSet(instructionsLine);
 
-            var conf = MownerConfiguration.with(location, instructionQueue);
+            var conf = MowerConfiguration.with(location, instructionQueue);
             result.add(conf);
         }
 
@@ -56,11 +56,11 @@ public class MownerConfigurationPaser {
     }
 
 
-    private MownerLocation parseMownerLocation(String mownerLine) throws ConfigurationFormatException {
+    private MowerLocation parseMownerLocation(String mownerLine) throws ConfigurationFormatException {
 
         final String SEPARATOR = " ";
 
-        MownerLocation result;
+        MowerLocation result;
 
         if (getPatternMowner().matcher(mownerLine).matches()) {
             var positionTokens = com.google.common.base.Splitter.on(SEPARATOR).splitToList(mownerLine);
@@ -69,7 +69,7 @@ public class MownerConfigurationPaser {
             int y = Integer.valueOf(positionTokens.get(1));
             String direction = positionTokens.get(2);
 
-            result= MownerLocation.with(Position.locatedAt(x, y), Orientation.valueOf(direction));
+            result= MowerLocation.with(Position.locatedAt(x, y), Orientation.valueOf(direction));
         }
         else
             throw new ConfigurationFormatException("Invalid Configuration format for Mowner : '"+mownerLine+"'");

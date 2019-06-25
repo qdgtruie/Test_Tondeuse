@@ -3,7 +3,7 @@ package com.publicissapient.tondeuse.service;
 import com.publicissapient.tondeuse.domain.*;
 import com.publicissapient.tondeuse.domain.configuration.Configuration;
 import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
-import com.publicissapient.tondeuse.domain.configuration.MownerConfiguration;
+import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEventArg;
 import com.publicissapient.tondeuse.errors.IllegalMownerInstruction;
 import io.vavr.collection.List;
@@ -90,8 +90,8 @@ public final class MownerController {
      * @param item MownerConfig used on the ExecutionBatch
      * @return a batch
      */
-    private ExecutionBatch createExecutionBatch(final GardenConfiguration garden, final MownerConfiguration item) {
-        MownerLocation initialLocation = item.getLocation();
+    private ExecutionBatch createExecutionBatch(final GardenConfiguration garden, final MowerConfiguration item) {
+        MowerLocation initialLocation = item.getLocation();
 
         var mowner = Mowner.initialLocation( UUID.randomUUID(),initialLocation);
         mowner.addPositionChecker(targetPosition -> garden.isValideMove(mowner.getId(),targetPosition) );

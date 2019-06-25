@@ -1,13 +1,13 @@
 package com.publicissapient.tondeuse.bdd;
 
 import com.publicissapient.tondeuse.domain.Instruction;
-import com.publicissapient.tondeuse.domain.MownerLocation;
+import com.publicissapient.tondeuse.domain.MowerLocation;
 import com.publicissapient.tondeuse.domain.Orientation;
 import com.publicissapient.tondeuse.domain.Position;
 import com.publicissapient.tondeuse.domain.configuration.Configuration;
 import com.publicissapient.tondeuse.domain.configuration.ConfigurationProvider;
 import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
-import com.publicissapient.tondeuse.domain.configuration.MownerConfiguration;
+import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.ConfigurationFormatException;
 import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Steps {
 
     private GardenConfiguration  gardenConfig;
-    private List<MownerConfiguration> mowners = new LinkedList<>();
+    private List<MowerConfiguration> mowners = new LinkedList<>();
     private MownerController controller = new MownerController();
 
     @BeforeScenario
@@ -48,8 +48,8 @@ public class Steps {
                     .map(Instruction::valueOf)
                     .collect(Collectors.toCollection(LinkedList::new));
 
-            mowners.add( MownerConfiguration.with(
-                    MownerLocation.with(Position.locatedAt(x, y), Orientation.valueOf(direction)),
+            mowners.add( MowerConfiguration.with(
+                    MowerLocation.with(Position.locatedAt(x, y), Orientation.valueOf(direction)),
                     InstructionQueue.with(queue)));
         }
         else
@@ -63,7 +63,7 @@ public class Steps {
 
         controller.load(Configuration.basedOn( new ConfigurationProvider(){
             public GardenConfiguration getGardenConfiguration() { return gardenConfig;}
-            public Queue<MownerConfiguration> getMownerConfiguration() {return (Queue<MownerConfiguration>)mowners;}
+            public Queue<MowerConfiguration> getMownerConfiguration() {return (Queue<MowerConfiguration>)mowners;}
         }
         )).run();
     }

@@ -13,7 +13,7 @@ import java.util.function.Predicate;
 @Slf4j
 @ToString(exclude = "positionListener")
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC, staticName = "with")
-public class MownerLocation {
+public class MowerLocation {
 
     /**
      * Current position of the location
@@ -141,8 +141,8 @@ public class MownerLocation {
      */
     @Override public boolean equals(Object o) {
         if (o == this) return true;
-        if (!(o instanceof MownerLocation)) return false;
-        MownerLocation other = (MownerLocation) o;
+        if (!(o instanceof MowerLocation)) return false;
+        MowerLocation other = (MowerLocation) o;
         if (!other.canEqual(this)) return false;
         if (this.getPosition() == null ? other.getPosition() != null : !this.getPosition().equals(other.getPosition())) return false;
         return this.getOrientation().equals(other.getOrientation());
@@ -150,7 +150,7 @@ public class MownerLocation {
     }
 
     private boolean canEqual(Object other) {
-        return other instanceof MownerLocation;
+        return other instanceof MowerLocation;
     }
 
     /**

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController("/")
-public class MownerWebController {
+public class MowerWebController {
 
     /**
      * Conf file reference
@@ -36,8 +36,8 @@ public class MownerWebController {
         log.info("[ConsoleApp] Starting mowner controller...");
         new MownerController()
                 .load(Configuration.basedOn(FileConfigurationProvider.fromFileResource(FILE_CONF)))
-                .withAlerter(MownerWebController::notifyInvalidMove)
-                .withResultPublisher(MownerWebController::printMownerFinalLocation)
+                .withAlerter(MowerWebController::notifyInvalidMove)
+                .withResultPublisher(MowerWebController::printMownerFinalLocation)
                 .run();
 
         return buffer.toString();

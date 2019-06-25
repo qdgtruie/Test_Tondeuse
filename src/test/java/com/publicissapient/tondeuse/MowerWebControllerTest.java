@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class MownerWebControllerTest {
+class MowerWebControllerTest {
 
     @Test
     void mownerWebControllerCanRunWithoutThrowing() {
-        assertDoesNotThrow(()->new MownerWebController().run());
+        assertDoesNotThrow(()->new MowerWebController().run());
     }
 
 

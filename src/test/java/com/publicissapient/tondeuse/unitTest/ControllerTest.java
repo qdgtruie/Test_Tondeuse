@@ -28,10 +28,10 @@ public class ControllerTest {
 
     private class OutOfBoundMemoryProvider extends LimittedMemoryProvider {
 
-        public Queue<MownerConfiguration> getMownerConfiguration()  {
-            Queue<MownerConfiguration> result = new LinkedList<>();
+        public Queue<MowerConfiguration> getMownerConfiguration()  {
+            Queue<MowerConfiguration> result = new LinkedList<>();
 
-            MownerLocation location = MownerLocation.with(Position.locatedAt(1,
+            MowerLocation location = MowerLocation.with(Position.locatedAt(1,
                     1), Orientation.S);
 
             Queue<Instruction> queue = new LinkedList<>();
@@ -39,7 +39,7 @@ public class ControllerTest {
             queue.add(Instruction.A);
             queue.add(Instruction.A);
 
-            var conf = MownerConfiguration.with(location, InstructionQueue.with(queue));
+            var conf = MowerConfiguration.with(location, InstructionQueue.with(queue));
             result.add(conf);
 
             return result;
@@ -79,11 +79,11 @@ public class ControllerTest {
             return random.nextInt(bound);
         }
 
-        public Queue<MownerConfiguration> getMownerConfiguration()  {
-            Queue<MownerConfiguration> result = new LinkedList<>();
+        public Queue<MowerConfiguration> getMownerConfiguration()  {
+            Queue<MowerConfiguration> result = new LinkedList<>();
 
             for (int i = 0; i < 100; i++) {
-                MownerLocation location = MownerLocation.with(Position.locatedAt(getRandomInt(100),
+                MowerLocation location = MowerLocation.with(Position.locatedAt(getRandomInt(100),
                         getRandomInt(100)), getRandomOrientation());
 
                 Queue<Instruction> queue = new LinkedList<>();
@@ -91,7 +91,7 @@ public class ControllerTest {
                 for (int j = 0; j < 100; j++)
                     queue.add(getRandomInstruction());
 
-                MownerConfiguration conf = MownerConfiguration.with(location, InstructionQueue.with(queue));
+                MowerConfiguration conf = MowerConfiguration.with(location, InstructionQueue.with(queue));
                 result.add(conf);
             }
             return result;
