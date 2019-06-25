@@ -38,7 +38,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-
+/*
 sourceSets {
     main {
         java {
@@ -55,7 +55,7 @@ sourceSets {
         }
     }
 }
-
+*/
 
 tasks.test {
         useJUnitPlatform {}
@@ -139,13 +139,16 @@ jacoco {
 tasks.jacocoTestReport {
     reports {
         xml.isEnabled = true
-        xml.destination = file("${buildDir}/jacocoxml")
-        csv.isEnabled = true
-        csv.destination = file("${buildDir}/jacococsv")
-        html.isEnabled = true
+        xml.destination = file("${buildDir}/jacocoxml.xml")
+        csv.isEnabled = false
+        csv.destination = file("${buildDir}/jacococsv.csv")
+        html.isEnabled = false
         html.destination = file("${buildDir}/jacocoHtml")
     }
 }
+
+tasks.test{finalizedBy("jacocoTestReport")}
+tasks.check{dependsOn("jacocoTestCoverageVerification")}
 
 tasks.register<JacocoReport>("applicationCodeCoverageReport") {
     executionData(tasks.run.get())
