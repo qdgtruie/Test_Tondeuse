@@ -109,8 +109,8 @@ public class MownerLocation {
             position.setX(nextX);
         }
         else
-            if(log.isWarnEnabled())
-                log.warn("Illegal position transition was attemped from ({},{}) to ({},{})",
+            if(log.isDebugEnabled())
+                log.debug("Illegal position transition was attemped from ({},{}) to ({},{})",
                     position.getX(),position.getY(), nextX,nextY);
 
     }
