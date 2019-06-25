@@ -3,7 +3,7 @@ package com.publicissapient.tondeuse.domain;
 import lombok.ToString;
 
 /**
- * set of instruction currently supported by mowners
+ * set of instruction currently supported by mowers
  */
 @ToString
 public enum Instruction {

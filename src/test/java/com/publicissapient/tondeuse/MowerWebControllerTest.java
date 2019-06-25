@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class MowerWebControllerTest {
 
     @Test
-    void mownerWebControllerCanRunWithoutThrowing() {
+    void mowerWebControllerCanRunWithoutThrowing() {
         assertDoesNotThrow(()->new MowerWebController().run());
     }
 

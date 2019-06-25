@@ -7,5 +7,5 @@ import java.util.Queue;
 public interface ConfigurationProvider {
 
     GardenConfiguration getGardenConfiguration() throws ConfigurationException;
-    Queue<MowerConfiguration> getMownerConfiguration()throws ConfigurationException;
+    Queue<MowerConfiguration> getMowerConfiguration()throws ConfigurationException;
 }

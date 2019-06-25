@@ -33,7 +33,7 @@ class ConfigurationFormatExceptionTest {
 
         var e = new ConfigurationFormatException(MESSAGE);
 
-        assertTrue(e instanceof Throwable, "IllegalMownerInstruction should be an exception");
+        assertTrue(e instanceof Throwable, "ConfigurationFormatException should be an exception");
     }
 
 }

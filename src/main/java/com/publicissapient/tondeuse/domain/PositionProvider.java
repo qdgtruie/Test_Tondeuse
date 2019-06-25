@@ -9,13 +9,13 @@ import java.util.UUID;
 public interface PositionProvider {
 
     /**
-     * Mowner ID
-     * @return a globally unique iendtifier for a given mowner
+     * Mower ID
+     * @return a globally unique identifier for a given mower
      */
     UUID getId();
 
     /**
-     * Current location of the associated mowner
+     * Current location of the associated mower
      * @return a location
      */
     MowerLocation getCurrentLocation();

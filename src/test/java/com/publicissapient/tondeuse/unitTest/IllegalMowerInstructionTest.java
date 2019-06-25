@@ -1,6 +1,6 @@
 package com.publicissapient.tondeuse.unitTest;
 
-import com.publicissapient.tondeuse.errors.IllegalMownerInstruction;
+import com.publicissapient.tondeuse.errors.IllegalMowerInstruction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,7 +11,7 @@ class IllegalMowerInstructionTest {
     void exceptionCanContainMessage() {
 
         final String MESSAGE = "MESSAGE";
-        var e = new IllegalMownerInstruction(MESSAGE);
+        var e = new IllegalMowerInstruction(MESSAGE);
 
         assertEquals(MESSAGE, e.getMessage(), "Exception message should be equals.");
     }
@@ -23,7 +23,7 @@ class IllegalMowerInstructionTest {
         final String INNER = "INNER";
 
         var ex = new Exception(INNER);
-        var e = new IllegalMownerInstruction(MESSAGE, ex);
+        var e = new IllegalMowerInstruction(MESSAGE, ex);
 
         assertEquals(MESSAGE, e.getMessage(), "Exception message should be equals.");
         assertEquals(ex.getMessage(), e.getCause().getMessage(), "Inner Exceptions message should be equals.");
@@ -35,8 +35,8 @@ class IllegalMowerInstructionTest {
     void exceptionIsThrowable() {
 
         final String MESSAGE = "MESSAGE";
-        var e = new IllegalMownerInstruction(MESSAGE);
+        var e = new IllegalMowerInstruction(MESSAGE);
 
-        assertTrue(e instanceof Throwable, "IllegalMownerInstruction should be an exception");
+        assertTrue(e instanceof Throwable, "IllegalMowerInstruction should be an exception");
     }
 }

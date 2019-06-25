@@ -11,7 +11,7 @@ import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.ConfigurationFormatException;
 import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
-import com.publicissapient.tondeuse.service.MownerController;
+import com.publicissapient.tondeuse.service.MowerController;
 import org.jbehave.core.annotations.*;
 
 import java.util.LinkedList;
@@ -25,13 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Steps {
 
     private GardenConfiguration  gardenConfig;
-    private List<MowerConfiguration> mowners = new LinkedList<>();
-    private MownerController controller = new MownerController();
+    private final List<MowerConfiguration> mowers = new LinkedList<>();
+    private MowerController controller = new MowerController();
 
     @BeforeScenario
     public void resetState(){
-        controller = new MownerController();
-        mowners.clear();
+        controller = new MowerController();
+        mowers.clear();
     }
 
     @Given("a garden of $width by $height")
@@ -48,7 +48,7 @@ public class Steps {
                     .map(Instruction::valueOf)
                     .collect(Collectors.toCollection(LinkedList::new));
 
-            mowners.add( MowerConfiguration.with(
+            mowers.add( MowerConfiguration.with(
                     MowerLocation.with(Position.locatedAt(x, y), Orientation.valueOf(direction)),
                     InstructionQueue.with(queue)));
         }
@@ -63,7 +63,7 @@ public class Steps {
 
         controller.load(Configuration.basedOn( new ConfigurationProvider(){
             public GardenConfiguration getGardenConfiguration() { return gardenConfig;}
-            public Queue<MowerConfiguration> getMownerConfiguration() {return (Queue<MowerConfiguration>)mowners;}
+            public Queue<MowerConfiguration> getMowerConfiguration() {return (Queue<MowerConfiguration>) mowers;}
         }
         )).run();
     }
@@ -71,9 +71,9 @@ public class Steps {
     @Then("Mower number $number should be at final position $x $y $orientationLabel")
     public void mowerShouldBeAtPosition(String number, int x, int y, String direction) {
         int idx =Integer.parseInt(number)-1;
-        assertEquals(x,mowners.get(idx).getLocation().getPosition().getX(),"x position should be ["+x+"]");
-        assertEquals(y,mowners.get(idx).getLocation().getPosition().getY(),"Y position should be ["+x+"]");
-        assertEquals(Orientation.valueOf(direction),mowners.get(idx).getLocation().getOrientation(),
+        assertEquals(x, mowers.get(idx).getLocation().getPosition().getX(),"x position should be ["+x+"]");
+        assertEquals(y, mowers.get(idx).getLocation().getPosition().getY(),"Y position should be ["+x+"]");
+        assertEquals(Orientation.valueOf(direction), mowers.get(idx).getLocation().getOrientation(),
                 "Orientation should be ["+direction+"]");
 
     }

@@ -18,20 +18,20 @@ import java.util.function.Consumer;
 @AllArgsConstructor(access = AccessLevel.PUBLIC,staticName = "endsAt")
 public class GardenConfiguration {
 
-    private Queue<Consumer<InvalidMoveEventArg>> consummers = new LinkedList<>();
+    private Queue<Consumer<InvalidMoveEventArg>> consumers = new LinkedList<>();
     private final Position upperRight;
 
-    public boolean isValideMove(UUID mownerID, Position target) {
+    public boolean isValidMove(UUID mowerID, Position target) {
         boolean valid = target.isWithinRectangle(upperRight);
         if(!valid)
-            for (var consummer:consummers)
-                consummer.accept(InvalidMoveEventArg.from(mownerID,target));
+            for (var consumer: consumers)
+                consumer.accept(InvalidMoveEventArg.from(mowerID,target));
 
         return valid;
     }
 
     public void addFenceViolationListener(Consumer<InvalidMoveEventArg> supplier) {
-        consummers.add(supplier);
+        consumers.add(supplier);
     }
 
 

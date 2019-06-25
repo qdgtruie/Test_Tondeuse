@@ -21,8 +21,8 @@ class FileConfigurationProviderTest {
     }
 
     @Property(tries = 100)
-    void getMownerConfiguration(@ForAll @StringLength(min=5) final String path) {
-        assertThrows(ConfigurationException.class, ()-> readConfigurationFromFileResource(path).getMownerConfiguration()
+    void getMowerConfiguration(@ForAll @StringLength(min=5) final String path) {
+        assertThrows(ConfigurationException.class, ()-> readConfigurationFromFileResource(path).getMowerConfiguration()
                 ,"Was expecting ConfigurationException");
     }
 }

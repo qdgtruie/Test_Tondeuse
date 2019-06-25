@@ -13,24 +13,24 @@ class GardenConfigurationTest {
     @Property
     void invalidMoveAttemptAreDetected(@ForAll("getGarden") GardenConfiguration garden) {
         var position = Position.locatedAt(garden.getUpperRight().getX()+1,garden.getUpperRight().getY());
-        assertFalse(garden.isValideMove(UUID.randomUUID(),position),"move should be invalid");
+        assertFalse(garden.isValidMove(UUID.randomUUID(),position),"move should be invalid");
     }
 
     @Property
     void validMoveAttemptPass(@ForAll("getGarden") GardenConfiguration garden) {
         var position = Position.locatedAt(garden.getUpperRight().getX()-1,garden.getUpperRight().getY());
-        assertTrue(garden.isValideMove(UUID.randomUUID(),position),"move should be valid");
+        assertTrue(garden.isValidMove(UUID.randomUUID(),position),"move should be valid");
     }
 
 
     @Property
-    void canGetConsummers(@ForAll("getGarden") GardenConfiguration garden) {
+    void canGetConsumers(@ForAll("getGarden") GardenConfiguration garden) {
 
-        assertEquals(0,garden.getConsummers().size(),"There should be 0 listener");
+        assertEquals(0,garden.getConsumers().size(),"There should be 0 listener");
         garden.addFenceViolationListener(evt ->{});
-        assertEquals(1,garden.getConsummers().size(),"There should be 1 listener");
+        assertEquals(1,garden.getConsumers().size(),"There should be 1 listener");
         garden.addFenceViolationListener(evt ->{});
-        assertEquals(2,garden.getConsummers().size(),"There should be 2 listener");
+        assertEquals(2,garden.getConsumers().size(),"There should be 2 listener");
     }
 
     @Provide
@@ -38,7 +38,7 @@ class GardenConfigurationTest {
         var xArbitrary = Arbitraries.integers().between(1, Integer.MAX_VALUE-1);
         var yArbitrary = Arbitraries.integers().between(1, Integer.MAX_VALUE-1);
         return Combinators.combine(xArbitrary,yArbitrary).as((x,y)->GardenConfiguration.endsAt(Position.locatedAt(x, y)));
-        //Arbitraries.combine() of(GardenConfiguration.endsAt(Position.locatedAt(x, y)));
+
     }
 
     @Property
@@ -62,7 +62,7 @@ class GardenConfigurationTest {
     @Property
     void noMatterTheGardenStringRepresentationIsAlwaysPossible(@ForAll("getGarden") GardenConfiguration garden) {
         assertDoesNotThrow(garden::toString,
-                "No matter the garden, string representation should always be pssible");
+                "No matter the garden, string representation should always be possible");
     }
 
 

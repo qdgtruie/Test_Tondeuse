@@ -1,7 +1,7 @@
 package com.publicissapient.tondeuse.domain;
 
 /**
- * Common set of feature supported by all the mowners from MownItNow
+ * Common set of feature supported by all the mowers from MowItNow
  */
 public interface Controllable {
 

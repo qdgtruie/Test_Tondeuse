@@ -5,7 +5,7 @@ import com.publicissapient.tondeuse.domain.configuration.Configuration;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEventArg;
 import com.publicissapient.tondeuse.domain.configuration.providers.FileConfigurationProvider;
-import com.publicissapient.tondeuse.service.MownerController;
+import com.publicissapient.tondeuse.service.MowerController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +25,7 @@ public class MowerWebController {
     private static final StringBuilder buffer = new StringBuilder();
 
     /**
-     * Run the MownerController
+     * Run the MowerController
      * @return a string representing the result.
      * @throws ConfigurationException when config is not right
      */
@@ -33,11 +33,11 @@ public class MowerWebController {
     public String run() throws ConfigurationException {
         buffer.setLength(0);
 
-        log.info("[ConsoleApp] Starting mowner controller...");
-        new MownerController()
+        log.info("[ConsoleApp] Starting mower controller...");
+        new MowerController()
                 .load(Configuration.basedOn(FileConfigurationProvider.fromFileResource(FILE_CONF)))
                 .withAlerter(MowerWebController::notifyInvalidMove)
-                .withResultPublisher(MowerWebController::printMownerFinalLocation)
+                .withResultPublisher(MowerWebController::printMowerFinalLocation)
                 .run();
 
         return buffer.toString();
@@ -49,23 +49,23 @@ public class MowerWebController {
      */
     private static void notifyInvalidMove(InvalidMoveEventArg x) {
         if (log.isInfoEnabled())
-            log.info("[Mowner {} ] tried to reach invalid position at {}",
-                    x.getMownerID().toString(), x.getTargetPosition().toString());
+            log.info("[Mower {} ] tried to reach invalid position at {}",
+                    x.getMowerID().toString(), x.getTargetPosition().toString());
 
-        buffer.append("[Mowner ");
-        buffer.append(x.getMownerID().toString());
+        buffer.append("[Mower ");
+        buffer.append(x.getMowerID().toString());
         buffer.append("] tried to reach invalid position at : ");
         buffer.append(x.getTargetPosition().toString());
         buffer.append("<p/>");
     }
 
     /**
-     * handle finakl move notification (log, display)
+     * handle final move notification (log, display)
      * @param x final position
      */
-    private static void printMownerFinalLocation(PositionProvider x) {
+    private static void printMowerFinalLocation(PositionProvider x) {
         if (log.isInfoEnabled())
-            log.info("[Mowner {} ] Job complete : position is {}",
+            log.info("[Mower {} ] Job complete : position is {}",
                     x.getId().toString(), x.getCurrentLocation().toString());
 
         buffer.append(x.getCurrentLocation().getPosition().getX());

@@ -8,7 +8,7 @@ import java.util.Queue;
 import java.util.function.Predicate;
 
 /**
- * Define the location (orientation + position) of a mowner
+ * Define the location (orientation + position) of a mower
  */
 @Slf4j
 @ToString(exclude = "positionListener")
@@ -31,7 +31,7 @@ public class MowerLocation {
 
 
     /**
-     * Queue of hanlder for position change notoification
+     * Queue of handler for position change notification
      */
     private final Queue<Predicate<Position>> positionListener = new LinkedList<>();
 
@@ -103,14 +103,14 @@ public class MowerLocation {
                 break;
         }
 
-        //triger event prior to actually changing position
+        //trigger event prior to actually changing position
         if (onMovingTo(Position.locatedAt(nextX, nextY))) {
             position.setY(nextY);
             position.setX(nextX);
         }
         else
             if(log.isDebugEnabled())
-                log.debug("Illegal position transition was attemped from ({},{}) to ({},{})",
+                log.debug("Illegal position transition was attempted from ({},{}) to ({},{})",
                     position.getX(),position.getY(), nextX,nextY);
 
     }
@@ -135,7 +135,7 @@ public class MowerLocation {
     }
 
     /**
-     * Test equallity between two Location
+     * Test equality between two Location
      * @param o an object to test against.
      * @return true if this object is the same as the obj argument; false otherwise.
      */

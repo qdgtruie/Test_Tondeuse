@@ -19,28 +19,28 @@ class ConfigurationTest {
 
 
     @Test
-    void loadConfigurationFromRessouce() throws ConfigurationException {
+    void loadConfigurationFromResource() throws ConfigurationException {
 
         ConfigurationProvider source = FileConfigurationProvider.fromFileResource(FILE_CONF);
 
-        var conf = source.getMownerConfiguration();
+        var conf = source.getMowerConfiguration();
 
         logger.info(conf.toString());
 
-        assertEquals(2, conf.size(), "There should be 2 mowners.");
+        assertEquals(2, conf.size(), "There should be 2 mowers.");
     }
 
     @Test
-    void loadConfigurationFromWrongRessouce()  {
+    void loadConfigurationFromWrongResource()  {
 
         assertThrows(ConfigurationException.class, () -> {
 
             ConfigurationProvider source = FileConfigurationProvider.fromFileResource(DUMMY_FILE);
-            var conf = source.getMownerConfiguration();
+            var conf = source.getMowerConfiguration();
 
             logger.info(conf.toString());
 
-            assertEquals(2, conf.size(), "There should be 2 mowners.");
+            assertEquals(2, conf.size(), "There should be 2 mowers.");
         });
     }
 

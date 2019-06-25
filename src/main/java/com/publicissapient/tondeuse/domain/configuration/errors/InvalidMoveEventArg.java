@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PUBLIC,staticName = "from")
 public class InvalidMoveEventArg {
     @Getter
-    private UUID mownerID;
+    private UUID mowerID;
     @Getter
     private Position targetPosition;
 }

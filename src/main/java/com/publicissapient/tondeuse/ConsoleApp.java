@@ -8,7 +8,7 @@ import com.publicissapient.tondeuse.domain.configuration.Configuration;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEventArg;
 import com.publicissapient.tondeuse.domain.configuration.providers.FileConfigurationProvider;
-import com.publicissapient.tondeuse.service.MownerController;
+import com.publicissapient.tondeuse.service.MowerController;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -18,11 +18,11 @@ class ConsoleApp {
 
     private void run()  throws ConfigurationException {
 
-        log.info("[ConsoleApp] Starting mowner controller...");
-        new MownerController()
+        log.info("[ConsoleApp] Starting mower controller...");
+        new MowerController()
                 .load(Configuration.basedOn(FileConfigurationProvider.fromFileResource(FILE_CONF)))
                 .withAlerter(ConsoleApp::notifyInvalidMove)
-                .withResultPublisher(ConsoleApp::printMownerFinalLocation)
+                .withResultPublisher(ConsoleApp::printMowerFinalLocation)
                 .run();
     }
 
@@ -41,17 +41,17 @@ class ConsoleApp {
      */
     private static void notifyInvalidMove(InvalidMoveEventArg x) {
         if (log.isInfoEnabled())
-            log.info("[Mowner {} ] tried to reach invalid position at {}",
-                    x.getMownerID().toString(), x.getTargetPosition().toString());
+            log.info("[Mower {} ] tried to reach invalid position at {}",
+                    x.getMowerID().toString(), x.getTargetPosition().toString());
     }
 
     /**
-     * handle finakl move notification (log)
+     * handle final move notification (log)
      * @param x final position
      */
-    private static void printMownerFinalLocation(PositionProvider x) {
+    private static void printMowerFinalLocation(PositionProvider x) {
         if (log.isInfoEnabled())
-            log.info("[Mowner {} ] Job complete : position is {}",
+            log.info("[Mower {} ] Job complete : position is {}",
                     x.getId().toString(), x.getCurrentLocation().toString());
     }
 

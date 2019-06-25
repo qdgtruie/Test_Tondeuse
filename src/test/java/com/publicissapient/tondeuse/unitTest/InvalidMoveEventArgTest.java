@@ -15,18 +15,18 @@ class InvalidMoveEventArgTest {
         Tuple tuple = new Tuple().invoke();
         InvalidMoveEventArg instance = tuple.getInstance();
 
-        assertEquals(tuple.getId(),instance.getMownerID(),"ID should be similar");
-        assertEquals(tuple.getPosition(),instance.getTargetPosition(),"Positon should be similar");
+        assertEquals(tuple.getId(),instance.getMowerID(),"ID should be similar");
+        assertEquals(tuple.getPosition(),instance.getTargetPosition(),"Position should be similar");
 
     }
 
     @Test
-    void canSetMownerID() {
+    void canSetMowerID() {
         Tuple tuple = new Tuple().invoke();
 
         var id = UUID.randomUUID();
-        tuple.instance.setMownerID(id);
-        assertEquals(id,tuple.instance.getMownerID(),"ID should be similar");
+        tuple.instance.setMowerID(id);
+        assertEquals(id,tuple.instance.getMowerID(),"ID should be similar");
 
     }
 
@@ -36,20 +36,20 @@ class InvalidMoveEventArgTest {
         Tuple tuple = new Tuple().invoke();
         var target = Position.locatedAt(5,5);
         tuple.instance.setTargetPosition(target);
-        assertEquals(target,tuple.instance.getTargetPosition(),"Positon should be similar");
+        assertEquals(target,tuple.instance.getTargetPosition(),"Position should be similar");
 
     }
 
     @Test
-    void canGetMownerID() {
+    void canGetMowerID() {
         Tuple tuple = new Tuple().invoke();
-        assertEquals(tuple.id,tuple.instance.getMownerID(),"ID should be similar");
+        assertEquals(tuple.id,tuple.instance.getMowerID(),"ID should be similar");
     }
 
     @Test
     void canGetTargetPosition() {
         Tuple tuple = new Tuple().invoke();
-        assertEquals(tuple.getPosition(),tuple.instance.getTargetPosition(),"Positon should be similar");
+        assertEquals(tuple.getPosition(),tuple.instance.getTargetPosition(),"Position should be similar");
 
     }
 

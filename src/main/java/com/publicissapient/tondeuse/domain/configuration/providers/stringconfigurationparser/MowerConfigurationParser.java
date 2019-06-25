@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class MowerConfigurationPaser {
+public class MowerConfigurationParser {
 
     public Queue<MowerConfiguration> parse(List<String> lines) throws ConfigurationFormatException {
 
@@ -23,8 +23,8 @@ public class MowerConfigurationPaser {
 
         for (int i = 0; i < lines.size(); i = i + 2) {
 
-            String mownerLine = lines.get(i);
-            MowerLocation location = parseMownerLocation(mownerLine);
+            String mowerLine = lines.get(i);
+            MowerLocation location = parseMowerLocation(mowerLine);
 
             String instructionsLine = lines.get(i+1);
             InstructionQueue instructionQueue = parseInstructionSet(instructionsLine);
@@ -56,14 +56,14 @@ public class MowerConfigurationPaser {
     }
 
 
-    private MowerLocation parseMownerLocation(String mownerLine) throws ConfigurationFormatException {
+    private MowerLocation parseMowerLocation(String mowerLine) throws ConfigurationFormatException {
 
         final String SEPARATOR = " ";
 
         MowerLocation result;
 
-        if (getPatternMowner().matcher(mownerLine).matches()) {
-            var positionTokens = com.google.common.base.Splitter.on(SEPARATOR).splitToList(mownerLine);
+        if (getPatternMower().matcher(mowerLine).matches()) {
+            var positionTokens = com.google.common.base.Splitter.on(SEPARATOR).splitToList(mowerLine);
 
             int x = Integer.valueOf(positionTokens.get(0));
             int y = Integer.valueOf(positionTokens.get(1));
@@ -72,18 +72,18 @@ public class MowerConfigurationPaser {
             result= MowerLocation.with(Position.locatedAt(x, y), Orientation.valueOf(direction));
         }
         else
-            throw new ConfigurationFormatException("Invalid Configuration format for Mowner : '"+mownerLine+"'");
+            throw new ConfigurationFormatException("Invalid Configuration format for Mower : '"+mowerLine+"'");
 
         return result;
     }
 
-    private Pattern patternMowner;
+    private Pattern patternMower;
 
-    private Pattern getPatternMowner() {
-        if(patternMowner==null)
-            patternMowner = Pattern.compile("\\d+ \\d+ [NSEW]");
+    private Pattern getPatternMower() {
+        if(patternMower ==null)
+            patternMower = Pattern.compile("\\d+ \\d+ [NSEW]");
 
-        return patternMowner;
+        return patternMower;
     }
 
     private Pattern patternInstruction;

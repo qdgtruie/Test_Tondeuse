@@ -5,8 +5,9 @@ import com.publicissapient.tondeuse.domain.configuration.*;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEventArg;
 import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
-import com.publicissapient.tondeuse.service.MownerController;
 
+
+import com.publicissapient.tondeuse.service.MowerController;
 import org.junit.jupiter.api.Test;
 import net.jqwik.api.*;
 
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ControllerTest {
 
-    private class LimittedMemoryProvider extends MemoryProvider {
+    private class LimitedMemoryProvider extends MemoryProvider {
 
         public GardenConfiguration getGardenConfiguration()  {
             return GardenConfiguration.endsAt(Position.locatedAt(getRandomInt(10), getRandomInt(10)));
@@ -26,9 +27,9 @@ public class ControllerTest {
 
     }
 
-    private class OutOfBoundMemoryProvider extends LimittedMemoryProvider {
+    private class OutOfBoundMemoryProvider extends LimitedMemoryProvider {
 
-        public Queue<MowerConfiguration> getMownerConfiguration()  {
+        public Queue<MowerConfiguration> getMowerConfiguration()  {
             Queue<MowerConfiguration> result = new LinkedList<>();
 
             MowerLocation location = MowerLocation.with(Position.locatedAt(1,
@@ -79,7 +80,7 @@ public class ControllerTest {
             return random.nextInt(bound);
         }
 
-        public Queue<MowerConfiguration> getMownerConfiguration()  {
+        public Queue<MowerConfiguration> getMowerConfiguration()  {
             Queue<MowerConfiguration> result = new LinkedList<>();
 
             for (int i = 0; i < 100; i++) {
@@ -100,31 +101,31 @@ public class ControllerTest {
 
 
     @Property
-    void mownerCanRunAtScale() throws ConfigurationException {
+    void mowerCanRunAtScale() throws ConfigurationException {
 
-        MownerController controller = new MownerController().load(Configuration.basedOn(new MemoryProvider()));
+        MowerController controller = new MowerController().load(Configuration.basedOn(new MemoryProvider()));
         controller.run();
 
     }
 
     @Test
-    void mownerCanNotGoOutsideOfGarden() throws ConfigurationException {
+    void mowerCanNotGoOutsideOfGarden() throws ConfigurationException {
 
-        MownerController controller = new MownerController().load(Configuration.basedOn(new LimittedMemoryProvider()));
+        MowerController controller = new MowerController().load(Configuration.basedOn(new LimitedMemoryProvider()));
         controller.run();
     }
 
     private boolean messageGotPublished = false;
 
     @Test
-    void mownerCanPublishResult() throws ConfigurationException {
+    void mowerCanPublishResult() throws ConfigurationException {
 
-       new MownerController()
+       new MowerController()
                          .withResultPublisher(this::publishPosition)
-                         .load(Configuration.basedOn(new LimittedMemoryProvider()))
+                         .load(Configuration.basedOn(new LimitedMemoryProvider()))
                          .run();
 
-        assertTrue(messageGotPublished,"Pusblish should have changed the value to true" );
+        assertTrue(messageGotPublished,"Publish should have changed the value to true" );
     }
 
     private void publishPosition(PositionProvider positionProvider) {
@@ -133,9 +134,9 @@ public class ControllerTest {
 
 
     @Test
-    void mownerCanRaiseOutOfBoundAlert() throws ConfigurationException {
+    void mowerCanRaiseOutOfBoundAlert() throws ConfigurationException {
 
-        new MownerController()
+        new MowerController()
                 .withAlerter(this::notifyAlert)
                 .load(Configuration.basedOn(new OutOfBoundMemoryProvider()))
                 .run();

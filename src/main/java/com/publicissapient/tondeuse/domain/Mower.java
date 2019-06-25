@@ -12,20 +12,20 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
- * Reification of a mowner which can be controlled to move and can prtovide its position
+ * Reification of a mower which can be controlled to move and can provide its position
  */
 @Slf4j
 @ToString
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC,staticName = "initialLocation")
-public class Mowner implements Controllable, PositionProvider {
+public class Mower implements Controllable, PositionProvider {
 
     /**
      * Maintain listener for collision
      */
-    private Queue<Consumer<InvalidMoveEventArg>> consummers = new LinkedList<>();
+    private final Queue<Consumer<InvalidMoveEventArg>> consumers = new LinkedList<>();
 
     /**
-     * ID of the Mowner
+     * ID of the Mower
      */
     @EqualsAndHashCode.Include
     @Getter(AccessLevel.PUBLIC)
@@ -33,7 +33,7 @@ public class Mowner implements Controllable, PositionProvider {
     private UUID id;
 
     /**
-     * Current position & orientation of the mowner
+     * Current position & orientation of the mower
      */
     @Getter(AccessLevel.PUBLIC)
     @NonNull
@@ -41,7 +41,7 @@ public class Mowner implements Controllable, PositionProvider {
 
 
     /**
-     * Add a mown boundary checker to the mowner
+     * Add a mow boundary checker to the mower
      * @param positionCheck predicate to perform the check
      */
     public void addPositionChecker(Predicate<Position> positionCheck ){
@@ -50,7 +50,7 @@ public class Mowner implements Controllable, PositionProvider {
     }
 
     /**
-     * Request the Mowner to turn Right
+     * Request the Mower to turn Right
      */
     @Override
     public void turnRight() {
@@ -58,7 +58,7 @@ public class Mowner implements Controllable, PositionProvider {
     }
 
     /**
-     * Request the Mowner to turn Left
+     * Request the Mower to turn Left
      */
     @Override
     public void turnLeft() {
@@ -66,7 +66,7 @@ public class Mowner implements Controllable, PositionProvider {
     }
 
     /**
-     * Request the Mowner to move forward.
+     * Request the Mower to move forward.
      */
     @Override
     public void moveForward(){
@@ -76,23 +76,23 @@ public class Mowner implements Controllable, PositionProvider {
 
 
     /**
-     * Check whether a given position conflict with current mowner position
-     * @param mownerID id of the mowner attempting a move
+     * Check whether a given position conflict with current mower position
+     * @param mowerID id of the mower attempting a move
      * @param targetPosition position to be check against
      * @return true if the position do not create a conflict
      */
-    public boolean checkcollision(UUID mownerID, Position targetPosition) {
+    public boolean checkCollision(UUID mowerID, Position targetPosition) {
         boolean valid =  ! targetPosition.equals(this.currentLocation.getPosition());
 
         if(!valid)
-            for (var consummer:consummers)
-                consummer.accept(InvalidMoveEventArg.from(mownerID,targetPosition));
+            for (var consumer: consumers)
+                consumer.accept(InvalidMoveEventArg.from(mowerID,targetPosition));
 
         return valid;
     }
 
     public void addCollisionListener(Consumer<InvalidMoveEventArg> supplier) {
-        consummers.add(supplier);
+        consumers.add(supplier);
     }
 
 }

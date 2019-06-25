@@ -23,7 +23,7 @@ public  @Data class Position {
 
 
     /**
-     * Check whether the position is whithin the Garden
+     * Check whether the position is within the Garden
      * @param upperRight upperRight corner of the Garden
      * @return true when the position is within the Garden.
      */

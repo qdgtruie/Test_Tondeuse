@@ -6,7 +6,7 @@ import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.ConfigurationFormatException;
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.GardenConfigurationParser;
-import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.MowerConfigurationPaser;
+import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.MowerConfigurationParser;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -62,12 +62,12 @@ public class FileConfigurationProvider implements ConfigurationProvider {
     }
 
 
-    private static InputStream getFileStream(@NonNull final String aRessourceName) throws FileNotFoundException {
-        File file = new File(aRessourceName);
+    private static InputStream getFileStream(@NonNull final String aResourceName) throws FileNotFoundException {
+        File file = new File(aResourceName);
         if(file.exists())
             return new FileInputStream(file);
         else
-            return FileConfigurationProvider.class.getClassLoader().getResourceAsStream(aRessourceName);
+            return FileConfigurationProvider.class.getClassLoader().getResourceAsStream(aResourceName);
 
     }
 
@@ -91,13 +91,13 @@ public class FileConfigurationProvider implements ConfigurationProvider {
 
 
     @Override
-    public Queue<MowerConfiguration> getMownerConfiguration() throws ConfigurationException {
+    public Queue<MowerConfiguration> getMowerConfiguration() throws ConfigurationException {
 
         try {
-            return new MowerConfigurationPaser().parse(getLines().subList(1, getLines().size()));
+            return new MowerConfigurationParser().parse(getLines().subList(1, getLines().size()));
 
         } catch (ConfigurationFormatException e) {
-            String message = "Error while parsing Mowner section of configuration file";
+            String message = "Error while parsing Mower section of configuration file";
             if(log.isErrorEnabled())
                 log.error(message, e);
             throw new ConfigurationException(message, e);

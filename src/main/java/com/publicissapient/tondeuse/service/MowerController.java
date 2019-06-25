@@ -5,7 +5,7 @@ import com.publicissapient.tondeuse.domain.configuration.Configuration;
 import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEventArg;
-import com.publicissapient.tondeuse.errors.IllegalMownerInstruction;
+import com.publicissapient.tondeuse.errors.IllegalMowerInstruction;
 import io.vavr.collection.List;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +15,14 @@ import java.util.Queue;
 import java.util.UUID;
 
 /**
- * Central controller to program the mowners
+ * Central controller to program the mowers
  */
 @Slf4j
-public final class MownerController {
+public final class MowerController {
 
 
     /**
-     * Queue of mowners (with their attached instruction set) to be controlled
+     * Queue of mowers (with their attached instruction set) to be controlled
      */
     private final Queue<ExecutionBatch> executions = new LinkedList<>();
 
@@ -30,32 +30,32 @@ public final class MownerController {
      * Alerter for out of garden bounds events
      */
     @Setter
-    private OffBoundAlerter offboundAlert;
+    private OffBoundAlerter offBoundAlert;
 
 
     /**
-     * Publisher to display final position of mowners
+     * Publisher to display final position of mowers
      */
     @Setter
     private ResultPublisher publisher;
 
 
     /**
-     * Initialize mowners based on a given configuration
-     * @param config a configuratio  to be loaded
+     * Initialize mowers based on a given configuration
+     * @param config a configuration  to be loaded
      * @return the controller
      */
-    public MownerController load(@NonNull final Configuration config) {
+    public MowerController load(@NonNull final Configuration config) {
 
         var garden = config.getGarden();
         garden.addFenceViolationListener(this::raiseAlertNotification);
 
         executions.clear();
 
-        for (var item : config.getMowners())
+        for (var item : config.getMowers())
             executions.add(createExecutionBatch(garden, item));
 
-        makeMownersSeeEachOthers();
+        makeMowersSeeEachOthers();
 
         if(log.isDebugEnabled()) {
             log.debug("Controller loaded garden configuration {}", garden.toString());
@@ -66,19 +66,19 @@ public final class MownerController {
     }
 
     /**
-     * reprocess the executionBatches to add to each mowner position checkers from all the other mowners.
+     * reprocess the executionBatches to add to each mower position checkers from all the other mowers.
      */
-    private void makeMownersSeeEachOthers() {
+    private void makeMowersSeeEachOthers() {
 
         for (var batch : executions)
-            for (var otherBtach : executions) {
+            for (var otherBatch : executions) {
 
-                var currentMowner = batch.getMowner();
-                var otherMowner = otherBtach.getMowner();
+                var currentMower = batch.getMower();
+                var otherMower = otherBatch.getMower();
 
-                if (currentMowner != otherMowner) {
-                    currentMowner.addPositionChecker(
-                            targetPosition -> otherMowner.checkcollision(currentMowner.getId(), targetPosition)
+                if (currentMower != otherMower) {
+                    currentMower.addPositionChecker(
+                            targetPosition -> otherMower.checkCollision(currentMower.getId(), targetPosition)
                     );
                 }
             }
@@ -87,37 +87,37 @@ public final class MownerController {
     /**
      * Build a ExecutionBatch object
      * @param garden to be used on the ExecutionBatch
-     * @param item MownerConfig used on the ExecutionBatch
+     * @param item MowerConfig used on the ExecutionBatch
      * @return a batch
      */
     private ExecutionBatch createExecutionBatch(final GardenConfiguration garden, final MowerConfiguration item) {
         MowerLocation initialLocation = item.getLocation();
 
-        var mowner = Mowner.initialLocation( UUID.randomUUID(),initialLocation);
-        mowner.addPositionChecker(targetPosition -> garden.isValideMove(mowner.getId(),targetPosition) );
-        mowner.addCollisionListener(this::raiseAlertNotification);
+        var mower = Mower.initialLocation( UUID.randomUUID(),initialLocation);
+        mower.addPositionChecker(targetPosition -> garden.isValidMove(mower.getId(),targetPosition) );
+        mower.addCollisionListener(this::raiseAlertNotification);
 
         var instructions = item.getInstructionQueue().getInstructions();
 
-        return new ExecutionBatch(mowner,instructions);
+        return new ExecutionBatch(mower,instructions);
     }
 
     /**
      * Set the out of bound Alerter on a given channel
-     * @param offboundAlert an OffBoundAlerter instance to raise alerts
+     * @param offBoundAlert an OffBoundAlerter instance to raise alerts
      * @return the controller
      */
-    public MownerController withAlerter(final OffBoundAlerter offboundAlert){
-        setOffboundAlert(offboundAlert);
+    public MowerController withAlerter(final OffBoundAlerter offBoundAlert){
+        setOffBoundAlert(offBoundAlert);
         return this;
     }
 
     /**
-     * Set the result publiosher on a given channel
+     * Set the result publisher on a given channel
      * @param publisher a result publisher
      * @return  the controller
      */
-    public MownerController withResultPublisher(final ResultPublisher publisher) {
+    public MowerController withResultPublisher(final ResultPublisher publisher) {
         setPublisher(publisher);
         return this;
     }
@@ -127,8 +127,8 @@ public final class MownerController {
      * @param e the invalid move event
      */
     private void raiseAlertNotification(final InvalidMoveEventArg e) {
-        if(offboundAlert != null)
-            offboundAlert.notifyAlert(e);
+        if(offBoundAlert != null)
+            offBoundAlert.notifyAlert(e);
     }
 
     /**
@@ -142,60 +142,60 @@ public final class MownerController {
 
 
     /**
-     * Tuple of Mowner and associated Instruction
+     * Tuple of Mower and associated Instruction
      */
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     private @Data class ExecutionBatch {
 
         @Getter
-        private final Mowner mowner;
+        private final Mower mower;
         @Getter
         private final Queue<Instruction> instructions;
 
     }
 
     /**
-     * Run the all the mowners
+     * Run the all the mowers
      */
     public void run() {
         for (ExecutionBatch e : executions) {
-            runMowner(e.getMowner(), e.getInstructions());
+            runMower(e.getMower(), e.getInstructions());
         }
     }
 
     /**
-     * Run one specific mowner
-     * @param mowner mowner to be executed
-     * @param instructions set of instruction to be eecuted on the mowner
+     * Run one specific mower
+     * @param mower mower to be executed
+     * @param instructions set of instruction to be executed on the mower
      */
-    private void runMowner(@NonNull Controllable mowner, @NonNull Queue<Instruction> instructions) {
+    private void runMower(@NonNull Controllable mower, @NonNull Queue<Instruction> instructions) {
 
-        List.ofAll(instructions).forEach(step->executeStep(mowner,step));
+        List.ofAll(instructions).forEach(step->executeStep(mower,step));
 
-        raisePositionPublication(((PositionProvider) mowner));
+        raisePositionPublication(((PositionProvider) mower));
     }
 
     /**
-     * Try to execute a single instruction on a single mowner
-     * @param mowner mowner to execute instruction on
-     * @param step instruction to be executed on the given mowner
+     * Try to execute a single instruction on a single mower
+     * @param mower mower to execute instruction on
+     * @param step instruction to be executed on the given mower
      */
-    private void executeStep(@NonNull Controllable mowner, @NonNull Instruction step) {
+    private void executeStep(@NonNull Controllable mower, @NonNull Instruction step) {
 
-        log.debug("Executing instruction [{}] on mowner {}", step.toString(),mowner.toString());
+        log.debug("Executing instruction [{}] on mower {}", step.toString(),mower.toString());
 
         switch (step) {
             case A:
-                mowner.moveForward();
+                mower.moveForward();
                 break;
             case D:
-                mowner.turnRight();
+                mower.turnRight();
                 break;
             case G:
-                mowner.turnLeft();
+                mower.turnLeft();
                 break;
             default:
-                throw new IllegalMownerInstruction("Unexpected Instruction value: " + step);
+                throw new IllegalMowerInstruction("Unexpected Instruction value: " + step);
         }
 
     }

@@ -38,6 +38,6 @@ class ConfigurationExceptionTest {
         final String MESSAGE = "MESSAGE";
         var e = new ConfigurationException(MESSAGE);
 
-        assertTrue(e instanceof Throwable, "IllegalMownerInstruction should be an exception");
+        assertTrue(e instanceof Throwable, "ConfigurationException should be an exception");
     }
 }

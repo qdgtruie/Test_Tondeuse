@@ -8,20 +8,20 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Reificate the configuration for ONE Mowner
+ * Reificate the configuration for ONE Mower
  */
 @ToString
 @AllArgsConstructor(access = AccessLevel.PUBLIC,staticName = "with")
 public class MowerConfiguration {
 
     /***
-     * Hold the mowner location, both in direction and position
+     * Hold the mower location, both in direction and position
      */
     @Getter
     private MowerLocation location;
 
     /**
-     * Hold the sequence of instruction to be executed by the mowner
+     * Hold the sequence of instruction to be executed by the mower
      */
     @Getter
     private InstructionQueue instructionQueue;
