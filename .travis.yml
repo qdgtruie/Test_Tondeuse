@@ -24,7 +24,6 @@ cache:
     - $HOME/google-cloud-sdk/
 
 jdk:
-  - oraclejdk11
   - openjdk11
 
 services:
