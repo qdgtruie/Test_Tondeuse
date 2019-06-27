@@ -56,6 +56,9 @@ docker run --rm tondeuse -p8080:8080
 ##### Model description #####
 ![Class diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/qdgtruie/Test_Tondeuse/master/src/main/resources/diagrams/classDiagram-configuration.puml)
 
+##### Activity description #####
+![Activity diagram](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/qdgtruie/Test_Tondeuse/master/src/main/resources/diagrams/activity.puml)
+
 ##### CI/CD Sequence description #####
 1. Use of Travis to build, run property based testing and run sonarcloud
 2. Package as a Docker Image
