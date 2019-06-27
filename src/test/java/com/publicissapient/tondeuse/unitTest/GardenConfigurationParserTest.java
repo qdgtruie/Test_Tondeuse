@@ -10,13 +10,13 @@ package com.publicissapient.tondeuse.unitTest;
 
 class GardenConfigurationParserTest {
 
-    @Property(tries=100)
+    @Property(tries=30)
     void parsingRandomStringThrowsConfigurationFormatException(@ForAll final String line) {
         assertThrows(ConfigurationFormatException.class,
                 ()-> new GardenConfigurationParser().parse(line));
     }
 
-    @Property(tries=100)
+    @Property(tries=30)
     void parsingValidFormatDoesNotThrow(@ForAll @IntRange() final int x,
                @ForAll @IntRange()  final int y)  {
 

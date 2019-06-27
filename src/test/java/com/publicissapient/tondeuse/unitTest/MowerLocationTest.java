@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MowerLocationTest {
 
-    @Property(tries=100)
+    @Property(tries=20)
     void mowerLocationEqualsIsProperlyWorking(@ForAll int x, @ForAll int y) {
 
         var location = MowerLocation.with(Position.locatedAt(x,y), Orientation.N);
@@ -24,7 +24,7 @@ class MowerLocationTest {
 
     }
 
-    @Property(tries=100)
+    @Property(tries=20)
     void mowerLocationHashIsSpecific(@ForAll int x, @ForAll int y){
 
         var location = MowerLocation.with(Position.locatedAt(x,y), Orientation.N);

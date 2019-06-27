@@ -1,5 +1,6 @@
 package com.publicissapient.tondeuse.unitTest;
 
+import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.providers.FileConfigurationProvider;
@@ -14,12 +15,12 @@ import java.io.RandomAccessFile;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.slf4j.LoggerFactory.*;
 
-class FileConfigurationProviderTest {
+class FileConfigurationProviderTest implements AutoCloseable {
 
 
     public  FileConfigurationProviderTest()  {
-        var logger = (Logger) getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME);
-        logger.setLevel(ch.qos.logback.classic.Level.ALL);
+        var logger = (Logger) getLogger(Logger.ROOT_LOGGER_NAME);
+        logger.setLevel(Level.ALL);
     }
 
     private FileConfigurationProvider readConfigurationFromFileResource(final String path) {
@@ -63,6 +64,12 @@ class FileConfigurationProviderTest {
                 ,"Was expecting ConfigurationException");
 
 
+    }
+
+    @Override
+    public void close() {
+        var logger = (Logger) getLogger(Logger.ROOT_LOGGER_NAME);
+        logger.setLevel(Level.ERROR);
     }
 
 }
