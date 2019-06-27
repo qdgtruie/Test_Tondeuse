@@ -38,7 +38,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-/*
+
 sourceSets {
     main {
         java {
@@ -55,7 +55,7 @@ sourceSets {
         }
     }
 }
-*/
+
 
 tasks.test {
         useJUnitPlatform {}
