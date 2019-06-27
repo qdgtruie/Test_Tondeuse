@@ -1,0 +1,33 @@
+@startuml
+start
+partition Initialisation {
+:Create Configuration instance through builder;
+:Load configuration;
+:Parse string;
+ if (Valid string?) then (no)
+ stop
+ endif
+:Instantiate Configuration hierarchy;
+}
+partition Execution {
+:Instantiate Garden;
+repeat
+    :Instantiate mower;
+    repeat
+    : Evaluate instruction;
+    if (
+    Within garden bounds
+                AND
+no collision with other mower
+) then (proceed)
+        :move to new position;
+    else (skip instruction)
+    :trigger alert;
+    endif
+    repeat while (more instructions?)
+    :report final position;
+repeat while (more mowers?)
+}
+end
+
+@enduml
