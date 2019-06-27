@@ -67,8 +67,8 @@ docker run --rm tondeuse -p8080:8080
 ### Possible improvements ###
 1. Move mowers in parallel through multithreading 
     - change `MownerController::runMowner` to trigger threads
-    - leverage `Mowner::addOffBoundChecker` to check for collisions
-    - manage state : either `MownerController` keeps track of all mowers or each `Mowner` registers with `addOffBoundChecker` on others.
+    - leverage `Mowner::addPositionChecker` to check for collisions
+    - manage state : either `MownerController` keeps track of all mowers or each `Mowner` registers with `addPositionChecker` on others.
 2. Move to a more functional implementation
     - use of vavr could be more consistent (currently only used for conveniance)
 3. Move to an Actor based model
