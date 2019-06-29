@@ -1,22 +1,24 @@
 package com.publicissapient.tondeuse.unitTest;
 
 import com.publicissapient.tondeuse.domain.*;
-import com.publicissapient.tondeuse.domain.configuration.*;
+import com.publicissapient.tondeuse.domain.configuration.Configuration;
+import com.publicissapient.tondeuse.domain.configuration.ConfigurationProvider;
+import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
+import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.errors.InvalidMoveEventArg;
-import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
-
-
 import com.publicissapient.tondeuse.service.MowerController;
+import lombok.extern.slf4j.Slf4j;
+import net.jqwik.api.Property;
 import org.junit.jupiter.api.Test;
-import net.jqwik.api.*;
 
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Slf4j
 public class ControllerTest {
 
     private class LimitedMemoryProvider extends MemoryProvider {
@@ -40,7 +42,7 @@ public class ControllerTest {
             queue.add(Instruction.A);
             queue.add(Instruction.A);
 
-            var conf = MowerConfiguration.with(location, InstructionQueue.with(queue));
+            var conf = MowerConfiguration.with(location, queue);
             result.add(conf);
 
             return result;
@@ -92,7 +94,7 @@ public class ControllerTest {
                 for (int j = 0; j < 100; j++)
                     queue.add(getRandomInstruction());
 
-                MowerConfiguration conf = MowerConfiguration.with(location, InstructionQueue.with(queue));
+                MowerConfiguration conf = MowerConfiguration.with(location, queue);
                 result.add(conf);
             }
             return result;
@@ -129,6 +131,7 @@ public class ControllerTest {
     }
 
     private void publishPosition(PositionProvider positionProvider) {
+        log.info(positionProvider.toString());
         messageGotPublished = true;
     }
 
@@ -147,6 +150,7 @@ public class ControllerTest {
     private boolean alertGotRaised = false;
 
     private void notifyAlert(InvalidMoveEventArg invalidMoveEventArg) {
+        log.info(invalidMoveEventArg.toString());
         alertGotRaised = true;
     }
 

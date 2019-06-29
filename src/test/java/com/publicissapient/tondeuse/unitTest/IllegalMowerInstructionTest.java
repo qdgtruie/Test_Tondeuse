@@ -37,6 +37,6 @@ class IllegalMowerInstructionTest {
         final String MESSAGE = "MESSAGE";
         var e = new IllegalMowerInstruction(MESSAGE);
 
-        assertTrue(e instanceof Throwable, "IllegalMowerInstruction should be an exception");
+        assertTrue(Throwable.class.isAssignableFrom(e.getClass()), "IllegalMowerInstruction should be an exception");
     }
 }

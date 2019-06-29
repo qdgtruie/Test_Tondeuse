@@ -97,7 +97,7 @@ public final class MowerController {
         mower.addPositionChecker(targetPosition -> garden.isValidMove(mower.getId(),targetPosition) );
         mower.addCollisionListener(this::raiseAlertNotification);
 
-        var instructions = item.getInstructionQueue().getInstructions();
+        var instructions = item.getInstructions();
 
         return new ExecutionBatch(mower,instructions);
     }

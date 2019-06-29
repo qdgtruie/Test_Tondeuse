@@ -33,7 +33,7 @@ class ConfigurationFormatExceptionTest {
 
         var e = new ConfigurationFormatException(MESSAGE);
 
-        assertTrue(e instanceof Throwable, "ConfigurationFormatException should be an exception");
+        assertTrue(Throwable.class.isAssignableFrom(e.getClass()), "ConfigurationFormatException should be an exception");
     }
 
 }

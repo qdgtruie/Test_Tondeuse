@@ -38,6 +38,6 @@ class ConfigurationExceptionTest {
         final String MESSAGE = "MESSAGE";
         var e = new ConfigurationException(MESSAGE);
 
-        assertTrue(e instanceof Throwable, "ConfigurationException should be an exception");
+        assertTrue(Throwable.class.isAssignableFrom(e.getClass()), "ConfigurationException should be an exception");
     }
 }

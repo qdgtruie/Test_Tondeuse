@@ -128,7 +128,7 @@ dependencies {
     testCompile("org.jbehave:jbehave-core:4.5.1")
     testCompile("com.github.valfirst:jbehave-junit-runner:2.2.1")
     testCompile("junit:junit:4.12")
-
+    testCompile("org.mockito:mockito-core:2.+")
 }
 
 

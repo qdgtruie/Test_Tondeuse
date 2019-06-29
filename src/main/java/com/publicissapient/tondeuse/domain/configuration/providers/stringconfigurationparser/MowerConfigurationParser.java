@@ -1,11 +1,10 @@
 package com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser;
 
-import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
-import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import com.publicissapient.tondeuse.domain.Instruction;
 import com.publicissapient.tondeuse.domain.MowerLocation;
 import com.publicissapient.tondeuse.domain.Orientation;
 import com.publicissapient.tondeuse.domain.Position;
+import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;
@@ -27,7 +26,7 @@ public class MowerConfigurationParser {
             MowerLocation location = parseMowerLocation(mowerLine);
 
             String instructionsLine = lines.get(i+1);
-            InstructionQueue instructionQueue = parseInstructionSet(instructionsLine);
+            var instructionQueue = parseInstructionSet(instructionsLine);
 
             var conf = MowerConfiguration.with(location, instructionQueue);
             result.add(conf);
@@ -36,17 +35,16 @@ public class MowerConfigurationParser {
         return result;
     }
 
-    private InstructionQueue parseInstructionSet(String instructionsLine) throws ConfigurationFormatException {
-        InstructionQueue result;
+    private Queue<Instruction> parseInstructionSet(String instructionsLine) throws ConfigurationFormatException {
+        Queue<Instruction> result;
 
         if (getPatternInstruction().matcher(instructionsLine).matches()) {
             var instructionTokens = com.google.common.base.Splitter.fixedLength(1).splitToList(instructionsLine);
 
-            var queue = instructionTokens.stream()
+            result = instructionTokens.stream()
                     .map(Instruction::valueOf)
                     .collect(Collectors.toCollection(LinkedList::new));
 
-            result = InstructionQueue.with(queue);
         }
         else
             throw new ConfigurationFormatException("Invalid Configuration format for Instruction set : '"+instructionsLine+"'");

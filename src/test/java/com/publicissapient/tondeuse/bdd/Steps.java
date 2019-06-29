@@ -10,9 +10,11 @@ import com.publicissapient.tondeuse.domain.configuration.GardenConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.MowerConfiguration;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.providers.stringconfigurationparser.ConfigurationFormatException;
-import com.publicissapient.tondeuse.domain.configuration.utils.InstructionQueue;
 import com.publicissapient.tondeuse.service.MowerController;
-import org.jbehave.core.annotations.*;
+import org.jbehave.core.annotations.BeforeScenario;
+import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -49,8 +51,7 @@ public class Steps {
                     .collect(Collectors.toCollection(LinkedList::new));
 
             mowers.add( MowerConfiguration.with(
-                    MowerLocation.with(Position.locatedAt(x, y), Orientation.valueOf(direction)),
-                    InstructionQueue.with(queue)));
+                    MowerLocation.with(Position.locatedAt(x, y), Orientation.valueOf(direction)), queue));
         }
         else
             throw new ConfigurationFormatException("Invalid Configuration format for Instruction set : '"+instructionsLine+"'");
@@ -63,7 +64,7 @@ public class Steps {
 
         controller.load(Configuration.basedOn( new ConfigurationProvider(){
             public GardenConfiguration getGardenConfiguration() { return gardenConfig;}
-            public Queue<MowerConfiguration> getMowerConfiguration() {return (Queue<MowerConfiguration>) mowers;}
+            public Queue<MowerConfiguration> getMowerConfiguration() { return  (Queue<MowerConfiguration>) mowers;}
         }
         )).run();
     }

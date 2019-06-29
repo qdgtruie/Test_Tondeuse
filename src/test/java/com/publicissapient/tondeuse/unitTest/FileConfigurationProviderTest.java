@@ -4,17 +4,18 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.publicissapient.tondeuse.domain.configuration.errors.ConfigurationException;
 import com.publicissapient.tondeuse.domain.configuration.providers.FileConfigurationProvider;
+import lombok.extern.slf4j.Slf4j;
 import net.jqwik.api.ForAll;
 import net.jqwik.api.Property;
 import net.jqwik.api.constraints.StringLength;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.slf4j.LoggerFactory.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.slf4j.LoggerFactory.getLogger;
 
+@Slf4j
 class FileConfigurationProviderTest implements AutoCloseable {
 
 
@@ -42,7 +43,7 @@ class FileConfigurationProviderTest implements AutoCloseable {
     @Property
     void canNotCreateProviderFromNullResource() {
 
-        assertThrows(NullPointerException.class, ()-> readConfigurationFromFileResource(null)
+        assertThrows(NullPointerException.class, ()->  log.info(readConfigurationFromFileResource(null).toString())
                 ,"Was expecting NullPointerException");
 
 
