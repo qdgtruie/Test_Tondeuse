@@ -45,6 +45,11 @@ First attempt to Tondeuse.
 docker build -t tondeuse
 docker run --rm tondeuse -p8080:8080
 ```
+### Running within Kubernetes ###
+Set ```.travis.yml``` config to point to your own kubernetes cluster, trigger a build and then :
+```
+curl  http://<service-public-ip>:8080
+```
 
 ### Overall approach  ###
 
@@ -64,14 +69,33 @@ docker run --rm tondeuse -p8080:8080
 2. Package as a Docker Image
 3. Push image into a GKE instance
 
+### Opinionated approach ###
+0. used the brief as a kind of (ubiquitus language) to design the domain model (leading to rich structure). 
+1. ConfigurationProviders is the only part using interface based approach to ensure extensibility
+2. Configuration domain model has high cohesion.
+3. No heavy framework dependency (e.g. spring injection) at the business logic level (domain).
+4. Exception are rewrapped in "business exception" and still capture the frames. 
+Moving to "exception less" design through functional is another route. 
+5. Code do need some comment. Self explanatory code is an aspirational and good thing, but in practice code do deserve some comments.
+6. Using code generation with `lombok is OK. (Really, I am not joking)
+7. Thread safety is not a focus for this exercise (structure immutability is not a concern).  
+
 ### Possible improvements ###
-1. Move mowers in parallel through multithreading 
-    - change `MownerController::runMowner` to trigger threads
+0. Add a `corretto-11` build as soon as Travis-CI community support it.
+1. Make implementation more modular :
+    - Deployables should be separated for domain, configuration providers, tests, and actual frontend (console, springboot, etc..)
+    - Leveraging `module-info` along new deployable structure
+2. Rework observability
+    - log should be streamed and centralized in log management system
+    - metrics should be exposed (JMX, actuator) at the engine level without creating dependency to heavy framework     
+3. Move mowers in parallel through multithreading 
+    - change `MownerController::runMowner` to trigger threads. Depending on concurrency level, fibers could be best suited.
     - leverage `Mowner::addPositionChecker` to check for collisions
+    - collision checks should stop as soon as one collision is detected (instead iterating on all checkers)
     - manage state : either `MownerController` keeps track of all mowers or each `Mowner` registers with `addPositionChecker` on others.
-2. Move to a more functional implementation
-    - use of vavr could be more consistent (currently only used for conveniance)
-3. Move to an Actor based model
+4. Move to a more functional implementation
+    - use of `vavr ` could be more consistent (currently only used for conveniance)
+5. Move to an Actor based model (e.g. akka)
 
 ### Specifications ###
 
