@@ -40,9 +40,10 @@ public class FileConfigurationProvider implements ConfigurationProvider {
      */
     private List<String> getLines() throws ConfigurationException {
         if (lines == null)
-            try {
+            try (var fileStream = getFileStream(resourcePath)){
 
-                String all = IOUtils.toString(getFileStream(resourcePath),Charset.defaultCharset());
+                //IOUtils do not close the input stream, need to be done at a higher level (hence the try with resource)
+                String all = IOUtils.toString(fileStream,Charset.defaultCharset());
                 lines = List.of(all.split(IOUtils.LINE_SEPARATOR));
 
             } catch (IllegalArgumentException e){
